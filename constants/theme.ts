@@ -4,16 +4,22 @@
  */
 
 
-const tintColor = '#0a7ea4';
+const tintColor = '#22A45D';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColor,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColor,
+    primary: '#22A45D',
+    success: '#43B726',
+    interface: '#186DDD',
+    warning: '#F7DE00',
+    danger: '#E23D24',
+    mainText: '#010F07',
+    bodyText: '#757575',
+    white: '#FFFFFF',
+    input: '#F6F8FC',
+    btnPrimary: '#22A45D',
+    btnSecondary: '#117653',
+    btnTertiary: '#B1B1B1',
   },
 };
 
