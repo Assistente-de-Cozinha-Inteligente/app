@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/theme';
 import {
   Poppins_100Thin,
   Poppins_100Thin_Italic,
@@ -31,6 +32,14 @@ SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
   anchor: '(tabs)',
+};
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: Colors.light.white,
+  },
 };
 
 export default function RootLayout() {
@@ -67,7 +76,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider value={DefaultTheme}>
+      <ThemeProvider value={theme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
