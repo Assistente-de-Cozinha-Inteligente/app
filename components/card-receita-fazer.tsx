@@ -28,7 +28,7 @@ export function CardReceitaFazer({
             <View style={styles.contentContainer}>
                 <Image source={{ uri: imageUri }} style={styles.image} />
                 <View style={styles.infoContainer}>
-                    <TextUI variant="bold" style={styles.title}>{title}</TextUI>
+                    <TextUI variant="medium" style={styles.title}>{title}</TextUI>
                     <View style={styles.infoTextContainer}>
                         <TextUI variant="regular" style={styles.time}>{time}</TextUI>
                         <TextUI variant="regular" style={styles.separator}>|</TextUI>
