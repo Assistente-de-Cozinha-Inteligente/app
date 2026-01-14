@@ -9,20 +9,27 @@ export function ButtonUI({
     disabled = false,
     loading = false,
     style,
+    textStyle,
 }: {
     title: string;
     onPress: () => void;
-    variant?: 'primary' | 'secondary' | 'tertiary';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'default';
     disabled?: boolean;
     loading?: boolean;
     style?: any;
+    textStyle?: any;
 }) {
     const backgroundColor = 
         variant === 'primary' 
             ? Colors.light.btnPrimary 
             : variant === 'secondary' 
             ? Colors.light.btnSecondary 
-            : Colors.light.btnTertiary;
+            : variant === 'tertiary'
+            ? Colors.light.btnTertiary
+            : Colors.light.white; // default: background branco
+
+    const borderColor = variant === 'default' ? "#EBEBEB": 'transparent';
+    const textColor = variant === 'default' ? Colors.light.mainText : Colors.light.white;
 
     const isDisabled = disabled || loading;
 
@@ -40,16 +47,17 @@ export function ButtonUI({
             style={[
                 styles.button,
                 { backgroundColor },
+                variant === 'default' && { borderWidth: 1.5, borderColor },
                 isDisabled && styles.buttonDisabled,
                 style
             ]}>
             {loading ? (
                 <ActivityIndicator 
                     size="small" 
-                    color={Colors.light.white} 
+                    color={textColor} 
                 />
             ) : (
-                <TextUI variant="semibold" style={styles.buttonText}>
+                <TextUI variant="semibold" style={[styles.buttonText, { color: textColor }, textStyle]}>
                     {title}
                 </TextUI>
             )}
