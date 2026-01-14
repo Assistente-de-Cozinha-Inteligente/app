@@ -77,7 +77,7 @@ export function PasswordStrength({ password }: PasswordStrengthProps) {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <TextUI variant="bold" style={styles.title}>
+                <TextUI variant="semibold" style={styles.title}>
                     Senha Forte
                 </TextUI>
                 <TextUI
