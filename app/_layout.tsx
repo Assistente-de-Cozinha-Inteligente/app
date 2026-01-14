@@ -1,3 +1,4 @@
+import { FloatingChatbotButton } from '@/components/ui/floating-chatbot-button';
 import { Colors } from '@/constants/theme';
 import {
   Poppins_100Thin,
@@ -80,7 +81,8 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
-        <StatusBar style="light" />
+        <FloatingChatbotButton onPress={() => console.log('Chatbot pressed')} />
+        <StatusBar style="dark" />
       </ThemeProvider>
     </SafeAreaProvider>
   );
