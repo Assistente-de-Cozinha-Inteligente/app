@@ -36,8 +36,3 @@
 <tipo>(<escopo>): <descrição>
 ```
 
-**Exemplo com escopo:**
-```bash
-git commit -m "feat(button): adicionar suporte a loading state"
-```
-
