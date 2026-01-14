@@ -1,13 +1,17 @@
+import { CardReceita } from '@/components/card-receita';
+import { CardReceitaFazer } from '@/components/card-receita-fazer';
+import { PasswordStrength } from '@/components/password-strength';
 import { ButtonUI } from '@/components/ui/button';
 import { InputUI } from '@/components/ui/input';
+import { InputPasswordUI } from '@/components/ui/input-password';
+import { InputSearchUI } from '@/components/ui/input-search';
 import { PageTitle } from '@/components/ui/page-title';
 import { TextUI } from '@/components/ui/text';
 import { Toggle } from '@/components/ui/toggle';
+import { Colors } from '@/constants/theme';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { InputPasswordUI } from '@/components/ui/input-password';
-import { InputSearchUI } from '@/components/ui/input-search';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -24,7 +28,7 @@ export default function HomeScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
     >
-      <View style={{ flex: 1, paddingTop: insets.top }}>
+      <View style={{ flex: 1, paddingTop: insets.top, backgroundColor: Colors.light.white }}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
@@ -99,7 +103,32 @@ export default function HomeScreen() {
             <TextUI variant="bold" style={{ textAlign: 'center' }}>
               ----------------------------------------------
             </TextUI>
+            <PasswordStrength password={password} />
+            <TextUI variant="bold" style={{ textAlign: 'center' }}>
+              ----------------------------------------------
+            </TextUI>
+            <CardReceita
+              imageUri={"https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg"}
+              category="Sushi"
+              title="Sushi de Salmão"
+              time="10 minutos"
+              servings="2 porções"
+              difficulty="Fácil"
+              onPress={() => { }}
+            />
+            <TextUI variant="bold" style={{ textAlign: 'center' }}>
+              ----------------------------------------------
+            </TextUI>
 
+            <CardReceitaFazer
+              imageUri={"https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg"}
+              title="Frango com legumes"
+              time="20 min"
+              servings="1 pessoa"
+              description="Usa o que você tem em casa"
+              onFazerAgora={() => console.log('Fazer agora')}
+              onProxima={() => console.log('Próxima')}
+            />
           </View>
         </ScrollView>
       </View>
