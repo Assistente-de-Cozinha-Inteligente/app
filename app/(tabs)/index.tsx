@@ -5,10 +5,12 @@ import { ButtonUI } from '@/components/ui/button';
 import { InputUI } from '@/components/ui/input';
 import { InputPasswordUI } from '@/components/ui/input-password';
 import { InputSearchUI } from '@/components/ui/input-search';
+import { PageHeader } from '@/components/ui/page-header';
 import { PageTitle } from '@/components/ui/page-title';
 import { TextUI } from '@/components/ui/text';
 import { Toggle } from '@/components/ui/toggle';
 import { Colors } from '@/constants/theme';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,6 +36,16 @@ export default function HomeScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={{ paddingHorizontal: 20, paddingVertical: 20, gap: 10 }}>
+            <PageHeader
+              title="Olá, Guilherme"
+              description="Tenho algumas receitas para hoje"
+              rightComponent={
+                <Ionicons name="notifications" size={20} color="black" />
+              }
+            />
+            <TextUI variant="bold" style={{ textAlign: 'center' }}>
+              ----------------------------------------------
+            </TextUI>
             <ButtonUI variant="primary" title="Button" onPress={() => { }} />
             <ButtonUI variant="secondary" title="Button" onPress={() => { }} />
             <ButtonUI variant="tertiary" title="Button" onPress={() => { }} />
@@ -129,6 +141,9 @@ export default function HomeScreen() {
               onFazerAgora={() => console.log('Fazer agora')}
               onProxima={() => console.log('Próxima')}
             />
+            <TextUI variant="bold" style={{ textAlign: 'center' }}>
+              ----------------------------------------------
+            </TextUI>
           </View>
         </ScrollView>
       </View>
