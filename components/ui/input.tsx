@@ -1,59 +1,66 @@
-import { Colors } from "@/constants/theme";
-import { StyleSheet, TextInput, View, Pressable } from "react-native";
+import { Colors, Fonts } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 export function InputUI({
   placeholder,
   value,
   onChangeText,
-  status = "default", // default | focus | error | success
-  secureTextEntry,
-  showClear,
+  borderColor = null,
 }: {
   placeholder: string;
   value?: string;
   onChangeText?: (text: string) => void;
-  status?: "default" | "focus" | "error" | "success";
-  secureTextEntry?: boolean;
-  showClear?: boolean;
+  borderColor?: null | 'success' | 'error';
 }) {
-  const [focused, setFocused] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const hasValue = value && value.length > 0;
+  const isSuccess = borderColor === 'success';
 
-  const visualState = focused ? "focus" : status;
+  const getBorderStyle = () => {
+    if (borderColor === null) {
+      return { borderWidth: 0 };
+    }
+    
+    const color = borderColor === 'success' 
+      ? Colors.light.success 
+      : Colors.light.danger;
+    
+    return {
+      borderWidth: 1.5,
+      borderColor: color,
+    };
+  };
 
   return (
-    <View style={[styles.wrapper, styles[visualState]]}>
+    <View style={[styles.wrapper, getBorderStyle()]}>
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
         style={styles.input}
-        secureTextEntry={secureTextEntry && !showPassword}
         underlineColorAndroid="transparent"
         autoCorrect={false}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
         placeholderTextColor={Colors.light.bodyText}
+        selectionColor={Colors.light.primary}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       />
 
-      {/* Botão limpar */}
-      {showClear && value?.length ? (
-        <Pressable onPress={() => onChangeText?.("")}>
-          <Ionicons name="close" size={18} color={Colors.light.bodyText} />
-        </Pressable>
-      ) : null}
-
-      {/* Mostrar senha */}
-      {secureTextEntry ? (
-        <Pressable onPress={() => setShowPassword(!showPassword)}>
-          {showPassword ? (
-            <Ionicons name="eye-off" size={18} color={Colors.light.bodyText} />
-          ) : (
-            <Ionicons name="eye" size={18} color={Colors.light.bodyText} />
-          )}
-        </Pressable>
+      {/* Ícone de check quando success, ou X para limpar (só aparece se estiver focado e houver texto) */}
+      {isSuccess ? (
+        <View style={styles.iconButton}>
+          <Ionicons name="checkmark" size={20} color={Colors.light.success} />
+        </View>
+      ) : isFocused && hasValue ? (
+        <TouchableOpacity 
+          onPress={() => onChangeText?.("")} 
+          style={styles.clearButton}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="close" size={20} color={Colors.light.bodyText} />
+        </TouchableOpacity>
       ) : null}
     </View>
   );
@@ -61,44 +68,36 @@ export function InputUI({
 
 
 const styles = StyleSheet.create({
-    wrapper: {
-      height: 48,
-      borderRadius: 12,
-      paddingHorizontal: 14,
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 10,
-      backgroundColor: Colors.light.input,
-      borderWidth: 1.5,
-    },
-  
-    default: {
-      borderColor: Colors.light.input,
-    },
-  
-    focus: {
-      borderColor: Colors.light.primary,
-    },
-  
-    error: {
-      borderColor: "#EF4444", // vermelho
-    },
-  
-    success: {
-      borderColor: "#22C55E", // verde
-    },
-  
-    input: {
-      flex: 1,
-  
-      padding: 0,
-      margin: 0,
-      borderWidth: 0,
-      backgroundColor: "transparent",
-  
-      color: Colors.light.bodyText,
-      fontSize: 16,
-      includeFontPadding: false,
-    },
-  });
-  
+  wrapper: {
+    height: 48,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Colors.light.input,
+    borderWidth: 0,
+  },
+
+  input: {
+    flex: 1,
+    padding: 0,
+    margin: 0,
+    borderWidth: 0,
+    backgroundColor: "transparent",
+    color: Colors.light.mainText,
+    fontSize: 14,
+    fontFamily: Fonts.regular,
+    includeFontPadding: false,
+    height: '100%',
+  },
+
+  clearButton: {
+    marginLeft: 8,
+    padding: 4,
+  },
+
+  iconButton: {
+    marginLeft: 8,
+    padding: 4,
+  },
+});
