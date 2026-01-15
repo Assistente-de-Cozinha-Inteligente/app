@@ -1,5 +1,6 @@
 import { CardCategoriaCompra } from '@/components/card-categoria-compra';
 import { ModalAdicionarItem } from '@/components/modal-adicionar-item';
+import { FloatingAddButton } from '@/components/ui/floating-add-button';
 import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { SectionUI } from '@/components/ui/section';
@@ -169,7 +170,7 @@ export default function CarrinhoScreen() {
         description="Gerencie suas compras"
         rightComponent={
           <TouchableOpacity onPress={handleShare} activeOpacity={0.7}>
-            <Ionicons name="share-social-outline" size={26} color="black" />
+          <Ionicons name="share-social-outline" size={26} color="black" />
           </TouchableOpacity>
         }
       />
@@ -214,6 +215,8 @@ export default function CarrinhoScreen() {
         locations={['Hortifruti', 'Bebidas', 'Carnes', 'Laticínios', 'Padaria', 'Limpeza', 'Outros']}
         isEditing={!!editingItem}
       />
+
+      <FloatingAddButton onPress={handleAddItem} />
     </ViewContainerUI>
   );
 } 
