@@ -1,19 +1,28 @@
 import { Colors, Fonts } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TextInput, TextInputProps, TouchableOpacity, View } from "react-native";
 
 export function InputUI({
   placeholder,
   value,
   onChangeText,
   borderColor = null,
+  keyboardType,
+  textAlign,
+  containerStyle,
+  showClearButton = true,
+  ...textInputProps
 }: {
   placeholder: string;
   value?: string;
   onChangeText?: (text: string) => void;
   borderColor?: null | 'success' | 'error';
-}) {
+  keyboardType?: TextInputProps['keyboardType'];
+  textAlign?: TextInputProps['textAlign'];
+  containerStyle?: any;
+  showClearButton?: boolean;
+} & Omit<TextInputProps, 'placeholder' | 'value' | 'onChangeText' | 'style' | 'underlineColorAndroid' | 'autoCorrect' | 'placeholderTextColor' | 'selectionColor' | 'onFocus' | 'onBlur'>) {
   const [isFocused, setIsFocused] = useState(false);
   const hasValue = value && value.length > 0;
   const isSuccess = borderColor === 'success';
@@ -34,18 +43,20 @@ export function InputUI({
   };
 
   return (
-    <View style={[styles.wrapper, getBorderStyle()]}>
+    <View style={[styles.wrapper, getBorderStyle(), containerStyle]}>
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        style={styles.input}
+        style={[styles.input, textAlign && { textAlign }]}
         underlineColorAndroid="transparent"
         autoCorrect={false}
         placeholderTextColor={Colors.light.bodyText}
         selectionColor={Colors.light.primary}
+        keyboardType={keyboardType}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        {...textInputProps}
       />
 
       {/* Ícone de check quando success, ou X para limpar (só aparece se estiver focado e houver texto) */}
@@ -53,7 +64,7 @@ export function InputUI({
         <View style={styles.iconButton}>
           <Ionicons name="checkmark" size={20} color={Colors.light.success} />
         </View>
-      ) : isFocused && hasValue ? (
+      ) : showClearButton && isFocused && hasValue ? (
         <TouchableOpacity 
           onPress={() => onChangeText?.("")} 
           style={styles.clearButton}
