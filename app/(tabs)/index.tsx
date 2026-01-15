@@ -1,12 +1,13 @@
 import { ReceitaSlider } from '@/components/receita-slider';
 import { ReceitaSliderFazer } from '@/components/receita-slider-fazer';
 import { PageHeader } from '@/components/ui/page-header';
+import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { SectionUI } from '@/components/ui/section';
 import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 export default function HomeScreen() {
   const receitasFazer = [
@@ -83,7 +84,7 @@ export default function HomeScreen() {
           <Ionicons name="notifications-outline" size={26} color="black" />
         }
       />
-      <ScrollView
+      <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
         <SectionUI title="Sugestão rápida" style={{
@@ -100,7 +101,6 @@ export default function HomeScreen() {
 
         <SectionUI title="" style={{
           paddingHorizontal: 20,
-          marginBottom: 70,
         }}>
           <View style={{
             borderRadius: 16,
@@ -120,7 +120,7 @@ export default function HomeScreen() {
             </Pressable>
           </View>
         </SectionUI>
-      </ScrollView>
+      </ScrollViewWithPadding>
     </ViewContainerUI>
   );
 } 

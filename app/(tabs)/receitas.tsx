@@ -4,12 +4,12 @@ import { ReceitaSlider } from '@/components/receita-slider';
 import { ReceitaSliderCompacto } from '@/components/receita-slider-compacto';
 import { InputSearchUI } from '@/components/ui/input-search';
 import { PageHeader } from '@/components/ui/page-header';
+import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { SectionUI } from '@/components/ui/section';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ScrollView } from 'react-native';
 
 // Importar imagens locais
 const imagem1 = require('@/assets/images/testes/1.png');
@@ -88,7 +88,7 @@ export default function ReceitasScreen() {
 
   return (
     <ViewContainerUI>
-      <ScrollView
+      <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
         <PageHeader
@@ -160,7 +160,7 @@ export default function ReceitasScreen() {
           }}>
           <ReceitaSliderCompacto receitas={receitas} />
         </SectionUI>
-      </ScrollView>
+      </ScrollViewWithPadding>
     </ViewContainerUI>
   );
 } 
