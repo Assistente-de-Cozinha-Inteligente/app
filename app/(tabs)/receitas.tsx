@@ -91,22 +91,22 @@ export default function ReceitasScreen() {
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
-        <PageHeader
-          style={{
-            paddingHorizontal: 20,
-          }}
+      <PageHeader
+        style={{
+          paddingHorizontal: 20,
+        }}
           title="Receitas"
           description="Explore opções quando quiser"
-          rightComponent={
-            <Ionicons name="notifications-outline" size={26} color="black" />
-          }
-        />
+        rightComponent={
+          <Ionicons name="notifications-outline" size={26} color="black" />
+        }
+      />
 
         <SectionUI title=""
           style={{
             marginBottom: 0,
-            paddingHorizontal: 20,
-          }}>
+          paddingHorizontal: 20,
+        }}>
           <InputSearchUI
             placeholder="Pesquisar receita"
             value={search}
@@ -144,8 +144,8 @@ export default function ReceitasScreen() {
             paddingVertical: 0,
           }}
           titleStyle={{
-            paddingHorizontal: 20,
-          }}>
+          paddingHorizontal: 20,
+        }}>
           <ReceitaSlider receitas={receitas} />
         </SectionUI>
 
@@ -156,8 +156,8 @@ export default function ReceitasScreen() {
             paddingVertical: 0,
           }}
           titleStyle={{
-            paddingHorizontal: 20,
-          }}>
+          paddingHorizontal: 20,
+        }}>
           <ReceitaSliderCompacto receitas={receitas} />
         </SectionUI>
       </ScrollViewWithPadding>
