@@ -11,6 +11,7 @@ type ReceitaData = {
   time: string;
   servings: string;
   difficulty: string;
+  status?: string;
   onPress?: () => void;
 };
 
@@ -85,6 +86,7 @@ export function ReceitaSlider({ receitas }: ReceitaSliderProps) {
               time={receita.time}
               servings={receita.servings}
               difficulty={receita.difficulty}
+              status={receita.status}
               onPress={receita.onPress}
             />
           </View>
@@ -118,7 +120,6 @@ export function ReceitaSlider({ receitas }: ReceitaSliderProps) {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 8,
     position: 'relative',
   },
   scrollContent: {

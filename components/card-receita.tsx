@@ -4,6 +4,33 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { TextUI } from './ui/text';
 
+// Função para determinar cor do status baseado no texto
+const getStatusColor = (status: string): { backgroundColor: string; textColor: string } => {
+  const statusLower = status.toLowerCase();
+  
+  // Status positivo - pode fazer
+  if (statusLower.includes('consegue fazer') || statusLower.includes('pode fazer') || statusLower.includes('pronto')) {
+    return {
+      backgroundColor: 'rgba(76, 175, 80, 0.95)', // Verde
+      textColor: '#FFFFFF',
+    };
+  }
+  
+  // Status de falta de ingredientes
+  if (statusLower.includes('falta') || statusLower.includes('faltam')) {
+    return {
+      backgroundColor: 'rgba(255, 193, 7, 0.95)', // Amarelo/Laranja
+      textColor: '#FFFFFF',
+    };
+  }
+  
+  // Status neutro/outros
+  return {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    textColor: Colors.light.bodyText,
+  };
+};
+
 type CardReceitaProps = {
     imageUri?: string;
     category: string;
@@ -11,6 +38,7 @@ type CardReceitaProps = {
     time: string;
     servings: string;
     difficulty: string;
+    status?: string;
     onPress?: () => void;
 };
 
@@ -21,6 +49,7 @@ export function CardReceita({
     time,
     servings,
     difficulty,
+    status,
     onPress,
 }: CardReceitaProps) {
     return (
@@ -51,6 +80,18 @@ export function CardReceita({
                     {category}
                 </TextUI>
             </View>
+
+            {/* Badge de status no canto superior direito */}
+            {status && (() => {
+                const statusColors = getStatusColor(status);
+                return (
+                    <View style={[styles.statusBadge, { backgroundColor: statusColors.backgroundColor }]}>
+                        <TextUI variant="regular" style={[styles.statusText, { color: statusColors.textColor }]}>
+                            {status}
+                        </TextUI>
+                    </View>
+                );
+            })()}
 
             {/* Conteúdo no canto inferior esquerdo */}
             <View style={styles.content}>
@@ -136,6 +177,18 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors.light.white,
         opacity: 0.7,
+    },
+    statusBadge: {
+        position: 'absolute',
+        top: 12,
+        right: 12,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 12,
+        zIndex: 1,
+    },
+    statusText: {
+        fontSize: 11,
     },
 });
 
