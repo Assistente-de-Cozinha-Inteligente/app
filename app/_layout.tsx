@@ -22,7 +22,7 @@ import {
 } from '@expo-google-fonts/poppins';
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -42,6 +42,25 @@ const theme = {
     background: Colors.light.white,
   },
 };
+
+function RootLayoutNav() {
+  const pathname = usePathname();
+  const shouldShowChatbot = pathname !== '/editar-perfil';
+
+  return (
+    <>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="buscar" options={{ headerShown: false }} />
+        <Stack.Screen name="editar-perfil" options={{ headerShown: false }} />
+      </Stack>
+      {shouldShowChatbot && (
+        <FloatingChatbotButton onPress={() => console.log('Chatbot pressed')} />
+      )}
+      <StatusBar style="dark" />
+    </>
+  );
+}
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -78,12 +97,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider value={theme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="buscar" options={{ headerShown: false }} />
-        </Stack>
-        <FloatingChatbotButton onPress={() => console.log('Chatbot pressed')} />
-        <StatusBar style="dark" />
+        <RootLayoutNav />
       </ThemeProvider>
     </SafeAreaProvider>
   );

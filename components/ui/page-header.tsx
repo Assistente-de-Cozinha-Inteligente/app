@@ -18,7 +18,7 @@ export function PageHeader({
   return (
     <View style={[styles.container, style]}>
       <View style={styles.leftContent}>
-        <TextUI variant="regular" style={styles.title}>
+        <TextUI variant="semibold" style={styles.title}>
           {title}
         </TextUI>
         {description && (
