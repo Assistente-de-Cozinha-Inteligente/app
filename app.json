@@ -19,6 +19,24 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "datePicker": {
+        "colorAccent": {
+          "light": "#22A45D"
+        },
+        "textColorPrimary": {
+          "light": "#22A45D"
+        }
+      },
+      "timePicker": {
+        "background": {
+          "light": "#22A45D",
+          "dark": "#22A45D"
+        },
+        "numbersBackgroundColor": {
+          "light": "#22A45D",
+          "dark": "#22A45D"
+        }
+      },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.anonymous.app"
@@ -37,7 +55,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true,
