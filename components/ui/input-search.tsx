@@ -60,8 +60,8 @@ export function InputSearchUI({
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: 48,
-    borderRadius: 12,
+    height: 55,
+    borderRadius: 15,
     paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",

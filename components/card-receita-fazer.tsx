@@ -12,6 +12,7 @@ type CardReceitaFazerProps = {
     description: string;
     onFazerAgora?: () => void;
     onProxima?: () => void;
+    isLast?: boolean;
 };
 
 export function CardReceitaFazer({
@@ -22,6 +23,7 @@ export function CardReceitaFazer({
     description,
     onFazerAgora,
     onProxima,
+    isLast = false,
 }: CardReceitaFazerProps) {
     return (
         <View style={styles.container}>
@@ -49,7 +51,7 @@ export function CardReceitaFazer({
                 </View>
                 <View style={styles.buttonProxima}>
                     <ButtonUI
-                        title="Proxima"
+                        title={isLast ? "VER MAIS" : "Proxima"}
                         onPress={onProxima || (() => { })}
                         variant="default"
                         style={styles.buttonProximaInner}

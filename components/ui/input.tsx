@@ -68,26 +68,26 @@ export function InputUI({
 
 
 const styles = StyleSheet.create({
-  wrapper: {
-    height: 48,
-    borderRadius: 12,
+    wrapper: {
+      height: 48,
+      borderRadius: 12,
     paddingHorizontal: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: Colors.light.input,
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: Colors.light.input,
     borderWidth: 0,
-  },
-
-  input: {
-    flex: 1,
-    padding: 0,
-    margin: 0,
-    borderWidth: 0,
-    backgroundColor: "transparent",
+    },
+  
+    input: {
+      flex: 1,
+      padding: 0,
+      margin: 0,
+      borderWidth: 0,
+      backgroundColor: "transparent",
     color: Colors.light.mainText,
     fontSize: 14,
     fontFamily: Fonts.regular,
-    includeFontPadding: false,
+      includeFontPadding: false,
     height: '100%',
   },
 
@@ -99,5 +99,6 @@ const styles = StyleSheet.create({
   iconButton: {
     marginLeft: 8,
     padding: 4,
-  },
-});
+    },
+  });
+  

@@ -1,22 +1,24 @@
 import { Colors } from '@/constants/theme';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { TextUI } from './text';
 
 type PageHeaderProps = {
   title: string;
   description?: string;
   rightComponent?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 };
 
 export function PageHeader({
   title,
   description,
   rightComponent,
+  style,
 }: PageHeaderProps) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.leftContent}>
-        <TextUI variant="medium" style={styles.title}>
+        <TextUI variant="regular" style={styles.title}>
           {title}
         </TextUI>
         {description && (
@@ -40,13 +42,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 16,
+    marginTop: 20,
   },
   leftContent: {
     flex: 1,
     flexDirection: 'column',
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     color: Colors.light.mainText,
   },
   description: {
