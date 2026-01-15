@@ -1,10 +1,13 @@
+import { CategoriaSlider } from '@/components/categoria-slider';
 import { PreferenciaSlider } from '@/components/preferencia-slider';
 import { ReceitaSlider } from '@/components/receita-slider';
+import { ReceitaSliderCompacto } from '@/components/receita-slider-compacto';
 import { InputSearchUI } from '@/components/ui/input-search';
 import { PageHeader } from '@/components/ui/page-header';
 import { SectionUI } from '@/components/ui/section';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
 
@@ -15,6 +18,13 @@ const imagem3 = require('@/assets/images/testes/3.png');
 
 export default function ReceitasScreen() {
   const [search, setSearch] = useState('');
+
+  const categorias = [
+    { id: '1', title: 'Geral' },
+    { id: '2', title: 'Rápidas' },
+    { id: '3', title: 'Pouco esforço' },
+    { id: '4', title: 'Leves' },
+  ];
 
   const preferencias = [
     {
@@ -41,7 +51,7 @@ export default function ReceitasScreen() {
       color: "#EEF1F6",          // azul acinzentado claro
       backgroundColor: "#E3E8F0", // azul acinzentado um pouco mais profundo
     },
-      
+
   ];
 
   const receitas = [
@@ -52,6 +62,7 @@ export default function ReceitasScreen() {
       time: "35 min",
       servings: "2 pessoas",
       difficulty: "Fácil",
+      status: "Consegue fazer agora",
       onPress: () => console.log('Sushi'),
     },
     {
@@ -61,6 +72,7 @@ export default function ReceitasScreen() {
       time: "35 min",
       servings: "2 pessoas",
       difficulty: "Fácil",
+      status: "Falta 2 ingredientes",
       onPress: () => console.log('Sushi 2'),
     },
     {
@@ -76,21 +88,19 @@ export default function ReceitasScreen() {
 
   return (
     <ViewContainerUI>
-
-      <PageHeader
-        style={{
-          marginBottom: 15,
-          paddingHorizontal: 20,
-        }}
-        title="Receitas"
-        description="Explore opções quando quiser"
-        rightComponent={
-          <Ionicons name="notifications-outline" size={26} color="black" />
-        }
-      />
       <ScrollView
         keyboardShouldPersistTaps="handled"
       >
+        <PageHeader
+          style={{
+            paddingHorizontal: 20,
+          }}
+          title="Receitas"
+          description="Explore opções quando quiser"
+          rightComponent={
+            <Ionicons name="notifications-outline" size={26} color="black" />
+          }
+        />
 
         <SectionUI title=""
           style={{
@@ -101,18 +111,55 @@ export default function ReceitasScreen() {
             placeholder="Pesquisar receita"
             value={search}
             onChangeText={setSearch}
+            onPress={() => router.push('/buscar')}
           />
         </SectionUI>
         <SectionUI
           title=""
           style={{
-            marginBottom: 15,
+            marginBottom: 16,
             paddingVertical: 0,
           }}>
           <PreferenciaSlider preferencias={preferencias} />
         </SectionUI>
 
-        {/* <ReceitaSlider receitas={receitas} /> */}
+        <SectionUI
+          title=""
+          style={{
+            marginBottom: 16,
+            paddingVertical: 0,
+          }}>
+          <CategoriaSlider
+            categorias={categorias}
+            onCategoriaChange={(categoriaId) => {
+              console.log('Categoria selecionada:', categoriaId);
+            }}
+          />
+        </SectionUI>
+
+        <SectionUI
+          title="Com seus ingredientes"
+          style={{
+            marginBottom: 25,
+            paddingVertical: 0,
+          }}
+          titleStyle={{
+            paddingHorizontal: 20,
+          }}>
+          <ReceitaSlider receitas={receitas} />
+        </SectionUI>
+
+        <SectionUI
+          title="Para variar"
+          style={{
+            marginBottom: 10,
+            paddingVertical: 0,
+          }}
+          titleStyle={{
+            paddingHorizontal: 20,
+          }}>
+          <ReceitaSliderCompacto receitas={receitas} />
+        </SectionUI>
       </ScrollView>
     </ViewContainerUI>
   );
