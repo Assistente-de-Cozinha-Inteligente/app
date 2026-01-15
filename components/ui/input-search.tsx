@@ -1,18 +1,21 @@
 import { Colors, Fonts } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { forwardRef } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
-export function InputSearchUI({
-  placeholder,
-  value,
-  onChangeText,
-  borderColor = null,
-}: {
+export const InputSearchUI = forwardRef<TextInput, {
   placeholder: string;
   value?: string;
   onChangeText?: (text: string) => void;
   borderColor?: null | 'success';
-}) {
+  onPress?: () => void;
+}>(({
+  placeholder,
+  value,
+  onChangeText,
+  borderColor = null,
+  onPress,
+}, ref) => {
   const hasValue = value && value.length > 0;
 
   const getBorderStyle = () => {
@@ -26,14 +29,22 @@ export function InputSearchUI({
     };
   };
 
+  const WrapperComponent = onPress ? TouchableOpacity : View;
+
   return (
-    <View style={[styles.wrapper, getBorderStyle()]}>
+    <WrapperComponent 
+      style={[styles.wrapper, getBorderStyle()]}
+      onPress={onPress}
+      activeOpacity={onPress ? 0.7 : 1}
+      disabled={!onPress}
+    >
       {/* Ícone de busca na esquerda */}
       <View style={styles.searchIcon}>
         <Ionicons name="search" size={20} color={Colors.light.bodyText} />
       </View>
 
       <TextInput
+        ref={ref}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -42,10 +53,12 @@ export function InputSearchUI({
         autoCorrect={false}
         placeholderTextColor={Colors.light.bodyText}
         selectionColor={Colors.light.primary}
+        editable={!onPress}
+        pointerEvents={onPress ? 'none' : 'auto'}
       />
 
       {/* X para limpar (aparece sempre que houver texto) */}
-      {hasValue && (
+      {hasValue && !onPress && (
         <TouchableOpacity 
           onPress={() => onChangeText?.("")} 
           style={styles.clearButton}
@@ -54,9 +67,11 @@ export function InputSearchUI({
           <Ionicons name="close" size={20} color={Colors.light.bodyText} />
         </TouchableOpacity>
       )}
-    </View>
+    </WrapperComponent>
   );
-}
+});
+
+InputSearchUI.displayName = 'InputSearchUI';
 
 const styles = StyleSheet.create({
   wrapper: {

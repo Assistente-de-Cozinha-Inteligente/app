@@ -1,5 +1,5 @@
 import { Colors } from '@/constants/theme';
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 import { TextUI } from './text';
 
 type SectionUIProps = {
@@ -7,6 +7,8 @@ type SectionUIProps = {
     title: string;
     titleStyle?: StyleProp<TextStyle>;
     rightButton?: React.ReactNode;
+    rightButtonStyle?: StyleProp<ViewStyle>;
+    onRightButtonPress?: () => void;
     style?: StyleProp<ViewStyle>;
 };
 
@@ -15,18 +17,20 @@ export function SectionUI({
     title,
     titleStyle,
     rightButton,
+    rightButtonStyle,
+    onRightButtonPress,
     style,
 }: SectionUIProps) {
     return (
         <View style={[styles.container, style]}>
             <View style={styles.titleContainer}>
                 {title && (
-                    <TextUI variant="medium" style={[styles.title, titleStyle]} numberOfLines={1}>{title}</TextUI>
+                    <TextUI variant="semibold" style={[styles.title, titleStyle]} numberOfLines={1}>{title}</TextUI>
                 )}
                 {rightButton && (
-                    <View style={styles.rightButton}>
+                    <Pressable style={[styles.rightButton, rightButtonStyle]} onPress={onRightButtonPress}>
                         {rightButton}
-                    </View>
+                    </Pressable>
                 )}
             </View>
             {children}
