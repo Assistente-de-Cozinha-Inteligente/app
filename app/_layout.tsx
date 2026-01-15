@@ -80,6 +80,7 @@ export default function RootLayout() {
       <ThemeProvider value={theme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="buscar" options={{ headerShown: false }} />
         </Stack>
         <FloatingChatbotButton onPress={() => console.log('Chatbot pressed')} />
         <StatusBar style="dark" />
