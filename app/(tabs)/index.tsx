@@ -1,152 +1,126 @@
-import { CardReceita } from '@/components/card-receita';
-import { CardReceitaFazer } from '@/components/card-receita-fazer';
-import { PasswordStrength } from '@/components/password-strength';
-import { ButtonUI } from '@/components/ui/button';
-import { InputUI } from '@/components/ui/input';
-import { InputPasswordUI } from '@/components/ui/input-password';
-import { InputSearchUI } from '@/components/ui/input-search';
+import { ReceitaSlider } from '@/components/receita-slider';
+import { ReceitaSliderFazer } from '@/components/receita-slider-fazer';
 import { PageHeader } from '@/components/ui/page-header';
-import { PageTitle } from '@/components/ui/page-title';
+import { SectionUI } from '@/components/ui/section';
 import { TextUI } from '@/components/ui/text';
-import { Toggle } from '@/components/ui/toggle';
+import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Pressable, ScrollView, View } from 'react-native';
 
 export default function HomeScreen() {
-  const insets = useSafeAreaInsets();
-  const [toggleEnabled, setToggleEnabled] = useState(false);
-  const [inputValue1, setInputValue1] = useState('');
-  const [inputValue2, setInputValue2] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [searchText, setSearchText] = useState('');
+  const receitasFazer = [
+    {
+      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
+      title: "Frango com legumes",
+      time: "20 min",
+      servings: "1 pessoa",
+      description: "Usa ingredientes comuns",
+      onFazerAgora: () => console.log('Fazer agora 1'),
+      onProxima: () => console.log('Próxima 1'),
+    },
+    {
+      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
+      title: "Salmão grelhado",
+      time: "25 min",
+      servings: "2 pessoas",
+      description: "Receita rápida e saudável",
+      onFazerAgora: () => console.log('Fazer agora 2'),
+      onProxima: () => console.log('Próxima 2'),
+    },
+    {
+      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
+      title: "Massa com molho",
+      time: "15 min",
+      servings: "1 pessoa",
+      description: "Perfeito para o almoço",
+      onFazerAgora: () => console.log('Fazer agora 3'),
+      onProxima: () => console.log('Próxima 3'),
+    },
+  ];
+
+  const receitas = [
+    {
+      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
+      category: "Sushi",
+      title: "Sushi",
+      time: "35 min",
+      servings: "2 pessoas",
+      difficulty: "Fácil",
+      onPress: () => console.log('Sushi'),
+    },
+    {
+      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
+      category: "Sushi",
+      title: "Sushi",
+      time: "35 min",
+      servings: "2 pessoas",
+      difficulty: "Fácil",
+      onPress: () => console.log('Sushi 2'),
+    },
+    {
+      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
+      category: "Sushi",
+      title: "Sushi",
+      time: "35 min",
+      servings: "2 pessoas",
+      difficulty: "Fácil",
+      onPress: () => console.log('Sushi 3'),
+    },
+  ];
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-    >
-      <View style={{ flex: 1, paddingTop: insets.top, backgroundColor: Colors.light.white }}>
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={{ paddingHorizontal: 20, paddingVertical: 20, gap: 10 }}>
-            <PageHeader
-              title="Olá, Guilherme"
-              description="Tenho algumas receitas para hoje"
-              rightComponent={
-                <Ionicons name="notifications" size={20} color="black" />
-              }
-            />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
-            </TextUI>
-            <ButtonUI variant="primary" title="Button" onPress={() => { }} />
-            <ButtonUI variant="secondary" title="Button" onPress={() => { }} />
-            <ButtonUI variant="tertiary" title="Button" onPress={() => { }} />
-            <ButtonUI variant="primary" title="Button" disabled={true} onPress={() => { }} />
-            <ButtonUI variant="primary" title="Button" disabled={true} loading={true} onPress={() => { }} />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
-            </TextUI>
-            <PageTitle title="Page Title" onBackPress={() => { }} />
-            <PageTitle title="Page Title" />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
-            </TextUI>
-            <Toggle value={toggleEnabled} onValueChange={setToggleEnabled} />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
-            </TextUI>
-            <InputUI
-              placeholder="Digite algo..."
-              value={inputValue1}
-              onChangeText={setInputValue1}
-            />
-            <InputUI
-              placeholder="Digite algo..."
-              value={inputValue1}
-              borderColor="success"
-              onChangeText={setInputValue1}
-            />
-            <InputUI
-              placeholder="Digite algo..."
-              value={inputValue2}
-              borderColor="error"
-              onChangeText={setInputValue2}
-            />
+    <ViewContainerUI>
 
-            <InputPasswordUI
-              placeholder="Digite sua senha"
-              value={password}
-              onChangeText={setPassword}
-            />
+      <PageHeader
+        style={{
+          marginBottom: 15,
+          paddingHorizontal: 20,
+        }}
+        title="Olá, bem vindo"
+        description="Tenho algumas receitas para hoje"
+        rightComponent={
+          <Ionicons name="notifications-outline" size={26} color="black" />
+        }
+      />
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+      >
+        <SectionUI title="Sugestão rápida" style={{
+          paddingHorizontal: 20,
+        }}>
+          <ReceitaSliderFazer receitas={receitasFazer} />
+        </SectionUI>
 
-            <InputPasswordUI
-              placeholder="Confirme sua senha"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              borderColor="success"
-            />
+        <SectionUI title="Outras ideias simples" titleStyle={{
+          paddingHorizontal: 20,
+        }}>
+          <ReceitaSlider receitas={receitas} />
+        </SectionUI>
 
-            <InputPasswordUI
-              placeholder="Confirme sua senha"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              borderColor="error"
-            />
-
-            <InputSearchUI
-              placeholder="Buscar..."
-              value={searchText}
-              borderColor="success"
-              onChangeText={setSearchText}
-            />
-            <InputSearchUI
-              placeholder="Buscar..."
-              value={searchText}
-              onChangeText={setSearchText}
-            />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
+        <SectionUI title="" style={{
+          paddingHorizontal: 20,
+          marginBottom: 70,
+        }}>
+          <View style={{
+            borderRadius: 16,
+            borderWidth: 1,
+            borderColor: '#EBEBEB',
+            paddingHorizontal: 18,
+            paddingVertical: 20,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+            <TextUI variant="medium">
+              🧺 {" "} 2 itens perto de vencer
             </TextUI>
-            <PasswordStrength password={password} />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
-            </TextUI>
-            <CardReceita
-              imageUri={"https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg"}
-              category="Sushi"
-              title="Sushi de Salmão"
-              time="10 minutos"
-              servings="2 porções"
-              difficulty="Fácil"
-              onPress={() => { }}
-            />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
-            </TextUI>
-
-            <CardReceitaFazer
-              imageUri={"https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg"}
-              title="Frango com legumes"
-              time="20 min"
-              servings="1 pessoa"
-              description="Usa o que você tem em casa"
-              onFazerAgora={() => console.log('Fazer agora')}
-              onProxima={() => console.log('Próxima')}
-            />
-            <TextUI variant="bold" style={{ textAlign: 'center' }}>
-              ----------------------------------------------
-            </TextUI>
+            <Pressable onPress={() => console.log('Ver todos')}>
+              <Ionicons name="chevron-forward-outline" size={20} color={Colors.light.primary} />
+            </Pressable>
           </View>
-        </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+        </SectionUI>
+      </ScrollView>
+    </ViewContainerUI>
   );
 } 
