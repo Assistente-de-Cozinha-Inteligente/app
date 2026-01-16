@@ -22,10 +22,12 @@ import {
 } from '@expo-google-fonts/poppins';
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import * as NavigationBar from 'expo-navigation-bar';
 import { Stack, usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import "../global.css";
 
@@ -45,7 +47,7 @@ const theme = {
 
 function RootLayoutNav() {
   const pathname = usePathname();
-  const shouldShowChatbot = pathname !== '/editar-perfil';
+  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat';
 
   return (
     <>
@@ -53,9 +55,11 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="buscar" options={{ headerShown: false }} />
         <Stack.Screen name="editar-perfil" options={{ headerShown: false }} />
+        <Stack.Screen name="receita/[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="chat" options={{ headerShown: false }} />
       </Stack>
       {shouldShowChatbot && (
-        <FloatingChatbotButton onPress={() => console.log('Chatbot pressed')} />
+        <FloatingChatbotButton />
       )}
       <StatusBar style="dark" />
     </>
@@ -89,6 +93,13 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      NavigationBar.setBackgroundColorAsync('#ffffff');
+      NavigationBar.setButtonStyleAsync('dark');
+    }
+  }, []);
 
   if (!fontsLoaded && !fontError) {
     return null;
