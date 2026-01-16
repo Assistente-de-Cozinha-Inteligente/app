@@ -1,5 +1,6 @@
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -12,10 +13,18 @@ export function FloatingChatbotButton({ onPress }: FloatingChatbotButtonProps) {
   // Altura aproximada da tab bar (80px) + padding bottom safe area
   const bottomOffset = 80 + insets.bottom;
 
+  const handlePress = () => {
+    if (onPress) {
+      onPress();
+    } else {
+      router.push('/chat');
+    }
+  };
+
   return (
     <View style={[styles.container, { bottom: bottomOffset }]}>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={handlePress}
         activeOpacity={0.8}
         style={styles.button}
       >
