@@ -13,7 +13,7 @@ export function ButtonUI({
 }: {
     title: string;
     onPress: () => void;
-    variant?: 'primary' | 'secondary' | 'tertiary' | 'default';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'default' | 'danger';
     disabled?: boolean;
     loading?: boolean;
     style?: any;
@@ -26,6 +26,8 @@ export function ButtonUI({
             ? Colors.light.btnSecondary 
             : variant === 'tertiary'
             ? Colors.light.btnTertiary
+            : variant === 'danger'
+            ? Colors.light.danger
             : Colors.light.white; // default: background branco
 
     const borderColor = variant === 'default' ? "#EBEBEB": 'transparent';

@@ -25,20 +25,20 @@ const recomendacoesOptions = {
 
 export default function ConfiguracoesScreen() {
   const [dailySuggestions, setDailySuggestions] = useState(true);
-  
+
   // Estados para valores selecionados
   const [restricaoAlimentar, setRestricaoAlimentar] = useState('Vegetariano');
   const [alergias, setAlergias] = useState<string[]>(['Lactose', 'Glúten']);
   const [prioridade, setPrioridade] = useState('Rapidez');
   const [preferenciaReceita, setPreferenciaReceita] = useState('Balanciada');
   const [nivelCozinha, setNivelCozinha] = useState('Iniciante');
-  
+
   // Estados para controlar qual modal está aberto
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalOptions, setModalOptions] = useState<string[]>([]);
   const [modalSelectedValue, setModalSelectedValue] = useState<string | string[]>('');
-  const [modalOnSelect, setModalOnSelect] = useState<(value: string | string[]) => void>(() => {});
+  const [modalOnSelect, setModalOnSelect] = useState<(value: string | string[]) => void>(() => { });
   const [modalMultiple, setModalMultiple] = useState(false);
 
   const formatAlergias = (alergiasArray: string[]): string => {
@@ -68,23 +68,23 @@ export default function ConfiguracoesScreen() {
 
   return (
     <ViewContainerUI>
-      <PageHeader
-        style={{
-          paddingHorizontal: 20,
-        }}
-        title="Meu Perfil"
-        description="Ajustes para recomendações melhores"
-        rightComponent={
-          <TouchableOpacity activeOpacity={0.7}>
-            <View style={styles.notificationContainer}>
-              <Ionicons name="notifications-outline" size={26} color={Colors.light.mainText} />
-              <View style={styles.notificationDot} />
-            </View>
-          </TouchableOpacity>
-        }
-      />
-
       <ScrollViewWithPadding>
+        <PageHeader
+          style={{
+            paddingHorizontal: 20,
+          }}
+          title="Meu Perfil"
+          description="Ajustes para recomendações melhores"
+          rightComponent={
+            <TouchableOpacity activeOpacity={0.7}>
+              <View style={styles.notificationContainer}>
+                <Ionicons name="notifications-outline" size={26} color={Colors.light.mainText} />
+                <View style={styles.notificationDot} />
+              </View>
+            </TouchableOpacity>
+          }
+        />
+
         {/* Seção Meu Perfil */}
         <SectionUI
           title=""

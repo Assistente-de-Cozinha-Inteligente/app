@@ -8,6 +8,7 @@ import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Pressable, View } from 'react-native';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
   const receitasFazer = [
@@ -48,7 +49,7 @@ export default function HomeScreen() {
       time: "35 min",
       servings: "2 pessoas",
       difficulty: "Fácil",
-      onPress: () => console.log('Sushi'),
+      onPress: () => router.push('/receita/1'),
     },
     {
       imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
@@ -57,7 +58,7 @@ export default function HomeScreen() {
       time: "35 min",
       servings: "2 pessoas",
       difficulty: "Fácil",
-      onPress: () => console.log('Sushi 2'),
+      onPress: () => router.push('/receita/1'),
     },
     {
       imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
@@ -66,7 +67,7 @@ export default function HomeScreen() {
       time: "35 min",
       servings: "2 pessoas",
       difficulty: "Fácil",
-      onPress: () => console.log('Sushi 3'),
+      onPress: () => router.push('/receita/1'),
     },
   ];
 
