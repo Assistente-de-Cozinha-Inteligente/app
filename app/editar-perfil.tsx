@@ -1,17 +1,14 @@
-import { ButtonUI } from '@/components/ui/button';
 import { InputUI } from '@/components/ui/input';
+import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { TextUI } from '@/components/ui/text';
 
 export default function EditarPerfilScreen() {
   const [nome, setNome] = useState('Guilherme');
-  const insets = useSafeAreaInsets();
 
   const handleSave = () => {
     // Aqui você pode salvar o nome
@@ -20,12 +17,12 @@ export default function EditarPerfilScreen() {
   };
 
   return (
-    <ViewContainerUI>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-        keyboardVerticalOffset={0}
-      >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'android' ? 'padding' : 'padding'}
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === 'android' ? 0 : 0}
+    >
+      <ViewContainerUI>
         {/* Header */}
         <View style={styles.header}>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
@@ -34,33 +31,36 @@ export default function EditarPerfilScreen() {
           <TextUI variant="semibold" style={styles.headerTitle}>
             Meu Perfil
           </TextUI>
-          <View style={styles.placeholder} />
+          <Pressable onPress={handleSave} disabled={!nome.trim()}>
+            <TextUI 
+              variant="semibold" 
+              style={[
+                styles.saveButton,
+                !nome.trim() && styles.saveButtonDisabled
+              ]}
+            >
+              SALVAR
+            </TextUI>
+          </Pressable>
         </View>
 
-        {/* Conteúdo */}
-        <View style={styles.content}>
-          <TextUI variant="semibold" style={styles.label}>
-            Nome
-          </TextUI>
-          <InputUI
-            placeholder=""
-            value={nome}
-            onChangeText={setNome}
-            borderColor={nome.trim() ? 'success' : null}
-          />
-        </View>
 
-        {/* Botão Salvar */}
-        <View style={[styles.buttonContainer, { paddingBottom: Math.max(insets.bottom, 20) }]}>
-          <ButtonUI
-            title="Salvar Alterações"
-            onPress={handleSave}
-            variant="primary"
-            disabled={!nome.trim()}
-          />
-        </View>
-      </KeyboardAvoidingView>
-    </ViewContainerUI>
+         {/* Conteúdo */}
+         <View style={styles.content}>
+           <View style={styles.inputContainer}>
+             <TextUI variant="semibold" style={styles.label}>
+               Nome
+             </TextUI>
+             <InputUI
+               placeholder=""
+               value={nome}
+               onChangeText={setNome}
+               borderColor={nome.trim() ? 'success' : null}
+             />
+           </View>
+         </View>
+      </ViewContainerUI>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -86,19 +86,24 @@ const styles = StyleSheet.create({
   placeholder: {
     width: 32,
   },
+  saveButton: {
+    fontSize: 16,
+    color: Colors.light.primary,
+  },
+  saveButtonDisabled: {
+    opacity: 0.3,
+  },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
     paddingTop: 40,
+  },
+  inputContainer: {
+    paddingHorizontal: 20,
   },
   label: {
     fontSize: 16,
     color: Colors.light.mainText,
     marginBottom: 12,
-  },
-  buttonContainer: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
   },
 });
 

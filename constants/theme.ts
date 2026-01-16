@@ -12,7 +12,7 @@ export const Colors = {
     success: '#43B726',
     interface: '#186DDD',
     warning: '#F7DE00',
-    danger: '#E23D24',
+    danger: '#FF6D92',
     mainText: '#010F07',
     bodyText: '#757575',
     white: '#FFFFFF',
