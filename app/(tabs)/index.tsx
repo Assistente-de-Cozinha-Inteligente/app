@@ -1,3 +1,4 @@
+import { CronometroOferta } from '@/components/cronometro-oferta';
 import { ReceitaSlider } from '@/components/receita-slider';
 import { ReceitaSliderFazer } from '@/components/receita-slider-fazer';
 import { PageHeader } from '@/components/ui/page-header';
@@ -7,8 +8,8 @@ import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Pressable, View } from 'react-native';
 import { router } from 'expo-router';
+import { Pressable, View } from 'react-native';
 
 export default function HomeScreen() {
   const receitasFazer = [
@@ -72,7 +73,7 @@ export default function HomeScreen() {
   ];
 
   return (
-    <ViewContainerUI>
+    <ViewContainerUI isTabBar={true}>
 
       <PageHeader
         style={{
@@ -88,6 +89,12 @@ export default function HomeScreen() {
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
+                <SectionUI title="" style={{
+          paddingHorizontal: 20,
+          marginBottom: 20,
+        }}>
+          <CronometroOferta variant="compact" />
+        </SectionUI>
         <SectionUI title="Sugestão rápida" style={{
           paddingHorizontal: 20,
         }}>
@@ -121,6 +128,7 @@ export default function HomeScreen() {
             </Pressable>
           </View>
         </SectionUI>
+
       </ScrollViewWithPadding>
     </ViewContainerUI>
   );
