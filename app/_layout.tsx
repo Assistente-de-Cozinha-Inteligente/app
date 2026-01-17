@@ -46,7 +46,7 @@ const theme = {
 
 function RootLayoutNav() {
   const pathname = usePathname();
-  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada';
+  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada' && pathname !== '/paywall' && pathname !== '/login' && pathname !== '/registro' && pathname !== '/resetar-senha';
 
   return (
     <>
@@ -57,6 +57,10 @@ function RootLayoutNav() {
         <Stack.Screen name="receita/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="chat" options={{ headerShown: false }} />
         <Stack.Screen name="oferta-limitada" options={{ headerShown: false }} />
+        <Stack.Screen name="paywall" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="registro" options={{ headerShown: false }} />
+        <Stack.Screen name="resetar-senha" options={{ headerShown: false }} />
       </Stack>
       {shouldShowChatbot && (
         <FloatingChatbotButton />
