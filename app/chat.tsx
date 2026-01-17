@@ -1,6 +1,6 @@
 import { ChatMessage } from '@/components/chat-message';
-import { ChatRecipeCard } from '@/components/chat-recipe-card';
 import { ChatTypingIndicator } from '@/components/chat-typing-indicator';
+import { ReceitaSliderCompacto } from '@/components/receita-slider-compacto';
 import { ButtonUI } from '@/components/ui/button';
 import { InputUI } from '@/components/ui/input';
 import { TextUI } from '@/components/ui/text';
@@ -21,7 +21,11 @@ type Message = {
     recipes?: Array<{
         id: string;
         imageUri: string;
+        category: string;
         title: string;
+        time: string;
+        servings: string;
+        status?: string;
     }>;
 };
 
@@ -59,7 +63,7 @@ export default function ChatScreen() {
     const handleSend = () => {
         if (message.trim() && !isProcessing) {
             setIsProcessing(true);
-            
+
             const userMessage: Message = {
                 id: Date.now().toString(),
                 text: message.trim(),
@@ -95,17 +99,29 @@ export default function ChatScreen() {
                         {
                             id: '1',
                             imageUri: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400',
+                            category: 'Japonesa',
                             title: 'Beef Ramen',
+                            time: '30 min',
+                            servings: '2 porções',
+                            status: 'Pode fazer',
                         },
                         {
                             id: '2',
                             imageUri: 'https://images.unsplash.com/photo-1555939594-58d7cb561b1e?w=400',
-                            title: 'Curry salmon...',
+                            category: 'Indiana',
+                            title: 'Curry Salmon',
+                            time: '25 min',
+                            servings: '2 porções',
+                            status: 'Pode fazer',
                         },
                         {
                             id: '3',
                             imageUri: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400',
-                            title: 'Cereal with sa...',
+                            category: 'Café da Manhã',
+                            title: 'Cereal com Frutas',
+                            time: '10 min',
+                            servings: '1 porção',
+                            status: 'Pode fazer',
                         },
                     ],
                 };
@@ -118,7 +134,7 @@ export default function ChatScreen() {
                 }, 100);
 
                 // Para a animação de escrita após o tempo necessário para escrever toda a mensagem
-                const typingDuration = aiMessage.text.length * 30; // 30ms por letra
+                const typingDuration = aiMessage.text.length * 60; // 60ms por letra (mais lenta)
                 setTimeout(() => {
                     setMessages((prev) =>
                         prev.map((msg) =>
@@ -128,7 +144,7 @@ export default function ChatScreen() {
                     // Libera os botões após terminar de escrever
                     setIsProcessing(false);
                 }, typingDuration);
-            }, 2000); // 2 segundos de "digitando..."
+            }, 1500); // 2 segundos de "digitando..."
         }
     };
 
@@ -213,20 +229,19 @@ export default function ChatScreen() {
                                         />
                                         {msg.recipes && msg.recipes.length > 0 && !msg.isTyping && (
                                             <View style={styles.recipesContainer}>
-                                                <ScrollView
-                                                    horizontal
-                                                    showsHorizontalScrollIndicator={false}
-                                                    contentContainerStyle={styles.recipesScrollContent}
-                                                >
-                                                    {msg.recipes.map((recipe) => (
-                                                        <ChatRecipeCard
-                                                            key={recipe.id}
-                                                            imageUri={recipe.imageUri}
-                                                            title={recipe.title}
-                                                            onPress={() => router.push(`/receita/${recipe.id}`)}
-                                                        />
-                                                    ))}
-                                                </ScrollView>
+                                                <View style={styles.recipesSliderWrapper}>
+                                                    <ReceitaSliderCompacto
+                                                        receitas={msg.recipes.map((recipe) => ({
+                                                            imageUri: recipe.imageUri,
+                                                            category: recipe.category,
+                                                            title: recipe.title,
+                                                            time: recipe.time,
+                                                            servings: recipe.servings,
+                                                            status: recipe.status,
+                                                            onPress: () => router.push(`/receita/${recipe.id}`),
+                                                        }))}
+                                                    />
+                                                </View>
                                             </View>
                                         )}
                                     </View>
@@ -256,6 +271,7 @@ export default function ChatScreen() {
                             containerStyle={styles.input}
                         />
                         <View style={styles.inputActions}>
+                            {/* 
                             <TouchableOpacity
                                 onPress={() => console.log('Microfone')}
                                 disabled={isProcessing}
@@ -270,7 +286,8 @@ export default function ChatScreen() {
                                     size={24}
                                     color={isProcessing ? Colors.light.bodyText : Colors.light.primary}
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity>                         
+                         */}
                             <TouchableOpacity
                                 onPress={handleSend}
                                 disabled={!message.trim() || isProcessing}
@@ -341,18 +358,21 @@ const styles = StyleSheet.create({
         marginTop: 12,
         marginBottom: 8,
     },
-    recipesScrollContent: {
-        paddingRight: 20,
+    recipesSliderWrapper: {
+        marginHorizontal: -20, // Compensa o paddingHorizontal do scrollContent
     },
     greetingContainer: {
         marginBottom: 32,
+        marginTop: 20,
     },
     greetingText: {
         fontSize: 24,
         color: Colors.light.mainText,
+        textAlign: 'center',
     },
     examplesSection: {
         marginTop: 8,
+        alignItems: 'center',
     },
     examplesHeader: {
         flexDirection: 'row',
@@ -366,10 +386,13 @@ const styles = StyleSheet.create({
     },
     examplesContainer: {
         gap: 12,
+        width: '100%',
+        alignItems: 'center',
     },
     exampleButton: {
         backgroundColor: Colors.light.white,
         borderRadius: 12,
+        width: '100%',
         paddingVertical: 14,
         paddingHorizontal: 16,
         borderWidth: 1,
@@ -378,6 +401,7 @@ const styles = StyleSheet.create({
     exampleText: {
         fontSize: 14,
         color: Colors.light.mainText,
+        textAlign: 'center',
     },
     inputWrapper: {
         flexDirection: 'row',

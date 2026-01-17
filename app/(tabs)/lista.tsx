@@ -119,7 +119,7 @@ export default function ListaScreen() {
   const suggestions = ['Arroz', 'Feijão', 'Ovos', 'Tomate', 'Cebola', 'Batata', 'Cenoura', 'Alho'];
 
   return (
-    <ViewContainerUI>
+    <ViewContainerUI isTabBar={true}>
       <PageHeader
         style={{
           marginBottom: 15,

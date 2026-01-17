@@ -27,7 +27,7 @@ export function ChatMessage({ message, sender, senderName, isTyping = false }: C
         const timer = setTimeout(() => {
           setDisplayedText(message.substring(0, currentIndex + 1));
           setCurrentIndex(currentIndex + 1);
-        }, 30); // Velocidade de digitação (30ms por letra)
+        }, 60); // Velocidade de digitação (60ms por letra - mais lenta)
 
         return () => clearTimeout(timer);
       }
