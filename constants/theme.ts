@@ -13,6 +13,7 @@ export const Colors = {
     interface: '#186DDD',
     warning: '#F7DE00',
     danger: '#FF6D92',
+    premium: '#FFA500',
     mainText: '#010F07',
     bodyText: '#757575',
     white: '#FFFFFF',
