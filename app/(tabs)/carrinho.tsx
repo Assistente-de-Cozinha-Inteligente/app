@@ -159,7 +159,7 @@ export default function CarrinhoScreen() {
   ];
 
   return (
-    <ViewContainerUI>
+    <ViewContainerUI isTabBar={true}>
 
       <PageHeader
         style={{

@@ -87,7 +87,7 @@ export default function ReceitasScreen() {
   ];
 
   return (
-    <ViewContainerUI>
+    <ViewContainerUI isTabBar={true}>
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
