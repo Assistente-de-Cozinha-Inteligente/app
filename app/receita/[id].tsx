@@ -1,5 +1,7 @@
 import { CardComoFazerReceita } from '@/components/card-como-fazer-receita';
+import { CardImpactoNutricional } from '@/components/card-impacto-nutricional';
 import { CardIngredienteReceita } from '@/components/card-ingrediente-receita';
+import { CardPontosAtencao } from '@/components/card-pontos-atencao';
 import { Badge } from '@/components/ui/badge';
 import { ButtonUI } from '@/components/ui/button';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
@@ -19,6 +21,7 @@ export default function ReceitaDetailScreen() {
     const insets = useSafeAreaInsets();
     const [scrolledPastImage, setScrolledPastImage] = useState(false);
     const scrollAnim = useRef(new Animated.Value(0)).current;
+    const userLoggedIn: number = 0; // 1 = logado/premium, 0 = não logado/gratuito
 
     // Dados mockados - você pode substituir por dados reais
     const receita = {
@@ -30,6 +33,17 @@ export default function ReceitaDetailScreen() {
         description: 'Uma receita simples, equilibrada e fácil de preparar.',
         difficulty: 'Fácil',
         categories: ['Rápida', 'Pouco esforço', 'Vegetariano'],
+        nutritional: {
+            calories: 320,
+            protein: 12,
+            carbs: 45,
+            fat: 8,
+        },
+        pontosAtencao: [
+            { id: '1', text: 'Alto teor de gordura', isPremium: false },
+            { id: '2', text: 'Alto teor de sódio', isPremium: true },
+            { id: '3', text: 'Contém glúten', isPremium: true },
+        ],
     };
 
     const handleShare = async () => {
@@ -47,6 +61,16 @@ export default function ReceitaDetailScreen() {
         }
     };
 
+    const handleSubstituirIngrediente = (ingredienteId: string) => {
+        console.log('Substituir ingrediente:', ingredienteId);
+        // Aqui você pode abrir um modal ou navegar para uma tela de substituição
+        Alert.alert(
+            'Substituir Ingrediente',
+            'Funcionalidade de substituição de ingredientes em desenvolvimento.',
+            [{ text: 'OK' }]
+        );
+    };
+
     return (
         <>
             <StatusBar style={scrolledPastImage ? 'dark' : 'light'} hidden={!scrolledPastImage} />
@@ -55,7 +79,7 @@ export default function ReceitaDetailScreen() {
                 <Animated.View style={[
                     styles.contentActions,
                     scrolledPastImage && styles.contentActionsScrolled,
-                    { 
+                    {
                         paddingTop: insets.top + 16,
                         backgroundColor: scrollAnim.interpolate({
                             inputRange: [0, 1],
@@ -81,8 +105,8 @@ export default function ReceitaDetailScreen() {
                             }}
                         >
                             {scrolledPastImage && (
-                                <TextUI 
-                                    variant="semibold" 
+                                <TextUI
+                                    variant="semibold"
                                     style={styles.contentActionsTitle}
                                     numberOfLines={1}
                                 >
@@ -121,16 +145,16 @@ export default function ReceitaDetailScreen() {
                         const scrollY = event.nativeEvent.contentOffset.y;
                         const threshold = 280;
                         const transitionRange = 50; // Range de transição suave
-                        
+
                         // Calcular valor animado baseado na posição do scroll
                         let animatedValue = 0;
                         if (scrollY > threshold - transitionRange) {
                             animatedValue = Math.min(1, (scrollY - (threshold - transitionRange)) / transitionRange);
                         }
-                        
+
                         // Atualizar valor animado diretamente para resposta imediata
                         scrollAnim.setValue(animatedValue);
-                        
+
                         // Atualizar estado apenas quando passar do threshold
                         const newScrolledPastImage = scrollY > threshold;
                         if (newScrolledPastImage !== scrolledPastImage) {
@@ -156,7 +180,10 @@ export default function ReceitaDetailScreen() {
                             />
                         </View>
                         <View style={styles.content}>
+                            {/* Título */}
                             <TextUI variant="medium" style={styles.title}>{receita.title}</TextUI>
+                            
+                            {/* Informações básicas */}
                             <View style={styles.infoContainer}>
                                 <View style={styles.infoItem}>
                                     <Ionicons name="time-outline" size={14} color={Colors.light.bodyText} />
@@ -179,33 +206,102 @@ export default function ReceitaDetailScreen() {
                                     </TextUI>
                                 </View>
                             </View>
-                            <TextUI variant="regular" style={styles.description}>
-                                {receita.description}
-                            </TextUI>
-                            
+
                             {/* Badges de categorias */}
                             <View style={styles.badgesContainer}>
                                 {receita.categories.map((category: string, index: number) => (
                                     <Badge key={index} label={category} />
                                 ))}
                             </View>
-                            
-                            <SectionUI title="Ingredientes">
+
+                            {/* Descrição */}
+                            <TextUI variant="regular" style={styles.description}>
+                                {receita.description}
+                            </TextUI>
+
+                            {/* Impacto Nutricional */}
+                            <CardImpactoNutricional
+                                nutritional={receita.nutritional}
+                                userLoggedIn={(userLoggedIn === 1 ? 1 : 0) as 0 | 1}
+                                onPremiumPress={() => console.log('Redirecionar para premium')}
+                            />
+
+                            {/* Pontos de atenção */}
+                            <SectionUI title="Pontos de atenção" style={{ marginTop: 24 }}>
+                                <CardPontosAtencao
+                                    pontos={receita.pontosAtencao}
+                                    userLoggedIn={(userLoggedIn === 1 ? 1 : 0) as 0 | 1}
+                                    onPremiumPress={() => console.log('Clicou')}
+                                />
+                            </SectionUI>
+
+                            <SectionUI 
+                                title="Ingredientes"
+                                rightButton={
+                                    (() => {
+                                        const ingredientes = [
+                                            { id: '1', name: 'Arroz cozido (Do dia anterior)', quantity: '2 xícaras', available: true },
+                                            { id: '2', name: 'Salsicha fatiada', quantity: '2 peças', available: false, canSubstitute: true },
+                                            { id: '3', name: 'Cebola picada', quantity: '1 unidade', available: false, canSubstitute: false },
+                                            { id: '4', name: 'Alho', quantity: '2 dentes', available: false, canSubstitute: true },
+                                            { id: '5', name: 'Azeite', quantity: '2 colheres', available: false },
+                                        ];
+                                        const hasSubstitutable = ingredientes.some(ing => !ing.available && ing.canSubstitute);
+                                        
+                                        if (!hasSubstitutable) return null;
+                                        
+                                        return (
+                                            <Pressable
+                                                onPress={() => {
+                                                    if (userLoggedIn === 1) {
+                                                        console.log('Abrir modal de substituição');
+                                                        handleSubstituirIngrediente('');
+                                                    } else {
+                                                        console.log('Redirecionar para premium');
+                                                    }
+                                                }}
+                                                style={({ pressed }) => [
+                                                    styles.substituirHeaderButton,
+                                                    pressed && styles.substituirHeaderButtonPressed
+                                                ]}
+                                            >
+                                                {userLoggedIn === 1 ? (
+                                                    <View style={styles.substituirHeaderContent}>
+                                                        <Ionicons name="swap-horizontal" size={18} color={Colors.light.primary} />
+                                                        <TextUI variant="semibold" style={styles.substituirHeaderText}>
+                                                            Substituir
+                                                        </TextUI>
+                                                    </View>
+                                                ) : (
+                                                    <View style={styles.substituirHeaderContent}>
+                                                        <Ionicons name="lock-closed" size={16} color={Colors.light.premium} />
+                                                        <TextUI variant="semibold" style={styles.substituirHeaderTextPremium}>
+                                                            Substituir
+                                                        </TextUI>
+                                                    </View>
+                                                )}
+                                            </Pressable>
+                                        );
+                                    })()
+                                }
+                            >
                                 <CardIngredienteReceita
                                     ingredientes={[
                                         { id: '1', name: 'Arroz cozido (Do dia anterior)', quantity: '2 xícaras', available: true },
-                                        { id: '2', name: 'Salsicha fatiada', quantity: '2 peças', available: false },
-                                        { id: '3', name: 'Salsicha fatiada', quantity: '2 peças', available: false },
-                                        { id: '4', name: 'Salsicha fatiada', quantity: '2 peças', available: false },
-                                        { id: '5', name: 'Salsicha fatiada', quantity: '2 peças', available: false },
+                                        { id: '2', name: 'Salsicha fatiada', quantity: '2 peças', available: false, canSubstitute: true },
+                                        { id: '3', name: 'Cebola picada', quantity: '1 unidade', available: false, canSubstitute: false },
+                                        { id: '4', name: 'Alho', quantity: '2 dentes', available: false, canSubstitute: true },
+                                        { id: '5', name: 'Azeite', quantity: '2 colheres', available: false },
                                     ]}
+                                    onSubstituirIngrediente={handleSubstituirIngrediente}
+                                    userLoggedIn={userLoggedIn}
                                 />
-                                <ButtonUI 
-                                    title="Adicionar faltantes à lista de compras" 
-                                    onPress={() => { }} 
-                                    variant="default" 
-                                    textStyle={styles.addToListButtonText} 
-                                    style={styles.addToListButton} 
+                                <ButtonUI
+                                    title="Adicionar faltantes à lista de compras"
+                                    onPress={() => { }}
+                                    variant="default"
+                                    textStyle={styles.addToListButtonText}
+                                    style={styles.addToListButton}
                                 />
                             </SectionUI>
                             <SectionUI title="Como fazer">
@@ -387,6 +483,27 @@ const styles = StyleSheet.create({
     addToListButtonText: {
         fontSize: 13,
         color: Colors.light.mainText,
+    },
+    substituirHeaderButton: {
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 8,
+    },
+    substituirHeaderButtonPressed: {
+        opacity: 0.7,
+    },
+    substituirHeaderContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    substituirHeaderText: {
+        fontSize: 14,
+        color: Colors.light.primary,
+    },
+    substituirHeaderTextPremium: {
+        fontSize: 14,
+        color: Colors.light.premium,
     },
 });
 
