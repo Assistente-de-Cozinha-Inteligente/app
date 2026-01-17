@@ -1,6 +1,8 @@
+import { CardPreferenciasIA } from '@/components/card-preferencias-ia';
 import { CronometroOferta } from '@/components/cronometro-oferta';
 import { ReceitaSlider } from '@/components/receita-slider';
 import { ReceitaSliderFazer } from '@/components/receita-slider-fazer';
+import { ButtonUI } from '@/components/ui/button';
 import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { SectionUI } from '@/components/ui/section';
@@ -89,12 +91,41 @@ export default function HomeScreen() {
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
-                <SectionUI title="" style={{
+        <SectionUI title="" style={{
           paddingHorizontal: 20,
           marginBottom: 20,
         }}>
           <CronometroOferta variant="compact" />
         </SectionUI>
+
+        <SectionUI title="" style={{
+          paddingHorizontal: 20,
+          marginBottom: 20,
+        }}>
+          <CardPreferenciasIA
+            preferencias={[
+              { id: '1', text: 'Você costuma preferir receitas rápidas.', icon: 'flash-outline' },
+              { id: '2', text: 'Você evita receitas com muitos passos.', icon: 'remove-circle-outline' },
+              { id: '3', text: 'Você usa frango com frequência.', icon: 'restaurant-outline' },
+            ]}
+          />
+        </SectionUI>
+
+        <ButtonUI title="PAGAR" onPress={() => router.push('/paywall')} style={{
+          marginHorizontal: 20,
+          marginBottom: 20,
+        }} />
+
+        <ButtonUI title="Login" onPress={() => router.push('/login')} style={{
+          marginHorizontal: 20,
+          marginBottom: 20,
+        }} />
+
+        <ButtonUI title="Registrar" onPress={() => router.push('/registro')} style={{
+          marginHorizontal: 20,
+          marginBottom: 20,
+        }} />
+
         <SectionUI title="Sugestão rápida" style={{
           paddingHorizontal: 20,
         }}>
