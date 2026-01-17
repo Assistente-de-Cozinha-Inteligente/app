@@ -1,5 +1,4 @@
 import { FloatingChatbotButton } from '@/components/ui/floating-chatbot-button';
-import { Colors } from '@/constants/theme';
 import {
   Poppins_100Thin,
   Poppins_100Thin_Italic,
@@ -41,13 +40,13 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: Colors.light.white,
+    background: '#FAFAFF', // Cor que combina com o gradiente do background
   },
 };
 
 function RootLayoutNav() {
   const pathname = usePathname();
-  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat';
+  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada';
 
   return (
     <>
@@ -57,6 +56,7 @@ function RootLayoutNav() {
         <Stack.Screen name="editar-perfil" options={{ headerShown: false }} />
         <Stack.Screen name="receita/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="chat" options={{ headerShown: false }} />
+        <Stack.Screen name="oferta-limitada" options={{ headerShown: false }} />
       </Stack>
       {shouldShowChatbot && (
         <FloatingChatbotButton />
@@ -96,7 +96,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('#ffffff');
+      NavigationBar.setBackgroundColorAsync('#FAFAFF'); // Cor que combina com o gradiente do background
       NavigationBar.setButtonStyleAsync('dark');
     }
   }, []);

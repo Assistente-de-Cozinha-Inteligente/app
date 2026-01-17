@@ -19,18 +19,18 @@ export function ButtonUI({
     style?: any;
     textStyle?: any;
 }) {
-    const backgroundColor = 
-        variant === 'primary' 
-            ? Colors.light.btnPrimary 
-            : variant === 'secondary' 
-            ? Colors.light.btnSecondary 
-            : variant === 'tertiary'
-            ? Colors.light.btnTertiary
-            : variant === 'danger'
-            ? Colors.light.danger
-            : Colors.light.white; // default: background branco
+    const backgroundColor =
+        variant === 'primary'
+            ? Colors.light.btnPrimary
+            : variant === 'secondary'
+                ? Colors.light.btnSecondary
+                : variant === 'tertiary'
+                    ? Colors.light.btnTertiary
+                    : variant === 'danger'
+                        ? Colors.light.danger
+                        : Colors.light.white; // default: background branco
 
-    const borderColor = variant === 'default' ? "#EBEBEB": 'transparent';
+    const borderColor = variant === 'default' ? "#EBEBEB" : 'transparent';
     const textColor = variant === 'default' ? Colors.light.mainText : Colors.light.white;
 
     const isDisabled = disabled || loading;
@@ -54,9 +54,9 @@ export function ButtonUI({
                 style
             ]}>
             {loading ? (
-                <ActivityIndicator 
-                    size="small" 
-                    color={textColor} 
+                <ActivityIndicator
+                    size="small"
+                    color={textColor}
                 />
             ) : (
                 <TextUI variant="semibold" style={[styles.buttonText, { color: textColor }, textStyle]}>
@@ -64,6 +64,7 @@ export function ButtonUI({
                 </TextUI>
             )}
         </TouchableOpacity>
+
     );
 }
 
