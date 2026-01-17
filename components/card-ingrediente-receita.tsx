@@ -10,16 +10,21 @@ type Ingrediente = {
   name: string;
   quantity: string;
   available: boolean; // true = checkmark verde, false = X vermelho
+  canSubstitute?: boolean; // true = tem opção de substituição, false/undefined = não tem
 };
 
 type CardIngredienteReceitaProps = {
   ingredientes: Ingrediente[];
   maxVisible?: number; // Número máximo de ingredientes visíveis antes de mostrar "Ver mais"
+  onSubstituirIngrediente?: (ingredienteId: string) => void;
+  userLoggedIn?: number; // 1 = logado/premium, 0 = não logado/gratuito
 };
 
 export function CardIngredienteReceita({
   ingredientes,
   maxVisible = 5,
+  onSubstituirIngrediente,
+  userLoggedIn = 0,
 }: CardIngredienteReceitaProps) {
   const [showAll, setShowAll] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -43,10 +48,10 @@ export function CardIngredienteReceita({
         const shouldShowOverlay = hasMore && !showAll && isLastVisible;
         const isNewItem = showAll && index >= maxVisible;
         const opacity = isNewItem ? fadeAnim : 1;
-        
+
         return (
-          <Animated.View 
-            key={ingrediente.id} 
+          <Animated.View
+            key={ingrediente.id}
             style={[styles.ingredientWrapper, { opacity }]}
           >
             <View style={styles.ingredientRow}>
@@ -83,6 +88,7 @@ export function CardIngredienteReceita({
                 </TextUI>
               </View>
             </View>
+
 
             {/* Linha separadora (exceto no último item) */}
             {index < visibleIngredientes.length - 1 && (
@@ -140,11 +146,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: 12,
   },
   ingredientName: {
     fontSize: 14,
     color: Colors.light.mainText,
     flex: 1,
+    minWidth: 0,
   },
   ingredientNameUnavailable: {
     opacity: 0.5,
@@ -155,7 +163,7 @@ const styles = StyleSheet.create({
   ingredientQuantity: {
     fontSize: 14,
     color: Colors.light.bodyText,
-    marginLeft: 8,
+    marginLeft: 'auto',
   },
   ingredientQuantityUnavailable: {
     opacity: 0.5,
