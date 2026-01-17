@@ -118,7 +118,10 @@ export default function ConfiguracoesScreen() {
               <Ionicons name="chevron-forward" size={20} color={Colors.light.bodyText} />
             </Pressable>
           ) : (
-            <Pressable style={styles.profileCard}>
+            <Pressable 
+              style={styles.profileCard}
+              onPress={() => router.push('/login')}
+            >
               <View style={styles.profileLeft}>
                 <View style={styles.avatarContainer}>
                   <Ionicons name="person-outline" size={32} color={Colors.light.bodyText} />
