@@ -228,21 +228,40 @@ export default function ChatScreen() {
                                             isTyping={msg.isTyping}
                                         />
                                         {msg.recipes && msg.recipes.length > 0 && !msg.isTyping && (
-                                            <View style={styles.recipesContainer}>
-                                                <View style={styles.recipesSliderWrapper}>
-                                                    <ReceitaSliderCompacto
-                                                        receitas={msg.recipes.map((recipe) => ({
-                                                            imageUri: recipe.imageUri,
-                                                            category: recipe.category,
-                                                            title: recipe.title,
-                                                            time: recipe.time,
-                                                            servings: recipe.servings,
-                                                            status: recipe.status,
-                                                            onPress: () => router.push(`/receita/${recipe.id}`),
-                                                        }))}
-                                                    />
+                                            <>
+                                                <View style={styles.recipesContainer}>
+                                                    <View style={styles.recipesSliderWrapper}>
+                                                        <ReceitaSliderCompacto
+                                                            receitas={msg.recipes.map((recipe) => ({
+                                                                imageUri: recipe.imageUri,
+                                                                category: recipe.category,
+                                                                title: recipe.title,
+                                                                time: recipe.time,
+                                                                servings: recipe.servings,
+                                                                status: recipe.status,
+                                                                onPress: () => router.push(`/receita/${recipe.id}`),
+                                                            }))}
+                                                        />
+                                                    </View>
                                                 </View>
-                                            </View>
+                                                <Pressable
+                                                    onPress={() => console.log('Redirecionar para premium')}
+                                                    style={({ pressed }) => [
+                                                        styles.premiumMessage,
+                                                        pressed && styles.premiumMessagePressed
+                                                    ]}
+                                                >
+                                                    <View style={styles.premiumMessageContent}>
+                                                        <Ionicons name="lock-closed" size={18} color={Colors.light.premium} />
+                                                        <View style={styles.premiumMessageTextContainer}>
+                                                            <TextUI variant="semibold" style={styles.premiumMessageText}>
+                                                                Ver análise completa no Premium
+                                                            </TextUI>
+                                                        </View>
+                                                        <Ionicons name="chevron-forward-outline" size={18} color={Colors.light.premium} />
+                                                    </View>
+                                                </Pressable>
+                                            </>
                                         )}
                                     </View>
                                 ))}
@@ -427,6 +446,49 @@ const styles = StyleSheet.create({
     },
     actionButtonDisabled: {
         opacity: 0.5,
+    },
+    premiumMessage: {
+        marginTop: 12,
+        marginBottom: 8,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 12,
+        backgroundColor: Colors.light.premium + '12',
+        borderWidth: 1,
+        borderColor: Colors.light.premium + '30',
+        alignSelf: 'flex-start',
+        shadowColor: Colors.light.premium,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    premiumMessagePressed: {
+        backgroundColor: Colors.light.premium + '20',
+        borderColor: Colors.light.premium + '50',
+        opacity: 0.95,
+    },
+    premiumMessageContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    premiumMessageTextContainer: {
+        flexDirection: 'row',
+        alignItems: 'baseline',
+        gap: 4,
+    },
+    premiumMessageText: {
+        fontSize: 14,
+        color: Colors.light.premium,
+    },
+    premiumMessageSubtext: {
+        fontSize: 12,
+        color: Colors.light.premium,
+        opacity: 0.8,
     },
 });
 
