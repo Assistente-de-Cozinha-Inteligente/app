@@ -292,7 +292,7 @@ export default function ConfiguracoesScreen() {
               value={dailySuggestions}
               onValueChange={setDailySuggestions}
             />
-          </View>
+    </View>
         </SectionUI>
 
         {/* Divisor */}
