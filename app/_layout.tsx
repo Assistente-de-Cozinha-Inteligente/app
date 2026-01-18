@@ -31,6 +31,7 @@ import { Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import "../global.css";
 import { initDatabase } from '@/data/local/initDatabase';
+import { useAppBackground } from '@/hooks/use-app-background';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -111,6 +112,12 @@ export default function RootLayout() {
 
     prepare();
   }, [fontsLoaded, fontError]);
+
+  useAppBackground(() => {
+    console.log(
+      `Agora vamos sincronizar lista e cozinha`
+    );
+  });
 
   useEffect(() => {
     if (Platform.OS === 'android') {
