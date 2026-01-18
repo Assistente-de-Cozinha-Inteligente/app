@@ -106,9 +106,10 @@ export default function OfertaLimitadaScreen() {
                                         Plano Premium
                                     </TextUI>
                                 </View>
+
                                 <View style={styles.badge}>
                                     <TextUI variant="bold" style={styles.badgeText}>
-                                        -57%
+                                        -31%
                                     </TextUI>
                                 </View>
                             </View>
@@ -116,15 +117,16 @@ export default function OfertaLimitadaScreen() {
                             <View style={styles.priceComparison}>
                                 <View style={styles.oldPriceContainer}>
                                     <TextUI variant="regular" style={styles.oldPrice}>
-                                        R$ 6,99
+                                        R$ 12,90
                                     </TextUI>
                                     <TextUI variant="regular" style={styles.oldPricePeriod}>
                                         /mês
                                     </TextUI>
                                 </View>
+
                                 <View style={styles.newPriceContainer}>
                                     <TextUI variant="bold" style={styles.newPrice}>
-                                        R$ 2,99
+                                        R$ 8,90
                                     </TextUI>
                                     <TextUI variant="regular" style={styles.newPricePeriod}>
                                         /mês
@@ -133,20 +135,22 @@ export default function OfertaLimitadaScreen() {
                             </View>
 
                             <View style={styles.priceInfo}>
-                                <View style={styles.priceInfoRow}>
-                                    <Ionicons name="checkmark-circle" size={16} color={Colors.light.white} />
-                                    <TextUI variant="regular" style={styles.priceInfoText}>
-                                        Válido por 6 meses
+                                <View style={styles.vitalicioContainer}>
+                                    <Ionicons name="infinite" size={18} color={Colors.light.white} />
+                                    <TextUI variant="bold" style={styles.vitalicioText}>
+                                        Preço especial mantido enquanto a assinatura estiver ativa
                                     </TextUI>
                                 </View>
+
                                 <View style={styles.priceInfoRow}>
                                     <Ionicons name="checkmark-circle" size={16} color={Colors.light.white} />
                                     <TextUI variant="semibold" style={styles.savingsText}>
-                                        Economia de R$ 24,00
+                                        Preço exclusivo para você
                                     </TextUI>
                                 </View>
                             </View>
                         </LinearGradient>
+
                     </View>
                 </Animated.View>
             </View>
@@ -332,7 +336,24 @@ const styles = StyleSheet.create({
         opacity: 0.9,
     },
     priceInfo: {
+        gap: 10,
+    },
+    vitalicioContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         gap: 8,
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+    },
+    vitalicioText: {
+        fontSize: 14,
+        color: Colors.light.white,
+        flex: 1,
+        lineHeight: 18,
     },
     priceInfoRow: {
         flexDirection: 'row',
