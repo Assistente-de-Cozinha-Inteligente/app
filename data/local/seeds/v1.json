@@ -1,0 +1,1246 @@
+{
+  "categorias": [
+    {
+      "id": 1,
+      "nome": "Rápida"
+    },
+    {
+      "id": 2,
+      "nome": "Pouco esforço"
+    },
+    {
+      "id": 3,
+      "nome": "Vegetariano"
+    },
+    {
+      "id": 4,
+      "nome": "Japonesa"
+    },
+    {
+      "id": 5,
+      "nome": "Saudável"
+    },
+    {
+      "id": 6,
+      "nome": "Italiana"
+    },
+    {
+      "id": 7,
+      "nome": "Proteína"
+    }
+  ],
+  "ingredientes": [
+    {
+      "id": 1,
+      "nome": "Arroz cozido",
+      "categoria": "grao"
+    },
+    {
+      "id": 2,
+      "nome": "Salsicha",
+      "categoria": "proteina"
+    },
+    {
+      "id": 3,
+      "nome": "Cebola",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 4,
+      "nome": "Alho",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 5,
+      "nome": "Azeite",
+      "categoria": "outro"
+    },
+    {
+      "id": 6,
+      "nome": "Óleo vegetal",
+      "categoria": "outro"
+    },
+    {
+      "id": 7,
+      "nome": "Molho de soja",
+      "categoria": "outro"
+    },
+    {
+      "id": 8,
+      "nome": "Vinagre de arroz",
+      "categoria": "outro"
+    },
+    {
+      "id": 9,
+      "nome": "Açúcar",
+      "categoria": "outro"
+    },
+    {
+      "id": 10,
+      "nome": "Gergelim",
+      "categoria": "outro"
+    },
+    {
+      "id": 11,
+      "nome": "Cebolinha",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 12,
+      "nome": "Pimenta",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 13,
+      "nome": "Cenoura",
+      "categoria": "legume"
+    },
+    {
+      "id": 14,
+      "nome": "Alface",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 15,
+      "nome": "Croutons",
+      "categoria": "outro"
+    },
+    {
+      "id": 16,
+      "nome": "Queijo parmesão",
+      "categoria": "outro"
+    },
+    {
+      "id": 17,
+      "nome": "Limão",
+      "categoria": "fruta"
+    },
+    {
+      "id": 18,
+      "nome": "Mostarda",
+      "categoria": "outro"
+    },
+    {
+      "id": 19,
+      "nome": "Ovo",
+      "categoria": "proteina"
+    },
+    {
+      "id": 20,
+      "nome": "Peito de frango",
+      "categoria": "proteina"
+    },
+    {
+      "id": 21,
+      "nome": "Sal",
+      "categoria": "outro"
+    },
+    {
+      "id": 22,
+      "nome": "Pimenta do reino",
+      "categoria": "outro"
+    },
+    {
+      "id": 23,
+      "nome": "Tomate",
+      "categoria": "fruta"
+    },
+    {
+      "id": 24,
+      "nome": "Abobrinha",
+      "categoria": "legume"
+    },
+    {
+      "id": 25,
+      "nome": "Arroz arbóreo",
+      "categoria": "grao"
+    },
+    {
+      "id": 26,
+      "nome": "Cogumelos",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 27,
+      "nome": "Caldo de legumes",
+      "categoria": "bebida"
+    },
+    {
+      "id": 28,
+      "nome": "Vinho branco",
+      "categoria": "bebida"
+    },
+    {
+      "id": 29,
+      "nome": "Manteiga",
+      "categoria": "outro"
+    },
+    {
+      "id": 30,
+      "nome": "Queijo parmesão ralado",
+      "categoria": "outro"
+    },
+    {
+      "id": 31,
+      "nome": "Salsinha",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 32,
+      "nome": "Manjericão",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 33,
+      "nome": "Orégano",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 34,
+      "nome": "Alecrim",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 35,
+      "nome": "Tomilho",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 36,
+      "nome": "Coentro",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 37,
+      "nome": "Batata",
+      "categoria": "legume"
+    },
+    {
+      "id": 38,
+      "nome": "Batata doce",
+      "categoria": "legume"
+    },
+    {
+      "id": 39,
+      "nome": "Mandioquinha",
+      "categoria": "legume"
+    },
+    {
+      "id": 40,
+      "nome": "Mandioca",
+      "categoria": "legume"
+    },
+    {
+      "id": 41,
+      "nome": "Milho",
+      "categoria": "grao"
+    },
+    {
+      "id": 42,
+      "nome": "Ervilha",
+      "categoria": "grao"
+    },
+    {
+      "id": 43,
+      "nome": "Lentilha",
+      "categoria": "grao"
+    },
+    {
+      "id": 44,
+      "nome": "Feijão carioca",
+      "categoria": "grao"
+    },
+    {
+      "id": 45,
+      "nome": "Feijão preto",
+      "categoria": "grao"
+    },
+    {
+      "id": 46,
+      "nome": "Grão de bico",
+      "categoria": "grao"
+    },
+    {
+      "id": 47,
+      "nome": "Carne bovina",
+      "categoria": "proteina"
+    },
+    {
+      "id": 48,
+      "nome": "Carne moída",
+      "categoria": "proteina"
+    },
+    {
+      "id": 49,
+      "nome": "Costela bovina",
+      "categoria": "proteina"
+    },
+    {
+      "id": 50,
+      "nome": "Linguiça",
+      "categoria": "proteina"
+    },
+    {
+      "id": 51,
+      "nome": "Bacon",
+      "categoria": "proteina"
+    },
+    {
+      "id": 52,
+      "nome": "Presunto",
+      "categoria": "proteina"
+    },
+    {
+      "id": 53,
+      "nome": "Peito de peru",
+      "categoria": "proteina"
+    },
+    {
+      "id": 54,
+      "nome": "Peixe",
+      "categoria": "proteina"
+    },
+    {
+      "id": 55,
+      "nome": "Salmão",
+      "categoria": "proteina"
+    },
+    {
+      "id": 56,
+      "nome": "Atum",
+      "categoria": "proteina"
+    },
+    {
+      "id": 57,
+      "nome": "Camarão",
+      "categoria": "proteina"
+    },
+    {
+      "id": 58,
+      "nome": "Leite",
+      "categoria": "bebida"
+    },
+    {
+      "id": 59,
+      "nome": "Leite de coco",
+      "categoria": "bebida"
+    },
+    {
+      "id": 60,
+      "nome": "Creme de leite",
+      "categoria": "outro"
+    },
+    {
+      "id": 61,
+      "nome": "Requeijão",
+      "categoria": "outro"
+    },
+    {
+      "id": 62,
+      "nome": "Iogurte natural",
+      "categoria": "bebida"
+    },
+    {
+      "id": 63,
+      "nome": "Farinha de trigo",
+      "categoria": "grao"
+    },
+    {
+      "id": 64,
+      "nome": "Farinha de rosca",
+      "categoria": "grao"
+    },
+    {
+      "id": 65,
+      "nome": "Farinha de milho",
+      "categoria": "grao"
+    },
+    {
+      "id": 66,
+      "nome": "Aveia",
+      "categoria": "grao"
+    },
+    {
+      "id": 67,
+      "nome": "Pão francês",
+      "categoria": "grao"
+    },
+    {
+      "id": 68,
+      "nome": "Pão integral",
+      "categoria": "grao"
+    },
+    {
+      "id": 69,
+      "nome": "Macarrão",
+      "categoria": "grao"
+    },
+    {
+      "id": 70,
+      "nome": "Espaguete",
+      "categoria": "grao"
+    },
+    {
+      "id": 71,
+      "nome": "Lasagna",
+      "categoria": "grao"
+    },
+    {
+      "id": 72,
+      "nome": "Molho de tomate",
+      "categoria": "outro"
+    },
+    {
+      "id": 73,
+      "nome": "Extrato de tomate",
+      "categoria": "outro"
+    },
+    {
+      "id": 74,
+      "nome": "Ketchup",
+      "categoria": "outro"
+    },
+    {
+      "id": 75,
+      "nome": "Maionese",
+      "categoria": "outro"
+    },
+    {
+      "id": 76,
+      "nome": "Molho barbecue",
+      "categoria": "outro"
+    },
+    {
+      "id": 77,
+      "nome": "Mel",
+      "categoria": "outro"
+    },
+    {
+      "id": 78,
+      "nome": "Canela",
+      "categoria": "outro"
+    },
+    {
+      "id": 79,
+      "nome": "Noz moscada",
+      "categoria": "outro"
+    },
+    {
+      "id": 80,
+      "nome": "Chocolate",
+      "categoria": "outro"
+    },
+    {
+      "id": 81,
+      "nome": "Chocolate em pó",
+      "categoria": "outro"
+    },
+    {
+      "id": 82,
+      "nome": "Leite condensado",
+      "categoria": "outro"
+    },
+    {
+      "id": 83,
+      "nome": "Banana",
+      "categoria": "fruta"
+    },
+    {
+      "id": 84,
+      "nome": "Maçã",
+      "categoria": "fruta"
+    },
+    {
+      "id": 85,
+      "nome": "Pera",
+      "categoria": "fruta"
+    },
+    {
+      "id": 86,
+      "nome": "Uva",
+      "categoria": "fruta"
+    },
+    {
+      "id": 87,
+      "nome": "Morango",
+      "categoria": "fruta"
+    },
+    {
+      "id": 88,
+      "nome": "Abacaxi",
+      "categoria": "fruta"
+    },
+    {
+      "id": 89,
+      "nome": "Manga",
+      "categoria": "fruta"
+    },
+    {
+      "id": 90,
+      "nome": "Abacate",
+      "categoria": "fruta"
+    },
+    {
+      "id": 91,
+      "nome": "Coco",
+      "categoria": "fruta"
+    },
+    {
+      "id": 92,
+      "nome": "Pimentão",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 93,
+      "nome": "Brócolis",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 94,
+      "nome": "Couve-flor",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 95,
+      "nome": "Espinafre",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 96,
+      "nome": "Rúcula",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 97,
+      "nome": "Repolho",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 98,
+      "nome": "Pepino",
+      "categoria": "vegetal"
+    },
+    {
+      "id": 99,
+      "nome": "Beterraba",
+      "categoria": "legume"
+    },
+    {
+      "id": 100,
+      "nome": "Chuchu",
+      "categoria": "legume"
+    }
+  ],
+  "receitas": [
+    {
+      "id": 1,
+      "nome": "Sushi",
+      "descricao": "Uma receita simples, equilibrada e fácil de preparar.",
+      "imagem": "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
+      "tempo_minutos": 35,
+      "pessoas": 2,
+      "calorias": 320,
+      "proteinas": 12,
+      "carboidratos": 45,
+      "gorduras": 8,
+      "nivel": "facil"
+    },
+    {
+      "id": 2,
+      "nome": "Salada Caesar",
+      "descricao": "Uma salada clássica e refrescante, perfeita para qualquer refeição.",
+      "imagem": "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=550&h=360&fit=crop",
+      "tempo_minutos": 15,
+      "pessoas": 4,
+      "calorias": 280,
+      "proteinas": 8,
+      "carboidratos": 20,
+      "gorduras": 18,
+      "nivel": "facil"
+    },
+    {
+      "id": 3,
+      "nome": "Frango Grelhado com Legumes",
+      "descricao": "Uma refeição completa, nutritiva e saborosa, ideal para o dia a dia.",
+      "imagem": "https://images.unsplash.com/photo-1534939561126-855b8675edd7?w=550&h=360&fit=crop",
+      "tempo_minutos": 40,
+      "pessoas": 4,
+      "calorias": 350,
+      "proteinas": 35,
+      "carboidratos": 25,
+      "gorduras": 12,
+      "nivel": "medio"
+    },
+    {
+      "id": 4,
+      "nome": "Risotto de Cogumelos",
+      "descricao": "Um risotto cremoso e saboroso, perfeito para uma refeição especial.",
+      "imagem": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=550&h=360&fit=crop",
+      "tempo_minutos": 45,
+      "pessoas": 4,
+      "calorias": 420,
+      "proteinas": 12,
+      "carboidratos": 65,
+      "gorduras": 15,
+      "nivel": "medio"
+    }
+  ],
+  "receita_ingredientes": [
+    {
+      "id": 1,
+      "receita_id": 1,
+      "ingrediente_id": 1,
+      "quantidade": 400,
+      "unidade": "grama",
+      "observacao": "Do dia anterior"
+    },
+    {
+      "id": 2,
+      "receita_id": 1,
+      "ingrediente_id": 2,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "observacao": "Fatiada"
+    },
+    {
+      "id": 3,
+      "receita_id": 1,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "observacao": "Picada"
+    },
+    {
+      "id": 4,
+      "receita_id": 1,
+      "ingrediente_id": 4,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "observacao": "Dentes"
+    },
+    {
+      "id": 5,
+      "receita_id": 1,
+      "ingrediente_id": 6,
+      "quantidade": 15,
+      "unidade": "mililitro",
+      "observacao": "1 colher de sopa"
+    },
+    {
+      "id": 6,
+      "receita_id": 1,
+      "ingrediente_id": 7,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "observacao": null
+    },
+    {
+      "id": 7,
+      "receita_id": 1,
+      "ingrediente_id": 8,
+      "quantidade": 15,
+      "unidade": "mililitro",
+      "observacao": null
+    },
+    {
+      "id": 8,
+      "receita_id": 1,
+      "ingrediente_id": 9,
+      "quantidade": 5,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 9,
+      "receita_id": 1,
+      "ingrediente_id": 10,
+      "quantidade": 5,
+      "unidade": "grama",
+      "observacao": "Torrado"
+    },
+    {
+      "id": 10,
+      "receita_id": 1,
+      "ingrediente_id": 11,
+      "quantidade": 10,
+      "unidade": "grama",
+      "observacao": "Picada"
+    },
+    {
+      "id": 11,
+      "receita_id": 2,
+      "ingrediente_id": 14,
+      "quantidade": 200,
+      "unidade": "grama",
+      "observacao": "Lavada e picada"
+    },
+    {
+      "id": 12,
+      "receita_id": 2,
+      "ingrediente_id": 15,
+      "quantidade": 50,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 13,
+      "receita_id": 2,
+      "ingrediente_id": 16,
+      "quantidade": 30,
+      "unidade": "grama",
+      "observacao": "Ralado"
+    },
+    {
+      "id": 14,
+      "receita_id": 2,
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "observacao": null
+    },
+    {
+      "id": 15,
+      "receita_id": 2,
+      "ingrediente_id": 17,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "observacao": "Suco"
+    },
+    {
+      "id": 16,
+      "receita_id": 2,
+      "ingrediente_id": 18,
+      "quantidade": 5,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 17,
+      "receita_id": 2,
+      "ingrediente_id": 19,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "observacao": "Gema"
+    },
+    {
+      "id": 18,
+      "receita_id": 3,
+      "ingrediente_id": 20,
+      "quantidade": 600,
+      "unidade": "grama",
+      "observacao": "Cortado em filés"
+    },
+    {
+      "id": 19,
+      "receita_id": 3,
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "observacao": null
+    },
+    {
+      "id": 20,
+      "receita_id": 3,
+      "ingrediente_id": 21,
+      "quantidade": 5,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 21,
+      "receita_id": 3,
+      "ingrediente_id": 22,
+      "quantidade": 2,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 22,
+      "receita_id": 3,
+      "ingrediente_id": 23,
+      "quantidade": 300,
+      "unidade": "grama",
+      "observacao": "Cortado em cubos"
+    },
+    {
+      "id": 23,
+      "receita_id": 3,
+      "ingrediente_id": 24,
+      "quantidade": 300,
+      "unidade": "grama",
+      "observacao": "Cortada em rodelas"
+    },
+    {
+      "id": 24,
+      "receita_id": 3,
+      "ingrediente_id": 13,
+      "quantidade": 200,
+      "unidade": "grama",
+      "observacao": "Cortada em palitos"
+    },
+    {
+      "id": 25,
+      "receita_id": 3,
+      "ingrediente_id": 4,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "observacao": "Dentes picados"
+    },
+    {
+      "id": 26,
+      "receita_id": 4,
+      "ingrediente_id": 25,
+      "quantidade": 300,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 27,
+      "receita_id": 4,
+      "ingrediente_id": 26,
+      "quantidade": 400,
+      "unidade": "grama",
+      "observacao": "Variados, fatiados"
+    },
+    {
+      "id": 28,
+      "receita_id": 4,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "observacao": "Picada"
+    },
+    {
+      "id": 29,
+      "receita_id": 4,
+      "ingrediente_id": 4,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "observacao": "Dentes picados"
+    },
+    {
+      "id": 30,
+      "receita_id": 4,
+      "ingrediente_id": 27,
+      "quantidade": 1000,
+      "unidade": "mililitro",
+      "observacao": "Quente"
+    },
+    {
+      "id": 31,
+      "receita_id": 4,
+      "ingrediente_id": 28,
+      "quantidade": 100,
+      "unidade": "mililitro",
+      "observacao": null
+    },
+    {
+      "id": 32,
+      "receita_id": 4,
+      "ingrediente_id": 29,
+      "quantidade": 30,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 33,
+      "receita_id": 4,
+      "ingrediente_id": 30,
+      "quantidade": 50,
+      "unidade": "grama",
+      "observacao": null
+    },
+    {
+      "id": 34,
+      "receita_id": 4,
+      "ingrediente_id": 31,
+      "quantidade": 10,
+      "unidade": "grama",
+      "observacao": "Picada"
+    }
+  ],
+  "receita_ingrediente_substitutos": [
+    {
+      "id": 1,
+      "receita_ingrediente_id": 2,
+      "ingrediente_id": 2,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "observacao": "Pode substituir por linguiça"
+    },
+    {
+      "id": 2,
+      "receita_ingrediente_id": 4,
+      "ingrediente_id": 4,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "observacao": "Pode usar alho em pó"
+    }
+  ],
+  "receita_etapas": [
+    {
+      "id": 1,
+      "receita_id": 1,
+      "ordem": 1,
+      "titulo": "Preparação",
+      "tempo_minutos": 5
+    },
+    {
+      "id": 2,
+      "receita_id": 1,
+      "ordem": 2,
+      "titulo": "Cozinhando a linguiça",
+      "tempo_minutos": 5
+    },
+    {
+      "id": 3,
+      "receita_id": 1,
+      "ordem": 3,
+      "titulo": "Finalizando o prato",
+      "tempo_minutos": 10
+    },
+    {
+      "id": 4,
+      "receita_id": 2,
+      "ordem": 1,
+      "titulo": "Preparando o molho",
+      "tempo_minutos": 5
+    },
+    {
+      "id": 5,
+      "receita_id": 2,
+      "ordem": 2,
+      "titulo": "Montando a salada",
+      "tempo_minutos": 10
+    },
+    {
+      "id": 6,
+      "receita_id": 3,
+      "ordem": 1,
+      "titulo": "Temperando o frango",
+      "tempo_minutos": 10
+    },
+    {
+      "id": 7,
+      "receita_id": 3,
+      "ordem": 2,
+      "titulo": "Grelhando o frango",
+      "tempo_minutos": 15
+    },
+    {
+      "id": 8,
+      "receita_id": 3,
+      "ordem": 3,
+      "titulo": "Preparando os legumes",
+      "tempo_minutos": 15
+    },
+    {
+      "id": 9,
+      "receita_id": 4,
+      "ordem": 1,
+      "titulo": "Preparando os ingredientes",
+      "tempo_minutos": 10
+    },
+    {
+      "id": 10,
+      "receita_id": 4,
+      "ordem": 2,
+      "titulo": "Cozinhando o risotto",
+      "tempo_minutos": 25
+    },
+    {
+      "id": 11,
+      "receita_id": 4,
+      "ordem": 3,
+      "titulo": "Finalizando",
+      "tempo_minutos": 10
+    }
+  ],
+  "receita_etapa_tarefas": [
+    {
+      "id": 1,
+      "receita_etapa_id": 1,
+      "texto": "Cozinhe o arroz se não estiver usando arroz que sobrou.",
+      "descricao": "Cozinhe o arroz se não estiver usando arroz que sobrou."
+    },
+    {
+      "id": 2,
+      "receita_etapa_id": 1,
+      "texto": "Corte as salsichas em rodelas, pique o alho, pique a cebola, corte a pimenta em rodelas e corte a cenoura em cubos.",
+      "descricao": "Corte as salsichas em rodelas, pique o alho, pique a cebola, corte a pimenta em rodelas e corte a cenoura em cubos."
+    },
+    {
+      "id": 3,
+      "receita_etapa_id": 2,
+      "texto": "Aqueça 1 colher de sopa de óleo vegetal em uma frigideira grande ou wok em fogo médio-alto.",
+      "descricao": "Aqueça 1 colher de sopa de óleo vegetal em uma frigideira grande ou wok em fogo médio-alto."
+    },
+    {
+      "id": 4,
+      "receita_etapa_id": 2,
+      "texto": "Adicione as salsichas e cozinhe até dourar, cerca de 3-4 minutos.",
+      "descricao": "Adicione as salsichas e cozinhe até dourar, cerca de 3-4 minutos."
+    },
+    {
+      "id": 5,
+      "receita_etapa_id": 2,
+      "texto": "Adicione o alho e a cebola e refogue por 1 minuto até perfumar.",
+      "descricao": "Adicione o alho e a cebola e refogue por 1 minuto até perfumar."
+    },
+    {
+      "id": 6,
+      "receita_etapa_id": 3,
+      "texto": "Adicione o arroz cozido e misture bem.",
+      "descricao": "Adicione o arroz cozido e misture bem."
+    },
+    {
+      "id": 7,
+      "receita_etapa_id": 3,
+      "texto": "Tempere com molho de soja, vinagre de arroz e açúcar.",
+      "descricao": "Tempere com molho de soja, vinagre de arroz e açúcar."
+    },
+    {
+      "id": 8,
+      "receita_etapa_id": 3,
+      "texto": "Finalize com gergelim torrado e cebolinha picada.",
+      "descricao": "Finalize com gergelim torrado e cebolinha picada."
+    },
+    {
+      "id": 9,
+      "receita_etapa_id": 4,
+      "texto": "Em uma tigela pequena, misture a gema do ovo, o suco de limão, a mostarda e o azeite.",
+      "descricao": "Em uma tigela pequena, misture a gema do ovo, o suco de limão, a mostarda e o azeite."
+    },
+    {
+      "id": 10,
+      "receita_etapa_id": 4,
+      "texto": "Tempere com sal e pimenta do reino a gosto.",
+      "descricao": "Tempere com sal e pimenta do reino a gosto."
+    },
+    {
+      "id": 11,
+      "receita_etapa_id": 5,
+      "texto": "Lave e seque bem a alface, depois pique em pedaços médios.",
+      "descricao": "Lave e seque bem a alface, depois pique em pedaços médios."
+    },
+    {
+      "id": 12,
+      "receita_etapa_id": 5,
+      "texto": "Coloque a alface em uma saladeira grande e adicione os croutons.",
+      "descricao": "Coloque a alface em uma saladeira grande e adicione os croutons."
+    },
+    {
+      "id": 13,
+      "receita_etapa_id": 5,
+      "texto": "Regue com o molho e misture delicadamente.",
+      "descricao": "Regue com o molho e misture delicadamente."
+    },
+    {
+      "id": 14,
+      "receita_etapa_id": 5,
+      "texto": "Finalize com queijo parmesão ralado por cima.",
+      "descricao": "Finalize com queijo parmesão ralado por cima."
+    },
+    {
+      "id": 15,
+      "receita_etapa_id": 6,
+      "texto": "Tempere os filés de frango com sal, pimenta do reino e alho picado.",
+      "descricao": "Tempere os filés de frango com sal, pimenta do reino e alho picado."
+    },
+    {
+      "id": 16,
+      "receita_etapa_id": 6,
+      "texto": "Deixe marinar por pelo menos 10 minutos.",
+      "descricao": "Deixe marinar por pelo menos 10 minutos."
+    },
+    {
+      "id": 17,
+      "receita_etapa_id": 7,
+      "texto": "Aqueça uma grelha ou frigideira antiaderente em fogo médio-alto.",
+      "descricao": "Aqueça uma grelha ou frigideira antiaderente em fogo médio-alto."
+    },
+    {
+      "id": 18,
+      "receita_etapa_id": 7,
+      "texto": "Grelhe o frango por cerca de 6-7 minutos de cada lado até dourar e cozinhar completamente.",
+      "descricao": "Grelhe o frango por cerca de 6-7 minutos de cada lado até dourar e cozinhar completamente."
+    },
+    {
+      "id": 19,
+      "receita_etapa_id": 8,
+      "texto": "Corte os tomates, abobrinha e cenoura em pedaços uniformes.",
+      "descricao": "Corte os tomates, abobrinha e cenoura em pedaços uniformes."
+    },
+    {
+      "id": 20,
+      "receita_etapa_id": 8,
+      "texto": "Em uma frigideira grande, aqueça o azeite e refogue os legumes por 8-10 minutos até ficarem macios.",
+      "descricao": "Em uma frigideira grande, aqueça o azeite e refogue os legumes por 8-10 minutos até ficarem macios."
+    },
+    {
+      "id": 21,
+      "receita_etapa_id": 8,
+      "texto": "Tempere os legumes com sal e pimenta do reino.",
+      "descricao": "Tempere os legumes com sal e pimenta do reino."
+    },
+    {
+      "id": 22,
+      "receita_etapa_id": 9,
+      "texto": "Pique a cebola e o alho finamente.",
+      "descricao": "Pique a cebola e o alho finamente."
+    },
+    {
+      "id": 23,
+      "receita_etapa_id": 9,
+      "texto": "Lave e fatie os cogumelos.",
+      "descricao": "Lave e fatie os cogumelos."
+    },
+    {
+      "id": 24,
+      "receita_etapa_id": 9,
+      "texto": "Mantenha o caldo de legumes aquecido em uma panela separada.",
+      "descricao": "Mantenha o caldo de legumes aquecido em uma panela separada."
+    },
+    {
+      "id": 25,
+      "receita_etapa_id": 10,
+      "texto": "Em uma panela grande, derreta a manteiga e refogue a cebola até ficar transparente.",
+      "descricao": "Em uma panela grande, derreta a manteiga e refogue a cebola até ficar transparente."
+    },
+    {
+      "id": 26,
+      "receita_etapa_id": 10,
+      "texto": "Adicione o arroz e mexa por 2 minutos até os grãos ficarem levemente tostados.",
+      "descricao": "Adicione o arroz e mexa por 2 minutos até os grãos ficarem levemente tostados."
+    },
+    {
+      "id": 27,
+      "receita_etapa_id": 10,
+      "texto": "Adicione o vinho branco e mexa até evaporar.",
+      "descricao": "Adicione o vinho branco e mexa até evaporar."
+    },
+    {
+      "id": 28,
+      "receita_etapa_id": 10,
+      "texto": "Adicione os cogumelos e comece a adicionar o caldo quente, uma concha por vez, mexendo sempre.",
+      "descricao": "Adicione os cogumelos e comece a adicionar o caldo quente, uma concha por vez, mexendo sempre."
+    },
+    {
+      "id": 29,
+      "receita_etapa_id": 10,
+      "texto": "Continue adicionando caldo e mexendo até o arroz ficar cremoso e al dente (cerca de 18-20 minutos).",
+      "descricao": "Continue adicionando caldo e mexendo até o arroz ficar cremoso e al dente (cerca de 18-20 minutos)."
+    },
+    {
+      "id": 30,
+      "receita_etapa_id": 11,
+      "texto": "Retire do fogo e adicione a manteiga restante e o queijo parmesão ralado.",
+      "descricao": "Retire do fogo e adicione a manteiga restante e o queijo parmesão ralado."
+    },
+    {
+      "id": 31,
+      "receita_etapa_id": 11,
+      "texto": "Misture bem e finalize com salsinha picada.",
+      "descricao": "Misture bem e finalize com salsinha picada."
+    }
+  ],
+  "receita_pontos_atencao": [
+    {
+      "id": 1,
+      "receita_id": 1,
+      "descricao": "Alto teor de gordura"
+    },
+    {
+      "id": 2,
+      "receita_id": 1,
+      "descricao": "Alto teor de sódio"
+    },
+    {
+      "id": 3,
+      "receita_id": 1,
+      "descricao": "Contém glúten"
+    },
+    {
+      "id": 4,
+      "receita_id": 2,
+      "descricao": "Contém ovo cru"
+    },
+    {
+      "id": 5,
+      "receita_id": 2,
+      "descricao": "Contém lactose"
+    },
+    {
+      "id": 6,
+      "receita_id": 3,
+      "descricao": "Alto teor de proteína"
+    },
+    {
+      "id": 7,
+      "receita_id": 4,
+      "descricao": "Contém lactose"
+    },
+    {
+      "id": 8,
+      "receita_id": 4,
+      "descricao": "Contém álcool (vinho)"
+    }
+  ],
+  "receitas_categorias": [
+    {
+      "receita_id": 1,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 1,
+      "categoria_id": 2,
+      "principal": false
+    },
+    {
+      "receita_id": 1,
+      "categoria_id": 3,
+      "principal": false
+    },
+    {
+      "receita_id": 1,
+      "categoria_id": 4,
+      "principal": true
+    },
+    {
+      "receita_id": 2,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 2,
+      "categoria_id": 2,
+      "principal": true
+    },
+    {
+      "receita_id": 2,
+      "categoria_id": 5,
+      "principal": true
+    },
+    {
+      "receita_id": 3,
+      "categoria_id": 5,
+      "principal": true
+    },
+    {
+      "receita_id": 3,
+      "categoria_id": 7,
+      "principal": true
+    },
+    {
+      "receita_id": 4,
+      "categoria_id": 3,
+      "principal": true
+    },
+    {
+      "receita_id": 4,
+      "categoria_id": 6,
+      "principal": true
+    }
+  ]
+}
