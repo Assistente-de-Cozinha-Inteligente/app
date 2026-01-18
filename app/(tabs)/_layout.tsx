@@ -70,7 +70,7 @@ export default function TabLayout() {
           title: 'Lista',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons 
-              name={focused ? 'checkmark-done' : 'checkmark-done-outline'} 
+              name={focused ? 'list-sharp' : 'list-outline'} 
               size={26} 
               color={color} 
             />
