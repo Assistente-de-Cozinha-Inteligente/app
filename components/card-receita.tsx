@@ -6,29 +6,29 @@ import { TextUI } from './ui/text';
 
 // Função para determinar cor do status baseado no texto
 const getStatusColor = (status: string): { backgroundColor: string; textColor: string } => {
-  const statusLower = status.toLowerCase();
-  
-  // Status positivo - pode fazer
-  if (statusLower.includes('consegue fazer') || statusLower.includes('pode fazer') || statusLower.includes('pronto')) {
+    const statusLower = status.toLowerCase();
+
+    // Status positivo - pode fazer
+    if (statusLower.includes('consegue fazer') || statusLower.includes('pode fazer') || statusLower.includes('pronto')) {
+        return {
+            backgroundColor: 'rgba(76, 175, 80, 0.95)', // Verde
+            textColor: '#FFFFFF',
+        };
+    }
+
+    // Status de falta de ingredientes
+    if (statusLower.includes('falta') || statusLower.includes('faltam')) {
+        return {
+            backgroundColor: 'rgba(255, 193, 7, 0.95)', // Amarelo/Laranja
+            textColor: '#FFFFFF',
+        };
+    }
+
+    // Status neutro/outros
     return {
-      backgroundColor: 'rgba(76, 175, 80, 0.95)', // Verde
-      textColor: '#FFFFFF',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        textColor: Colors.light.bodyText,
     };
-  }
-  
-  // Status de falta de ingredientes
-  if (statusLower.includes('falta') || statusLower.includes('faltam')) {
-    return {
-      backgroundColor: 'rgba(255, 193, 7, 0.95)', // Amarelo/Laranja
-      textColor: '#FFFFFF',
-    };
-  }
-  
-  // Status neutro/outros
-  return {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    textColor: Colors.light.bodyText,
-  };
 };
 
 type CardReceitaProps = {
@@ -73,7 +73,6 @@ export function CardReceita({
                 locations={[0, 0.5, 1]}
                 style={styles.gradient}
             />
-
             {/* Botão de categoria no canto superior esquerdo */}
             <View style={styles.categoryButton}>
                 <TextUI variant="regular" style={styles.categoryText}>
