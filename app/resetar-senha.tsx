@@ -1,5 +1,5 @@
-import { InputUI } from '@/components/ui/input';
 import { ButtonUI } from '@/components/ui/button';
+import { InputUI } from '@/components/ui/input';
 import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
@@ -7,14 +7,14 @@ import { haptics } from '@/utils/haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { 
-  Animated, 
-  KeyboardAvoidingView, 
-  Platform, 
-  Pressable, 
-  ScrollView, 
-  StyleSheet, 
-  View 
+import {
+  Animated,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
