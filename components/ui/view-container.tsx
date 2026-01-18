@@ -17,8 +17,8 @@ export function ViewContainerUI({
             colors={['#FFF9F5', '#FFFFFF', '#F5F9FF']}
             locations={[0, 0.5, 1]}
             style={{
-                flex: 1,
-                paddingTop: insets.top,
+            flex: 1,
+            paddingTop: insets.top,
                 paddingBottom: isTabBar ? 0 : insets.bottom,
             }}
         >
