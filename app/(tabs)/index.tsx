@@ -9,8 +9,11 @@ import { SectionUI } from '@/components/ui/section';
 import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
+import { getOrCreateLocalUser } from '@/data/local/dao/usuarioDao';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFocusEffect } from 'expo-router';
 import { router } from 'expo-router';
+import { useEffect } from 'react';
 import { Pressable, View } from 'react-native';
 
 export default function HomeScreen() {
@@ -74,6 +77,11 @@ export default function HomeScreen() {
     },
   ];
 
+  useFocusEffect(() => {
+    const user = getOrCreateLocalUser().then((user) => {
+      console.log(user, "(<<<<<<<<< ID do usuário <<<<<<<<<)");
+    });
+  });
   return (
     <ViewContainerUI isTabBar={true}>
 
@@ -116,12 +124,12 @@ export default function HomeScreen() {
           marginBottom: 20,
         }} />
 
-        <ButtonUI title="Login" onPress={() => router.push('/login')} style={{
+        <ButtonUI title="Login" onPress={() => router.push('/login?modo=assinatura')} style={{
           marginHorizontal: 20,
           marginBottom: 20,
         }} />
 
-        <ButtonUI title="Registrar" onPress={() => router.push('/registro')} style={{
+        <ButtonUI title="Registrar" onPress={() => router.push('/registro?modo=assinatura')} style={{
           marginHorizontal: 20,
           marginBottom: 20,
         }} />
