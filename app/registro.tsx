@@ -6,7 +6,7 @@ import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { haptics } from '@/utils/haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -21,6 +21,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function RegistroScreen() {
   const insets = useSafeAreaInsets();
+  const { modo } = useLocalSearchParams<{ modo?: string }>();
+  const isModoAssinatura = modo === 'assinatura';
+  
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -138,10 +141,12 @@ export default function RegistroScreen() {
             {/* Título */}
             <View style={styles.titleContainer}>
               <TextUI variant="bold" style={styles.title}>
-                Criar conta
+                {isModoAssinatura ? 'Proteja sua assinatura' : 'Criar conta'}
               </TextUI>
               <TextUI variant="regular" style={styles.subtitle}>
-                Preencha os dados para começar
+                {isModoAssinatura 
+                  ? 'Crie uma conta para garantir acesso ao Premium em qualquer dispositivo.'
+                  : 'Preencha os dados para começar'}
               </TextUI>
             </View>
 
