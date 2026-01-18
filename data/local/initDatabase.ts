@@ -1,3 +1,5 @@
+import { deleteDatabaseAsync } from 'expo-sqlite';
+import { getOrCreateLocalUser } from './dao/usuarioDao';
 import { execAsync, getFirstAsync, openDatabase, runAsync } from './database';
 import seedV1 from './seeds/v1.json';
 import tabelasSchema from './tabelas.json';
@@ -57,9 +59,6 @@ export async function initDatabase(): Promise<void> {
       // Aplicar seeds
       await applySeeds();
 
-      // Executar migrations (se houver)
-      // await runMigrations();
-
       isInitialized = true;
       console.log('✅ Banco de dados inicializado com sucesso');
     } catch (error) {
@@ -102,9 +101,13 @@ async function createTables(): Promise<void> {
     console.log(`Criando tabela ${tableName}`);
     await createTable(tableName, columns);
     console.log(`✅ Tabela '${tableName}' criada com sucesso`);
+
+    if (tableName === 'usuario') {
+      //criar uuid
+      await getOrCreateLocalUser();
+    }
   }
 }
-
 /**
  * Cria uma tabela individual baseada no schema
  */
@@ -182,7 +185,7 @@ async function applySeed(version: number): Promise<void> {
   try {
     // Obtém os dados da seed do mapeamento
     const seedData = seedsMap[version];
-    
+
     if (!seedData) {
       console.log(`⏭️  Seed v${version} não encontrada, pulando...`);
       return;
@@ -252,4 +255,9 @@ async function applySeeds(): Promise<void> {
   }
 
   console.log('✅ Verificação de seeds concluída');
+}
+
+// Drop database (teste)
+export async function dropDatabase(): Promise<void> {
+  await deleteDatabaseAsync('app.db');
 }
