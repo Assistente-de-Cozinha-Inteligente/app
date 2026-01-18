@@ -127,17 +127,17 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
                             <View style={styles.compactPriceSection}>
                                 <View style={styles.compactPriceRow}>
                                     <TextUI variant="regular" style={styles.compactOldPrice}>
-                                        R$ 6,99
+                                        R$ 12,90
                                     </TextUI>
                                     <TextUI variant="bold" style={styles.compactNewPrice}>
-                                        R$ 2,99
+                                        R$ 8,90
                                     </TextUI>
                                     <TextUI variant="regular" style={styles.compactPricePeriod}>
                                         /mês
                                     </TextUI>
                                 </View>
                                 <TextUI variant="regular" style={styles.compactPriceSubtext}>
-                                    6 meses por R$ 2,99
+                                    Desconto vitalício enquanto mantiver assinatura
                                 </TextUI>
                             </View>
                             <Ionicons name="chevron-forward-outline" size={20} color={Colors.light.primary} />
