@@ -1,206 +1,185 @@
 {
-    "usuario": [
-      {
-        "id": "TEXT PRIMARY KEY",
-        "uuid": "TEXT NOT NULL",
-        "nome": "TEXT NOT NULL",
-        "email": "TEXT NOT NULL"
-      }
-    ],
-  
-    "perfis_usuario": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "usuario_id": "TEXT NOT NULL",
-        "nivel_cozinha": "TEXT CHECK (nivel_cozinha IN ('iniciante','intermediario','avancado','outro')) NOT NULL",
-        "receber_sugestao_dia": "BOOLEAN NOT NULL"
-      }
-    ],
-  
-    "perfil_restricoes_alimentares": [
-      {
-        "perfil_id": "INTEGER NOT NULL",
-        "restricao": "TEXT CHECK (restricao IN ('vegetariano','vegano','sem_gluten','sem_lactose','outro'))",
-        "PRIMARY KEY": "(perfil_id, restricao)"
-      }
-    ],
-  
-    "perfil_alergias": [
-      {
-        "perfil_id": "INTEGER NOT NULL",
-        "alergia": "TEXT CHECK (alergia IN ('lactose','gluten','amendoim','frutos_do_mar','ovos','soja','outro'))",
-        "PRIMARY KEY": "(perfil_id, alergia)"
-      }
-    ],
-  
-    "perfil_prioridades": [
-      {
-        "perfil_id": "INTEGER NOT NULL",
-        "prioridade": "TEXT CHECK (prioridade IN ('rapidez','economia','saude','sabor','outro'))",
-        "PRIMARY KEY": "(perfil_id, prioridade)"
-      }
-    ],
-  
-    "categorias": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "nome": "TEXT NOT NULL"
-      }
-    ],
-  
-    "ingredientes": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "nome": "TEXT NOT NULL",
-        "categoria": "TEXT CHECK (categoria IN ('proteina','vegetal','fruta','legume','grao','bebida','outro'))"
-      }
-    ],
-  
-    "receitas": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "nome": "TEXT NOT NULL",
-        "descricao": "TEXT NOT NULL",
-        "imagem": "TEXT NOT NULL",
-        "tempo_minutos": "INTEGER NOT NULL",
-        "pessoas": "INTEGER",
-        "calorias": "INTEGER",
-        "proteinas": "INTEGER",
-        "carboidratos": "INTEGER",
-        "gorduras": "INTEGER",
-        "nivel": "TEXT CHECK (nivel IN ('facil','medio','dificil')) NOT NULL"
-      }
-    ],
-  
-    "receita_ingredientes": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "receita_id": "INTEGER NOT NULL",
-        "ingrediente_id": "INTEGER NOT NULL",
-        "quantidade": "INTEGER NOT NULL",
-        "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
-        "observacao": "TEXT"
-      }
-    ],
-  
-    "receita_ingrediente_substitutos": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "receita_ingrediente_id": "INTEGER NOT NULL",
-        "ingrediente_id": "INTEGER NOT NULL",
-        "quantidade": "INTEGER NOT NULL",
-        "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
-        "observacao": "TEXT"
-      }
-    ],
-  
-    "receita_etapas": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "receita_id": "INTEGER NOT NULL",
-        "ordem": "INTEGER NOT NULL",
-        "titulo": "TEXT NOT NULL",
-        "tempo_minutos": "INTEGER NOT NULL"
-      }
-    ],
-  
-    "receita_etapa_tarefas": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "receita_etapa_id": "INTEGER NOT NULL",
-        "texto": "TEXT NOT NULL",
-        "descricao": "TEXT NOT NULL"
-      }
-    ],
-  
-    "receita_pontos_atencao": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "receita_id": "INTEGER NOT NULL",
-        "descricao": "TEXT NOT NULL"
-      }
-    ],
-  
-    "receitas_categorias": [
-      {
-        "receita_id": "INTEGER NOT NULL",
-        "categoria_id": "INTEGER NOT NULL",
-        "principal": "BOOLEAN NOT NULL",
-        "PRIMARY KEY": "(receita_id, categoria_id)"
-      }
-    ],
-  
-    "inventario": [
-      {
-        "usuario_id": "TEXT NOT NULL",
-        "ingrediente_id": "INTEGER NOT NULL",
-        "quantidade": "INTEGER NOT NULL",
-        "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
-        "validade": "DATE NOT NULL",
-        "local": "TEXT CHECK (local IN ('geladeira','freezer','armario','outro'))",
-        "PRIMARY KEY": "(usuario_id, ingrediente_id)"
-      }
-    ],
-  
-    "lista_compras": [
-      {
-        "usuario_id": "TEXT NOT NULL",
-        "ingrediente_id": "INTEGER NOT NULL",
-        "quantidade": "INTEGER NOT NULL",
-        "local": "TEXT CHECK (local IN ('geladeira','freezer','armario','outro'))",
-        "marcado": "BOOLEAN NOT NULL",
-        "PRIMARY KEY": "(usuario_id, ingrediente_id)"
-      }
-    ],
-  
-    "usuario_gostos": [
-      {
-        "id": "INTEGER PRIMARY KEY",
-        "usuario_id": "TEXT NOT NULL",
-        "atualizado_em": "INTEGER NOT NULL"
-      }
-    ],
-  
-    "usuario_categorias_favoritas": [
-      {
-        "usuario_gosto_id": "INTEGER NOT NULL",
-        "categoria_id": "INTEGER NOT NULL",
-        "peso": "INTEGER NOT NULL",
-        "PRIMARY KEY": "(usuario_gosto_id, categoria_id)"
-      }
-    ],
-  
-    "usuario_ingredientes_favoritos": [
-      {
-        "usuario_gosto_id": "INTEGER NOT NULL",
-        "ingrediente_id": "INTEGER NOT NULL",
-        "peso": "INTEGER NOT NULL",
-        "PRIMARY KEY": "(usuario_gosto_id, ingrediente_id)"
-      }
-    ],
-  
-    "usuario_ingredientes_evitados": [
-      {
-        "usuario_gosto_id": "INTEGER NOT NULL",
-        "ingrediente_id": "INTEGER NOT NULL",
-        "PRIMARY KEY": "(usuario_gosto_id, ingrediente_id)"
-      }
-    ],
-  
-    "app_config": [
-      {
-        "segmento": "TEXT CHECK (segmento IN ('free','premium'))",
-        "key": "TEXT NOT NULL",
-        "value": "TEXT NOT NULL",
-        "PRIMARY KEY": "(segmento, key)"
-      }
-    ],
-
-    "seeds_applied": [
-      {
-        "version": "INTEGER NOT NULL",
-        "data": "datetime NOT NULL"
-      }
-    ]
-  }
-  
+  "usuario": [
+    {
+      "id": "TEXT PRIMARY KEY",
+      "uuid": "TEXT",
+      "nome": "TEXT",
+      "email": "TEXT"
+    }
+  ],
+  "perfis_usuario": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "usuario_id": "TEXT NOT NULL",
+      "nivel_cozinha": "TEXT CHECK (nivel_cozinha IN ('iniciante','intermediario','avancado','outro')) NOT NULL",
+      "receber_sugestao_dia": "BOOLEAN NOT NULL"
+    }
+  ],
+  "perfil_restricoes_alimentares": [
+    {
+      "perfil_id": "INTEGER NOT NULL",
+      "restricao": "TEXT CHECK (restricao IN ('vegetariano','vegano','sem_gluten','sem_lactose','outro'))",
+      "PRIMARY KEY": "(perfil_id, restricao)"
+    }
+  ],
+  "perfil_alergias": [
+    {
+      "perfil_id": "INTEGER NOT NULL",
+      "alergia": "TEXT CHECK (alergia IN ('lactose','gluten','amendoim','frutos_do_mar','ovos','soja','outro'))",
+      "PRIMARY KEY": "(perfil_id, alergia)"
+    }
+  ],
+  "perfil_prioridades": [
+    {
+      "perfil_id": "INTEGER NOT NULL",
+      "prioridade": "TEXT CHECK (prioridade IN ('rapidez','economia','saude','sabor','outro'))",
+      "PRIMARY KEY": "(perfil_id, prioridade)"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "nome": "TEXT NOT NULL"
+    }
+  ],
+  "ingredientes": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "nome": "TEXT NOT NULL",
+      "categoria": "TEXT CHECK (categoria IN ('proteina','vegetal','fruta','legume','grao','bebida','outro'))"
+    }
+  ],
+  "receitas": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "nome": "TEXT NOT NULL",
+      "descricao": "TEXT NOT NULL",
+      "imagem": "TEXT NOT NULL",
+      "tempo_minutos": "INTEGER NOT NULL",
+      "pessoas": "INTEGER",
+      "calorias": "INTEGER",
+      "proteinas": "INTEGER",
+      "carboidratos": "INTEGER",
+      "gorduras": "INTEGER",
+      "nivel": "TEXT CHECK (nivel IN ('facil','medio','dificil')) NOT NULL"
+    }
+  ],
+  "receita_ingredientes": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "receita_id": "INTEGER NOT NULL",
+      "ingrediente_id": "INTEGER NOT NULL",
+      "quantidade": "INTEGER NOT NULL",
+      "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
+      "observacao": "TEXT"
+    }
+  ],
+  "receita_ingrediente_substitutos": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "receita_ingrediente_id": "INTEGER NOT NULL",
+      "ingrediente_id": "INTEGER NOT NULL",
+      "quantidade": "INTEGER NOT NULL",
+      "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
+      "observacao": "TEXT"
+    }
+  ],
+  "receita_etapas": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "receita_id": "INTEGER NOT NULL",
+      "ordem": "INTEGER NOT NULL",
+      "titulo": "TEXT NOT NULL",
+      "tempo_minutos": "INTEGER NOT NULL"
+    }
+  ],
+  "receita_etapa_tarefas": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "receita_etapa_id": "INTEGER NOT NULL",
+      "texto": "TEXT NOT NULL",
+      "descricao": "TEXT NOT NULL"
+    }
+  ],
+  "receita_pontos_atencao": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "receita_id": "INTEGER NOT NULL",
+      "descricao": "TEXT NOT NULL"
+    }
+  ],
+  "receitas_categorias": [
+    {
+      "receita_id": "INTEGER NOT NULL",
+      "categoria_id": "INTEGER NOT NULL",
+      "principal": "BOOLEAN NOT NULL",
+      "PRIMARY KEY": "(receita_id, categoria_id)"
+    }
+  ],
+  "inventario": [
+    {
+      "usuario_id": "TEXT NOT NULL",
+      "ingrediente_id": "INTEGER NOT NULL",
+      "quantidade": "INTEGER NOT NULL",
+      "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
+      "validade": "DATE NOT NULL",
+      "local": "TEXT CHECK (local IN ('geladeira','freezer','armario','outro'))",
+      "PRIMARY KEY": "(usuario_id, ingrediente_id)"
+    }
+  ],
+  "lista_compras": [
+    {
+      "usuario_id": "TEXT NOT NULL",
+      "ingrediente_id": "INTEGER NOT NULL",
+      "quantidade": "INTEGER NOT NULL",
+      "local": "TEXT CHECK (local IN ('geladeira','freezer','armario','outro'))",
+      "marcado": "BOOLEAN NOT NULL",
+      "PRIMARY KEY": "(usuario_id, ingrediente_id)",
+      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE"
+    }
+  ],
+  "usuario_gostos": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "usuario_id": "TEXT NOT NULL",
+      "atualizado_em": "INTEGER NOT NULL"
+    }
+  ],
+  "usuario_categorias_favoritas": [
+    {
+      "usuario_gosto_id": "INTEGER NOT NULL",
+      "categoria_id": "INTEGER NOT NULL",
+      "peso": "INTEGER NOT NULL",
+      "PRIMARY KEY": "(usuario_gosto_id, categoria_id)"
+    }
+  ],
+  "usuario_ingredientes_favoritos": [
+    {
+      "usuario_gosto_id": "INTEGER NOT NULL",
+      "ingrediente_id": "INTEGER NOT NULL",
+      "peso": "INTEGER NOT NULL",
+      "PRIMARY KEY": "(usuario_gosto_id, ingrediente_id)"
+    }
+  ],
+  "usuario_ingredientes_evitados": [
+    {
+      "usuario_gosto_id": "INTEGER NOT NULL",
+      "ingrediente_id": "INTEGER NOT NULL",
+      "PRIMARY KEY": "(usuario_gosto_id, ingrediente_id)"
+    }
+  ],
+  "app_config": [
+    {
+      "segmento": "TEXT CHECK (segmento IN ('free','premium'))",
+      "key": "TEXT NOT NULL",
+      "value": "TEXT NOT NULL",
+      "PRIMARY KEY": "(segmento, key)"
+    }
+  ],
+  "seeds_applied": [
+    {
+      "version": "INTEGER NOT NULL",
+      "data": "datetime NOT NULL"
+    }
+  ]
+}
