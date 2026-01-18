@@ -1,4 +1,5 @@
 import { FloatingChatbotButton } from '@/components/ui/floating-chatbot-button';
+
 import {
   Poppins_100Thin,
   Poppins_100Thin_Italic,
@@ -29,6 +30,7 @@ import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import "../global.css";
+import { initDatabase } from '@/data/local/initDatabase';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -52,14 +54,14 @@ function RootLayoutNav() {
     <>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="buscar" options={{ headerShown: false }} />
+        <Stack.Screen name="buscar" options={{ headerShown: false, animation: 'fade' }} />
         <Stack.Screen name="editar-perfil" options={{ headerShown: false }} />
-        <Stack.Screen name="receita/[id]" options={{ headerShown: false }} />
-        <Stack.Screen name="chat" options={{ headerShown: false }} />
+        <Stack.Screen name="receita/[id]" options={{ headerShown: false, animation: 'fade' }} />
+        <Stack.Screen name="chat" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="oferta-limitada" options={{ headerShown: false }} />
         <Stack.Screen name="paywall" options={{ headerShown: false }} />
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="registro" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
+        <Stack.Screen name="registro" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="resetar-senha" options={{ headerShown: false }} />
       </Stack>
       {shouldShowChatbot && (
@@ -93,9 +95,21 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
+    async function prepare() {
+      try {
+        await initDatabase(); // SQLite + migrations + FTS
+      } catch (e) {
+        console.error('Erro ao iniciar DB', e);
+      } finally {
+        await SplashScreen.hideAsync();
+      }
+
+      if (fontsLoaded || fontError) {
+        await SplashScreen.hideAsync();
+      }
     }
+
+    prepare();
   }, [fontsLoaded, fontError]);
 
   useEffect(() => {
