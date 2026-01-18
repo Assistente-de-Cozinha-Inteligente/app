@@ -13,14 +13,15 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useRef, useState } from 'react';
-import { Alert, Animated, Pressable, Share, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Pressable, Share, StyleSheet, View } from 'react-native';
+import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export default function ReceitaDetailScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const insets = useSafeAreaInsets();
     const [scrolledPastImage, setScrolledPastImage] = useState(false);
-    const scrollAnim = useRef(new Animated.Value(0)).current;
+    const scrollAnim = useSharedValue(0);
     const userLoggedIn: number = 0; // 1 = logado/premium, 0 = não logado/gratuito
 
     // Dados mockados - você pode substituir por dados reais
@@ -71,6 +72,39 @@ export default function ReceitaDetailScreen() {
         );
     };
 
+    // Estilos animados com react-native-reanimated
+    const headerAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            backgroundColor: interpolateColor(
+                scrollAnim.value,
+                [0, 1],
+                ['transparent', Colors.light.white]
+            ),
+        };
+    });
+
+    const whiteIconAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            opacity: interpolate(
+                scrollAnim.value,
+                [0, 1],
+                [1, 0]
+            ),
+        };
+    });
+
+    const darkIconAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            opacity: scrollAnim.value,
+        };
+    });
+
+    const titleAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            opacity: scrollAnim.value,
+        };
+    });
+
     return (
         <>
             <StatusBar style={scrolledPastImage ? 'dark' : 'light'} hidden={!scrolledPastImage} />
@@ -81,28 +115,25 @@ export default function ReceitaDetailScreen() {
                     scrolledPastImage && styles.contentActionsScrolled,
                     {
                         paddingTop: insets.top + 16,
-                        backgroundColor: scrollAnim.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: ['transparent', Colors.light.white],
-                        }),
-                    }
+                    },
+                    headerAnimatedStyle
                 ]}>
                     <View style={styles.contentActionsLeft}>
                         <Pressable onPress={() => router.back()}>
                             <View style={styles.iconContainer}>
-                                <Animated.View style={{ opacity: scrollAnim.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }) }}>
+                                <Animated.View style={[{ position: 'absolute' }, whiteIconAnimatedStyle]}>
                                     <Ionicons name="arrow-back" size={28} color="white" />
                                 </Animated.View>
-                                <Animated.View style={{ position: 'absolute', opacity: scrollAnim }}>
+                                <Animated.View style={[{ position: 'absolute' }, darkIconAnimatedStyle]}>
                                     <Ionicons name="arrow-back" size={28} color={Colors.light.mainText} />
                                 </Animated.View>
                             </View>
                         </Pressable>
                         <Animated.View
-                            style={{
-                                opacity: scrollAnim,
-                                flex: 1,
-                            }}
+                            style={[
+                                { flex: 1 },
+                                titleAnimatedStyle
+                            ]}
                         >
                             {scrolledPastImage && (
                                 <TextUI
@@ -118,20 +149,20 @@ export default function ReceitaDetailScreen() {
                     <View style={styles.contentActionsIcons}>
                         <Pressable>
                             <View style={styles.iconContainer}>
-                                <Animated.View style={{ opacity: scrollAnim.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }) }}>
+                                <Animated.View style={[{ position: 'absolute' }, whiteIconAnimatedStyle]}>
                                     <Ionicons name="heart-outline" size={28} color="white" />
                                 </Animated.View>
-                                <Animated.View style={{ position: 'absolute', opacity: scrollAnim }}>
+                                <Animated.View style={[{ position: 'absolute' }, darkIconAnimatedStyle]}>
                                     <Ionicons name="heart-outline" size={28} color={Colors.light.mainText} />
                                 </Animated.View>
                             </View>
                         </Pressable>
                         <Pressable onPress={handleShare}>
                             <View style={styles.iconContainer}>
-                                <Animated.View style={{ opacity: scrollAnim.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }) }}>
+                                <Animated.View style={[{ position: 'absolute' }, whiteIconAnimatedStyle]}>
                                     <Ionicons name="share-social-outline" size={28} color="white" />
                                 </Animated.View>
-                                <Animated.View style={{ position: 'absolute', opacity: scrollAnim }}>
+                                <Animated.View style={[{ position: 'absolute' }, darkIconAnimatedStyle]}>
                                     <Ionicons name="share-social-outline" size={28} color={Colors.light.mainText} />
                                 </Animated.View>
                             </View>
@@ -153,7 +184,7 @@ export default function ReceitaDetailScreen() {
                         }
 
                         // Atualizar valor animado diretamente para resposta imediata
-                        scrollAnim.setValue(animatedValue);
+                        scrollAnim.value = animatedValue;
 
                         // Atualizar estado apenas quando passar do threshold
                         const newScrolledPastImage = scrollY > threshold;
