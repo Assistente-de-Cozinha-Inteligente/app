@@ -126,7 +126,7 @@
       "ingrediente_id": "INTEGER NOT NULL",
       "quantidade": "INTEGER NOT NULL",
       "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
-      "validade": "INTEGER NOT NULL",
+      "validade": "INTEGER",
       "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE",
       "local": "TEXT CHECK (local IN ('frutas_vegetais','laticinios_queijos','carnes_peixes','padaria','graos_cereais','bebidas','congelados','outro'))",
       "atualizado_em": "INTEGER NOT NULL",
