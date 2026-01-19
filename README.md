@@ -1,5 +1,5 @@
 > ⚠️ **Achou alguma melhoria, bug ou aquela gambiarra que magicamente funciona?**  
-> Fique a vontade para abrir uma *issue* ou mandar um **pull request**.  
+> Fique à vontade para abrir uma *issue* ou mandar um **pull request**.  
 > Só não julgue tanto 😅😅😅
 
 ---
@@ -114,6 +114,23 @@ O login é opcional e serve para:
 
 ---
 
+## 💰 Por que Firebase?
+
+Este projeto utiliza **Firebase** por um motivo simples: **custo-benefício**.
+
+Manter uma API própria + servidor dedicado (ou cluster) **não faria sentido financeiramente** para este tipo de aplicativo, especialmente nas fases iniciais.
+
+O Firebase oferece:
+- 🔹 Baixo custo operacional
+- 🔹 Escalabilidade automática
+- 🔹 Backend pronto sem overhead de infra
+- 🔹 Bom suporte a apps mobile
+- 🔹 Excelente integração com apps offline-first
+
+Para o escopo do projeto, o Firebase é a **melhor escolha técnica e econômica**.
+
+---
+
 ## 🔐 Segurança e dados
 
 Este repositório é **público por design**, porque:
@@ -198,4 +215,4 @@ obrigado por se interessar pelo projeto 🙌
 ---
 
 > 😄 **Nota honesta:** sim, este README foi gerado com ajuda de IA para ficar bonito, organizado e legível.  
-> Se dependesse só de mim, provavelmente estaria funcional… porém bem feio
+> Se dependesse só de mim, provavelmente estaria funcional… porém bem feio 😅
