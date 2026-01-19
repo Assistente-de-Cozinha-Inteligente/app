@@ -114,18 +114,66 @@ O login é opcional e serve para:
 
 ---
 
+## 📦 Dados iniciais, seeders e funcionamento offline
+
+Desde o início, a proposta do app é ser **offline-first**.  
+Ou seja: ele precisa funcionar **mesmo sem internet**, inclusive no primeiro uso.
+
+### Como funciona
+
+Sempre que o usuário abre o app, ele verifica:
+
+- Se as tabelas/coleções locais já existem
+- Se os dados iniciais (seeders) já foram carregados
+- Se o app já foi inicializado corretamente naquele dispositivo
+
+Caso algo não exista, o app:
+- Carrega **dados iniciais diretamente do próprio app**
+- Usa arquivos JSON simples como base
+- Persiste esses dados localmente para uso offline
+
+---
+
+### Por que dados locais no app?
+
+- O app não pode depender de backend no primeiro uso
+- A experiência offline precisa ser completa
+- Os dados iniciais são **poucos, simples e controlados**
+- JSONs locais não impactam desempenho
+- O impacto no tamanho final do app é **irrelevante**
+
+✔️ Sem loading infinito  
+✔️ Sem dependência de rede  
+✔️ Sem experiência quebrada  
+
+---
+
+### Performance e tamanho do app
+
+Essa abordagem **não afeta performance**:
+
+- Os arquivos são pequenos
+- São carregados uma única vez
+- Ficam persistidos localmente
+- Não há processamento pesado em runtime
+
+> Prefiro carregar alguns KB a mais no app  
+> do que entregar uma experiência quebrada sem internet.
+
+---
+
 ## 💰 Por que Firebase?
 
 Este projeto utiliza **Firebase** por um motivo simples: **custo-benefício**.
 
-Manter uma API própria + servidor dedicado (ou cluster) **não faria sentido financeiramente** para este tipo de aplicativo, especialmente nas fases iniciais.
+Manter uma API própria + servidor dedicado **não faria sentido financeiramente** para este tipo de aplicativo, principalmente nas fases iniciais.
 
 O Firebase oferece:
 - 🔹 Baixo custo operacional
 - 🔹 Escalabilidade automática
-- 🔹 Backend pronto sem overhead de infra
-- 🔹 Bom suporte a apps mobile
-- 🔹 Excelente integração com apps offline-first
+- 🔹 Backend pronto sem overhead de infraestrutura
+- 🔹 Boa integração com apps mobile
+- 🔹 Excelente suporte a apps offline-first
 
 Para o escopo do projeto, o Firebase é a **melhor escolha técnica e econômica**.
 
