@@ -51,7 +51,7 @@ const theme = {
 
 function RootLayoutNav() {
   const pathname = usePathname();
-  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada' && pathname !== '/paywall' && pathname !== '/login' && pathname !== '/registro' && pathname !== '/resetar-senha' && pathname !== '/adicionar-item-lista';
+  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada' && pathname !== '/paywall' && pathname !== '/login' && pathname !== '/registro' && pathname !== '/resetar-senha' && pathname !== '/adicionar-item-lista' && pathname !== '/adicionar-item-inventario';
 
   return (
     <>
@@ -67,6 +67,7 @@ function RootLayoutNav() {
         <Stack.Screen name="registro" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="resetar-senha" options={{ headerShown: false }} />
         <Stack.Screen name="adicionar-item-lista" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
+        <Stack.Screen name="adicionar-item-inventario" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
       </Stack>
       {shouldShowChatbot && (
         <FloatingChatbotButton />
