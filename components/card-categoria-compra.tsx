@@ -1,25 +1,19 @@
 import { Colors } from '@/constants/theme';
+import { ListaCompras } from '@/models';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { TextUI } from './ui/text';
 
-type Item = {
-  id: string;
-  name: string;
-  quantity?: string;
-  checked?: boolean;
-};
-
 type CardCategoriaCompraProps = {
   category: string;
   icon?: keyof typeof Ionicons.glyphMap;
   iconColor?: string;
-  items: Item[];
-  onItemCheck?: (itemId: string, checked: boolean) => void;
-  onItemRemove?: (itemId: string) => void;
+  items: ListaCompras[];
+  onItemCheck?: (ingrediente_id: number, checked: boolean) => void;
+  onItemRemove?: (ingrediente_id: number) => void;
   onAddItem?: () => void;
-  onItemPress?: (item: Item) => void;
+  onItemPress?: (item: ListaCompras) => void;
 };
 
 export function CardCategoriaCompra({
@@ -38,12 +32,12 @@ export function CardCategoriaCompra({
     setIsExpanded(!isExpanded);
   };
 
-  const handleItemCheck = (itemId: string, checked: boolean) => {
-    onItemCheck?.(itemId, checked);
+  const handleItemCheck = (ingrediente_id: number, checked: boolean) => {
+    onItemCheck?.(ingrediente_id, checked);
   };
 
-  const handleItemRemove = (itemId: string) => {
-    onItemRemove?.(itemId);
+  const handleItemRemove = (ingrediente_id: number) => {
+    onItemRemove?.(ingrediente_id);
   };
 
   return (
@@ -52,7 +46,6 @@ export function CardCategoriaCompra({
       <Pressable
         onPress={handleToggleExpand}
         style={styles.header}
-        activeOpacity={0.7}
       >
         <View style={styles.headerLeft}>
           <View style={[styles.iconContainer, { backgroundColor: `${iconColor}15` }]}>
@@ -73,15 +66,15 @@ export function CardCategoriaCompra({
       {isExpanded && (
         <View style={styles.content}>
           {items.map((item) => (
-            <View key={item.id} style={styles.itemRow}>
+            <View key={`${item.usuario_id}-${item.ingrediente_id}`} style={styles.itemRow}>
               {/* Checkbox */}
               <TouchableOpacity
-                onPress={() => handleItemCheck(item.id, !item.checked)}
+                onPress={() => handleItemCheck(item.ingrediente_id, !item.marcado)}
                 style={styles.checkboxContainer}
                 activeOpacity={0.7}
               >
-                <View style={[styles.checkbox, item.checked && styles.checkboxChecked]}>
-                  {item.checked && (
+                <View style={[styles.checkbox, item.marcado && styles.checkboxChecked]}>
+                  {item.marcado && (
                     <Ionicons name="checkmark" size={14} color={Colors.light.white} />
                   )}
                 </View>
@@ -96,16 +89,18 @@ export function CardCategoriaCompra({
                   variant="regular"
                   style={[
                     styles.itemText,
-                    item.checked && styles.itemTextChecked,
+                    item.marcado && styles.itemTextChecked,
                   ]}
                 >
-                  {item.quantity ? `${item.quantity} ${item.name}` : item.name}
+                  {item.quantidade > 0 
+                    ? `${item.quantidade} ${item.ingrediente?.nome || 'Item'}` 
+                    : item.ingrediente?.nome || 'Item'}
                 </TextUI>
               </Pressable>
 
               {/* Ícone de lixeira */}
               <TouchableOpacity
-                onPress={() => handleItemRemove(item.id)}
+                onPress={() => handleItemRemove(item.ingrediente_id)}
                 style={styles.removeButton}
                 activeOpacity={0.7}
               >
@@ -115,7 +110,7 @@ export function CardCategoriaCompra({
           ))}
 
           {/* Botão Adicionar */}
-          <Pressable
+          <TouchableOpacity
             onPress={onAddItem}
             style={styles.addButton}
             activeOpacity={0.7}
@@ -123,7 +118,7 @@ export function CardCategoriaCompra({
             <TextUI variant="regular" style={styles.addButtonText}>
               + Adicionar
             </TextUI>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       )}
     </View>
