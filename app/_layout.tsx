@@ -21,13 +21,15 @@ import {
   Poppins_900Black_Italic,
 } from '@expo-google-fonts/poppins';
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
 import { Stack, usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import "../global.css";
 import { initDatabase } from '@/data/local/initDatabase';
@@ -49,7 +51,7 @@ const theme = {
 
 function RootLayoutNav() {
   const pathname = usePathname();
-  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada' && pathname !== '/paywall' && pathname !== '/login' && pathname !== '/registro' && pathname !== '/resetar-senha';
+  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada' && pathname !== '/paywall' && pathname !== '/login' && pathname !== '/registro' && pathname !== '/resetar-senha' && pathname !== '/adicionar-item-lista';
 
   return (
     <>
@@ -64,6 +66,7 @@ function RootLayoutNav() {
         <Stack.Screen name="login" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="registro" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="resetar-senha" options={{ headerShown: false }} />
+        <Stack.Screen name="adicionar-item-lista" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
       </Stack>
       {shouldShowChatbot && (
         <FloatingChatbotButton />
@@ -131,10 +134,20 @@ export default function RootLayout() {
   }
 
   return (
+    <GestureHandlerRootView style={styles.container}>
     <SafeAreaProvider>
+        <BottomSheetModalProvider>
       <ThemeProvider value={theme}>
         <RootLayoutNav />
       </ThemeProvider>
+        </BottomSheetModalProvider>
     </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
