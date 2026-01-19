@@ -14,7 +14,7 @@ import { getNomeLocal } from '@/utils/localHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, BackHandler, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function CarrinhoScreen() {
   const [listaCompras, setListaCompras] = useState<ListaCompras[]>([]);
@@ -33,7 +33,7 @@ export default function CarrinhoScreen() {
   // Agrupa itens por local
   const itensPorLocal = useMemo(() => {
     const grupos: Record<string, ListaCompras[]> = {};
-    
+
     listaCompras.forEach(item => {
       const local = item.local || 'outro';
       if (!grupos[local]) {
@@ -51,7 +51,7 @@ export default function CarrinhoScreen() {
       })
       .map(([local, itens]) => ({
         local: local as LocalIngrediente,
-        itens: itens.sort((a, b) => 
+        itens: itens.sort((a, b) =>
           (a.ingrediente?.nome || '').localeCompare(b.ingrediente?.nome || '')
         )
       }));
@@ -71,9 +71,9 @@ export default function CarrinhoScreen() {
   const toggleLocal = (local: string) => {
     const isExpanded = expandedLocals[local] ?? true;
     const newExpanded = !isExpanded;
-    
+
     setExpandedLocals(prev => ({ ...prev, [local]: newExpanded }));
-    
+
     const animValue = animations[local] || new Animated.Value(1);
     if (!animations[local]) {
       setAnimations(prev => ({ ...prev, [local]: animValue }));
@@ -101,7 +101,7 @@ export default function CarrinhoScreen() {
     setListaCompras(listaCompras.filter(item => item.ingrediente_id !== ingrediente_id));
 
     // Remove no banco (soft delete)
-    await excluirItemListaCompras(ingrediente_id);
+    await excluirItemListaCompras([ingrediente_id]);
   };
 
   const handleAddItem = () => {
@@ -140,16 +140,14 @@ export default function CarrinhoScreen() {
     try {
       // Guarda o número de itens antes de removê-los
       const quantidadeItens = itensMarcados.length;
-      
+
       // TODO: Implementar lógica para adicionar itens marcados ao inventário
       // Por enquanto, apenas remove os itens marcados da lista de compras
-      for (const item of itensMarcados) {
-        await excluirItemListaCompras(item.ingrediente_id);
-      }
+      await excluirItemListaCompras(itensMarcados.map(item => item.ingrediente_id));
 
       // Atualiza a lista local removendo os itens marcados
       setListaCompras(listaCompras.filter(item => !item.marcado));
-      
+
       // Mostra mensagem de sucesso
       setItensEnviadosCount(quantidadeItens);
       setShowSuccessMessage(true);
@@ -161,6 +159,20 @@ export default function CarrinhoScreen() {
   const handleShare = async () => {
     handleShareCarrinho(listaCompras || []);
   };
+
+  // Handler para o botão de voltar do Android
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Se o bottom sheet estiver aberto, fecha ele primeiro
+      if (editingItem) {
+        setEditingItem(null);
+        return true; // Previne o comportamento padrão (voltar para tela anterior)
+      }
+      return false; // Permite o comportamento padrão
+    });
+
+    return () => backHandler.remove();
+  }, [editingItem]);
 
   useFocusEffect(
     useCallback(() => {
@@ -213,7 +225,7 @@ export default function CarrinhoScreen() {
           {itensPorLocal.map(({ local, itens }) => {
             const isExpanded = expandedLocals[local] ?? true;
             const animValue = animations[local] || new Animated.Value(1);
-            
+
             // Calcula altura máxima baseada no número de itens
             // CardItemLista: paddingVertical (10*2) + marginBottom (6) + altura do conteúdo (~44) = ~70px
             // Adiciona margem extra para evitar corte
@@ -225,7 +237,7 @@ export default function CarrinhoScreen() {
             // Inclui o marginBottom do último item (6px) + espaço de segurança (10px)
             const extraSpace = 16;
             const maxHeight = (itens.length * itemHeight) + paddingVertical + extraSpace;
-            
+
             const contentHeight = animValue.interpolate({
               inputRange: [0, 1],
               outputRange: [0, maxHeight],
