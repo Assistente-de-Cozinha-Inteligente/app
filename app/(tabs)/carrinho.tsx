@@ -292,17 +292,15 @@ export default function CarrinhoScreen() {
       />
 
       {/* Bottom Sheet para editar item */}
-      {editingItem && editingItem.ingrediente && (
-        <BottomSheetEditarItemLista
-          item={{
-            ingrediente: editingItem.ingrediente,
-            quantidade: editingItem.quantidade,
-            unidade: editingItem.unidade,
-          }}
-          onClose={() => setEditingItem(null)}
-          onSave={handleSaveItem}
-        />
-      )}
+      <BottomSheetEditarItemLista
+        item={editingItem && editingItem.ingrediente ? {
+          ingrediente: editingItem.ingrediente,
+          quantidade: editingItem.quantidade,
+          unidade: editingItem.unidade,
+        } : null}
+        onClose={() => setEditingItem(null)}
+        onSave={handleSaveItem}
+      />
 
       <FloatingAddButton onPress={handleAddItem} />
     </ViewContainerUI>
