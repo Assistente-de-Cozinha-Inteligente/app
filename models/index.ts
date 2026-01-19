@@ -17,7 +17,7 @@ export type {
 export type { Categoria } from './categoria';
 
 // Ingrediente
-export type { CategoriaIngrediente, Ingrediente } from './ingrediente';
+export type { CategoriaIngrediente, LocalIngrediente, Ingrediente } from './ingrediente';
 
 // Receita
 export type {
