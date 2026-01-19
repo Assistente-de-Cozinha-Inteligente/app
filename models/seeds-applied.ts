@@ -1,5 +1,5 @@
 export type SeedsApplied = {
   version: number;
-  data: string; // datetime format
+  data: number; // INTEGER timestamp
 };
 
