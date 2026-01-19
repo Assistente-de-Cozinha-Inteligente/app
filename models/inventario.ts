@@ -1,4 +1,5 @@
 import { UnidadeMedida } from './receita';
+import { LocalIngrediente } from './ingrediente';
 
 export type LocalArmazenamento = 'geladeira' | 'freezer' | 'armario' | 'outro';
 
@@ -7,7 +8,10 @@ export type Inventario = {
   ingrediente_id: number;
   quantidade: number;
   unidade: UnidadeMedida;
-  validade: string; // DATE format
-  local: LocalArmazenamento;
+  validade: number; // INTEGER timestamp
+  precisa_sincronizar: boolean;
+  local?: LocalIngrediente;
+  atualizado_em?: number;
+  deletado_em?: number;
 };
 
