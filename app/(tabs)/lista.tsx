@@ -1,5 +1,4 @@
 import { CardCategoriaCozinha } from '@/components/card-categoria-cozinha';
-import { ModalAdicionarItemCozinha } from '@/components/modal-adicionar-item-cozinha';
 import { FloatingAddButton } from '@/components/ui/floating-add-button';
 import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
@@ -43,8 +42,6 @@ export default function ListaScreen() {
     },
   ]);
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [editingItem, setEditingItem] = useState<Item | null>(null);
 
   const handleItemCheck = (itemId: string, checked: boolean) => {
     setItems(items.map(item =>
@@ -57,35 +54,11 @@ export default function ListaScreen() {
   };
 
   const handleAddItem = () => {
-    setEditingItem(null);
-    setModalVisible(true);
+    // TODO: Implementar adição de item
   };
 
   const handleItemPress = (item: Item) => {
-    setEditingItem(item);
-    setModalVisible(true);
-  };
-
-  const handleSaveItem = (itemName: string, quantity: string, expirationDate?: string, location?: string) => {
-    if (editingItem) {
-      // Editar item existente
-      setItems(items.map(item =>
-        item.id === editingItem.id
-          ? { ...item, name: itemName, quantity, expirationDate, location }
-          : item
-      ));
-    } else {
-      // Adicionar novo item
-      const newItem: Item = {
-        id: Date.now().toString(),
-        name: itemName,
-        quantity,
-        checked: false,
-        expirationDate,
-        location,
-      };
-      setItems([...items, newItem]);
-    }
+    // TODO: Implementar edição de item
   };
 
   const handleShare = async () => {
@@ -116,7 +89,6 @@ export default function ListaScreen() {
     }
   };
 
-  const suggestions = ['Arroz', 'Feijão', 'Ovos', 'Tomate', 'Cebola', 'Batata', 'Cenoura', 'Alho'];
 
   return (
     <ViewContainerUI isTabBar={true}>
@@ -161,19 +133,6 @@ export default function ListaScreen() {
           />
         </SectionUI>
       </ScrollViewWithPadding>
-
-      <ModalAdicionarItemCozinha
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onSave={handleSaveItem}
-        initialItemName={editingItem?.name || ''}
-        initialQuantity={editingItem?.quantity || '1'}
-        initialExpirationDate={editingItem?.expirationDate || ''}
-        initialLocation={editingItem?.location || ''}
-        suggestions={suggestions}
-        locations={['Hortifruti', 'Bebidas', 'Carnes', 'Laticínios', 'Padaria', 'Limpeza', 'Outros']}
-        isEditing={!!editingItem}
-      />
 
       <FloatingAddButton onPress={handleAddItem} />
     </ViewContainerUI>
