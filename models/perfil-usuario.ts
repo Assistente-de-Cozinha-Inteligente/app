@@ -15,16 +15,16 @@ export type PerfilUsuario = {
 
 export type PerfilRestricaoAlimentar = {
   perfil_id: number;
-  restricao: RestricaoAlimentar;
+  restricao: RestricaoAlimentar | null;
 };
 
 export type PerfilAlergia = {
   perfil_id: number;
-  alergia: Alergia;
+  alergia: Alergia | null;
 };
 
 export type PerfilPrioridade = {
   perfil_id: number;
-  prioridade: Prioridade;
+  prioridade: Prioridade | null;
 };
 
