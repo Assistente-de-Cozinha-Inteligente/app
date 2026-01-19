@@ -162,9 +162,10 @@ async function seedApplied(version: number): Promise<boolean> {
  */
 async function markSeedApplied(version: number): Promise<void> {
   await runAsync(
-    `INSERT INTO seeds_applied (version, data) VALUES (?, datetime('now'))`,
-    version
+    `INSERT INTO seeds_applied (version, data) VALUES (?, ?)`,
+    [version, Date.now()]
   );
+
 }
 
 /**
