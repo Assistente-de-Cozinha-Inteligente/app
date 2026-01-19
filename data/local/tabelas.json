@@ -42,19 +42,23 @@
       "nome": "TEXT NOT NULL"
     }
   ],
+  "unidades": [
+    {
+      "id": "INTEGER PRIMARY KEY",
+      "nome": "TEXT NOT NULL"
+    }
+  ],
   "ingredientes": [
     {
       "id": "INTEGER PRIMARY KEY",
       "nome": "TEXT NOT NULL",
-      "categoria": "TEXT CHECK (categoria IN ('proteina','vegetal','fruta','legume','grao','bebida','outro'))"
+      "categoria": "TEXT CHECK (categoria IN ('legume','verdura','fruta','proteína','grão','laticíneo','tempero','óleo_gordura','bebida' , 'panificacao_massas',  'congelado')) NOT NULL",
+      "local": "TEXT CHECK (local IN ('frutas_vegetais','laticinios_queijos','carnes_peixes','padaria','graos_cereais','bebidas','congelados','outro'))"
     }
   ],
   "receitas": [
     {
       "id": "INTEGER PRIMARY KEY",
-      "nome": "TEXT NOT NULL",
-      "descricao": "TEXT NOT NULL",
-      "imagem": "TEXT NOT NULL",
       "tempo_minutos": "INTEGER NOT NULL",
       "pessoas": "INTEGER",
       "calorias": "INTEGER",
@@ -122,9 +126,11 @@
       "ingrediente_id": "INTEGER NOT NULL",
       "quantidade": "INTEGER NOT NULL",
       "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
-      "validade": "DATE NOT NULL",
-      "local": "TEXT CHECK (local IN ('geladeira','freezer','armario','outro'))",
-      "PRIMARY KEY": "(usuario_id, ingrediente_id)"
+      "validade": "INTEGER NOT NULL",
+      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE",
+      "local": "TEXT CHECK (local IN ('frutas_vegetais','laticinios_queijos','carnes_peixes','padaria','graos_cereais','bebidas','congelados','outro'))",
+      "atualizado_em": "INTEGER NOT NULL",
+      "deletado_em": "INTEGER"
     }
   ],
   "lista_compras": [
@@ -132,10 +138,12 @@
       "usuario_id": "TEXT NOT NULL",
       "ingrediente_id": "INTEGER NOT NULL",
       "quantidade": "INTEGER NOT NULL",
-      "local": "TEXT CHECK (local IN ('geladeira','freezer','armario','outro'))",
+      "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
       "marcado": "BOOLEAN NOT NULL",
-      "PRIMARY KEY": "(usuario_id, ingrediente_id)",
-      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE"
+      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE",
+      "local": "TEXT CHECK (local IN ('frutas_vegetais','laticinios_queijos','carnes_peixes','padaria','graos_cereais','bebidas','congelados','outro'))",
+      "atualizado_em": "INTEGER NOT NULL",
+      "deletado_em": "INTEGER"
     }
   ],
   "usuario_gostos": [
@@ -179,7 +187,7 @@
   "seeds_applied": [
     {
       "version": "INTEGER NOT NULL",
-      "data": "datetime NOT NULL"
+      "data": "INTEGER NOT NULL"
     }
   ]
 }
