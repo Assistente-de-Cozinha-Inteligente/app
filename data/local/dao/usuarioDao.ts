@@ -4,11 +4,12 @@ import { randomUUID } from 'expo-crypto';
 import { getDatabase, getFirstAsync } from '../database';
 import { dropDatabase } from '../initDatabase';
 
+const KEY_LOCAL_USER = 'localUser';
+
 export async function getOrCreateLocalUser(): Promise<Usuario | null> {
-    const key = 'localUser';
 
     // 1. Verificar se existe no AsyncStorage
-    const stored = await AsyncStorage.getItem(key);
+    const stored = await AsyncStorage.getItem(KEY_LOCAL_USER);
     if (stored) {
         const usuario = JSON.parse(stored) as Usuario;
         console.log(">>>>>>>>> Usuario encontrado no storage <<<<<<<<<");
@@ -27,7 +28,7 @@ export async function getOrCreateLocalUser(): Promise<Usuario | null> {
     );
     if (existingUser) {
         // Salvar no storage para próximas consultas
-        await AsyncStorage.setItem(key, JSON.stringify(existingUser));
+        await AsyncStorage.setItem(KEY_LOCAL_USER, JSON.stringify(existingUser));
         console.log(">>>>>>>>> Usuario encontrado no banco <<<<<<<<<");
         return existingUser;
     }
@@ -57,7 +58,7 @@ export async function getOrCreateLocalUser(): Promise<Usuario | null> {
     }
 
     // Salvar no storage
-    await AsyncStorage.setItem(key, JSON.stringify(newUser));
+    await AsyncStorage.setItem(KEY_LOCAL_USER, JSON.stringify(newUser));
 
     console.log(">>>>>>>>> Usuario criado com sucesso <<<<<<<<<");
     console.log(newUser);
@@ -67,6 +68,5 @@ export async function getOrCreateLocalUser(): Promise<Usuario | null> {
 
 
 export async function setLocalUserId(id: string) {
-    const key = 'localUserId';
-    await AsyncStorage.setItem(key, id);
+    await AsyncStorage.setItem(KEY_LOCAL_USER, id);
 }
