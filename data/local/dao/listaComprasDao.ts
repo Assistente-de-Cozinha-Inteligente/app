@@ -206,7 +206,7 @@ export async function atualizarQuantidadeUnidadeItemListaCompras(
  * Exclui um item da lista de compras (soft delete)
  * @param ingrediente_id ID do ingrediente a ser excluído
  */
-export async function excluirItemListaCompras(ingrediente_id: number): Promise<void> {
+export async function excluirItemListaCompras(ingrediente_ids: number[]): Promise<void> {
     const db = getDatabase();
     if (!db) {
         throw new Error("Banco de dados não inicializado");
@@ -220,17 +220,19 @@ export async function excluirItemListaCompras(ingrediente_id: number): Promise<v
     const agora = Date.now();
 
     // Atualiza o campo deletado_em para fazer soft delete
-    await db.runAsync(
-        `UPDATE ${TABLE_NAME}
+    for (const ingrediente_id of ingrediente_ids) {
+        await db.runAsync(
+            `UPDATE ${TABLE_NAME}
          SET deletado_em = ?, atualizado_em = ?, precisa_sincronizar = ?
          WHERE usuario_id = ? AND ingrediente_id = ? AND deletado_em IS NULL`,
-        [
-            agora,
-            agora,
-            1, // precisa_sincronizar = true para sincronizar a exclusão
-            usuario.id,
-            ingrediente_id
-        ]
-    );
+            [
+                agora,
+                agora,
+                1, // precisa_sincronizar = true para sincronizar a exclusão
+                usuario.id,
+                ingrediente_id
+            ]
+        );
+    }
 }
 
