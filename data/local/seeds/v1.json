@@ -29,637 +29,514 @@
       "nome": "Proteína"
     }
   ],
-  "unidades": [
-    {
-      "id": 1,
-      "nome": "grama"
-    },
-    {
-      "id": 2,
-      "nome": "kilograma"
-    },
-    {
-      "id": 3,
-      "nome": "litro"
-    },
-    {
-      "id": 4,
-      "nome": "mililitro"
-    },
-    {
-      "id": 5,
-      "nome": "unidade"
-    },
-    {
-      "id": 6,
-      "nome": "outro"
-    }
-  ],
   "ingredientes": [
     {
       "id": 1,
       "nome": "Arroz cozido",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 2,
       "nome": "Salsicha",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 3,
       "nome": "Cebola",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 4,
       "nome": "Alho",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 5,
       "nome": "Azeite",
-      "categoria": "óleo_gordura",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 6,
       "nome": "Óleo vegetal",
-      "categoria": "óleo_gordura",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 7,
       "nome": "Molho de soja",
-      "categoria": "bebida",
-      "local": "bebidas"
+      "categoria": "outro"
     },
     {
       "id": 8,
       "nome": "Vinagre de arroz",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "outro"
     },
     {
       "id": 9,
       "nome": "Açúcar",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 10,
       "nome": "Gergelim",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 11,
       "nome": "Cebolinha",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 12,
       "nome": "Pimenta",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 13,
       "nome": "Cenoura",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     },
     {
       "id": 14,
       "nome": "Alface",
-      "categoria": "verdura",
-      "local": "frutas_vegetais"
+      "categoria": "vegetal"
     },
     {
       "id": 15,
       "nome": "Croutons",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "outro"
     },
     {
       "id": 16,
       "nome": "Queijo parmesão",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "outro"
     },
     {
       "id": 17,
       "nome": "Limão",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 18,
       "nome": "Mostarda",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 19,
       "nome": "Ovo",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 20,
       "nome": "Peito de frango",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 21,
       "nome": "Sal",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 22,
       "nome": "Pimenta do reino",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 23,
       "nome": "Tomate",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 24,
       "nome": "Abobrinha",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     },
     {
       "id": 25,
       "nome": "Arroz arbóreo",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 26,
       "nome": "Cogumelos",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 27,
       "nome": "Caldo de legumes",
-      "categoria": "bebida",
-      "local": "bebidas"
+      "categoria": "bebida"
     },
     {
       "id": 28,
       "nome": "Vinho branco",
-      "categoria": "bebida",
-      "local": "bebidas"
+      "categoria": "bebida"
     },
     {
       "id": 29,
       "nome": "Manteiga",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "outro"
     },
     {
       "id": 30,
       "nome": "Queijo parmesão ralado",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "outro"
     },
     {
       "id": 31,
       "nome": "Salsinha",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 32,
       "nome": "Manjericão",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 33,
       "nome": "Orégano",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 34,
       "nome": "Alecrim",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 35,
       "nome": "Tomilho",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "vegetal"
     },
     {
       "id": 36,
       "nome": "Coentro",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 37,
       "nome": "Batata",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     },
     {
       "id": 38,
       "nome": "Batata doce",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     },
     {
       "id": 39,
       "nome": "Mandioquinha",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     },
     {
       "id": 40,
       "nome": "Mandioca",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     },
     {
       "id": 41,
       "nome": "Milho",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 42,
       "nome": "Ervilha",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 43,
       "nome": "Lentilha",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 44,
       "nome": "Feijão carioca",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 45,
       "nome": "Feijão preto",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 46,
       "nome": "Grão de bico",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 47,
       "nome": "Carne bovina",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 48,
       "nome": "Carne moída",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 49,
       "nome": "Costela bovina",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "proteina"
     },
     {
       "id": 50,
       "nome": "Linguiça",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 51,
       "nome": "Bacon",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 52,
       "nome": "Presunto",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 53,
       "nome": "Peito de peru",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 54,
       "nome": "Peixe",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 55,
       "nome": "Salmão",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 56,
       "nome": "Atum",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 57,
       "nome": "Camarão",
-      "categoria": "proteína",
-      "local": "carnes_peixes"
+      "categoria": "proteina"
     },
     {
       "id": 58,
       "nome": "Leite",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "bebida"
     },
     {
       "id": 59,
       "nome": "Leite de coco",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "bebida"
     },
     {
       "id": 60,
       "nome": "Creme de leite",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "outro"
     },
     {
       "id": 61,
       "nome": "Requeijão",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "outro"
     },
     {
       "id": 62,
       "nome": "Iogurte natural",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "bebida"
     },
     {
       "id": 63,
       "nome": "Farinha de trigo",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "grao"
     },
     {
       "id": 64,
       "nome": "Farinha de rosca",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "grao"
     },
     {
       "id": 65,
       "nome": "Farinha de milho",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 66,
       "nome": "Aveia",
-      "categoria": "grão",
-      "local": "graos_cereais"
+      "categoria": "grao"
     },
     {
       "id": 67,
       "nome": "Pão francês",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "grao"
     },
     {
       "id": 68,
       "nome": "Pão integral",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "grao"
     },
     {
       "id": 69,
       "nome": "Macarrão",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "grao"
     },
     {
       "id": 70,
       "nome": "Espaguete",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "grao"
     },
     {
       "id": 71,
       "nome": "Lasagna",
-      "categoria": "panificacao_massas",
-      "local": "padaria"
+      "categoria": "grao"
     },
     {
       "id": 72,
       "nome": "Molho de tomate",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "outro"
     },
     {
       "id": 73,
       "nome": "Extrato de tomate",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "outro"
     },
     {
       "id": 74,
       "nome": "Ketchup",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 75,
       "nome": "Maionese",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 76,
       "nome": "Molho barbecue",
-      "categoria": "bebida",
-      "local": "bebidas"
+      "categoria": "outro"
     },
     {
       "id": 77,
       "nome": "Mel",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 78,
       "nome": "Canela",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 79,
       "nome": "Noz moscada",
-      "categoria": "tempero",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 80,
       "nome": "Chocolate",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 81,
       "nome": "Chocolate em pó",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "outro"
     },
     {
       "id": 82,
       "nome": "Leite condensado",
-      "categoria": "laticíneo",
-      "local": "laticinios_queijos"
+      "categoria": "outro"
     },
     {
       "id": 83,
       "nome": "Banana",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 84,
       "nome": "Maçã",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 85,
       "nome": "Pera",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 86,
       "nome": "Uva",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 87,
       "nome": "Morango",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 88,
       "nome": "Abacaxi",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 89,
       "nome": "Manga",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 90,
       "nome": "Abacate",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 91,
       "nome": "Coco",
-      "categoria": "fruta",
-      "local": "frutas_vegetais"
+      "categoria": "fruta"
     },
     {
       "id": 92,
       "nome": "Pimentão",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "vegetal"
     },
     {
       "id": 93,
       "nome": "Brócolis",
-      "categoria": "outro",
-      "local": "outro"
+      "categoria": "vegetal"
     },
     {
       "id": 94,
       "nome": "Couve-flor",
-      "categoria": "verdura",
-      "local": "frutas_vegetais"
+      "categoria": "vegetal"
     },
     {
       "id": 95,
       "nome": "Espinafre",
-      "categoria": "verdura",
-      "local": "frutas_vegetais"
+      "categoria": "vegetal"
     },
     {
       "id": 96,
       "nome": "Rúcula",
-      "categoria": "verdura",
-      "local": "frutas_vegetais"
+      "categoria": "vegetal"
     },
     {
       "id": 97,
       "nome": "Repolho",
-      "categoria": "verdura",
-      "local": "frutas_vegetais"
+      "categoria": "vegetal"
     },
     {
       "id": 98,
       "nome": "Pepino",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "vegetal"
     },
     {
       "id": 99,
       "nome": "Beterraba",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     },
     {
       "id": 100,
       "nome": "Chuchu",
-      "categoria": "legume",
-      "local": "frutas_vegetais"
+      "categoria": "legume"
     }
   ],
   "receitas": [
     {
       "id": 1,
+      "nome": "Sushi",
+      "descricao": "Uma receita simples, equilibrada e fácil de preparar.",
+      "imagem": "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
       "tempo_minutos": 35,
       "pessoas": 2,
       "calorias": 320,
@@ -670,6 +547,9 @@
     },
     {
       "id": 2,
+      "nome": "Salada Caesar",
+      "descricao": "Uma salada clássica e refrescante, perfeita para qualquer refeição.",
+      "imagem": "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=550&h=360&fit=crop",
       "tempo_minutos": 15,
       "pessoas": 4,
       "calorias": 280,
@@ -680,6 +560,9 @@
     },
     {
       "id": 3,
+      "nome": "Frango Grelhado com Legumes",
+      "descricao": "Uma refeição completa, nutritiva e saborosa, ideal para o dia a dia.",
+      "imagem": "https://images.unsplash.com/photo-1534939561126-855b8675edd7?w=550&h=360&fit=crop",
       "tempo_minutos": 40,
       "pessoas": 4,
       "calorias": 350,
@@ -690,6 +573,9 @@
     },
     {
       "id": 4,
+      "nome": "Risotto de Cogumelos",
+      "descricao": "Um risotto cremoso e saboroso, perfeito para uma refeição especial.",
+      "imagem": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=550&h=360&fit=crop",
       "tempo_minutos": 45,
       "pessoas": 4,
       "calorias": 420,
@@ -705,290 +591,290 @@
       "receita_id": 1,
       "ingrediente_id": 1,
       "quantidade": 400,
-      "observacao": "Do dia anterior",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Do dia anterior"
     },
     {
       "id": 2,
       "receita_id": 1,
       "ingrediente_id": 2,
       "quantidade": 2,
-      "observacao": "Fatiada",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Fatiada"
     },
     {
       "id": 3,
       "receita_id": 1,
       "ingrediente_id": 3,
       "quantidade": 1,
-      "observacao": "Picada",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Picada"
     },
     {
       "id": 4,
       "receita_id": 1,
       "ingrediente_id": 4,
       "quantidade": 2,
-      "observacao": "Dentes",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Dentes"
     },
     {
       "id": 5,
       "receita_id": 1,
       "ingrediente_id": 6,
       "quantidade": 15,
-      "observacao": "1 colher de sopa",
-      "unidade": "mililitro"
+      "unidade": "mililitro",
+      "observacao": "1 colher de sopa"
     },
     {
       "id": 6,
       "receita_id": 1,
       "ingrediente_id": 7,
       "quantidade": 30,
-      "observacao": null,
-      "unidade": "mililitro"
+      "unidade": "mililitro",
+      "observacao": null
     },
     {
       "id": 7,
       "receita_id": 1,
       "ingrediente_id": 8,
       "quantidade": 15,
-      "observacao": null,
-      "unidade": "mililitro"
+      "unidade": "mililitro",
+      "observacao": null
     },
     {
       "id": 8,
       "receita_id": 1,
       "ingrediente_id": 9,
       "quantidade": 5,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 9,
       "receita_id": 1,
       "ingrediente_id": 10,
       "quantidade": 5,
-      "observacao": "Torrado",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Torrado"
     },
     {
       "id": 10,
       "receita_id": 1,
       "ingrediente_id": 11,
       "quantidade": 10,
-      "observacao": "Picada",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Picada"
     },
     {
       "id": 11,
       "receita_id": 2,
       "ingrediente_id": 14,
       "quantidade": 200,
-      "observacao": "Lavada e picada",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Lavada e picada"
     },
     {
       "id": 12,
       "receita_id": 2,
       "ingrediente_id": 15,
       "quantidade": 50,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 13,
       "receita_id": 2,
       "ingrediente_id": 16,
       "quantidade": 30,
-      "observacao": "Ralado",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Ralado"
     },
     {
       "id": 14,
       "receita_id": 2,
       "ingrediente_id": 5,
       "quantidade": 30,
-      "observacao": null,
-      "unidade": "mililitro"
+      "unidade": "mililitro",
+      "observacao": null
     },
     {
       "id": 15,
       "receita_id": 2,
       "ingrediente_id": 17,
       "quantidade": 1,
-      "observacao": "Suco",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Suco"
     },
     {
       "id": 16,
       "receita_id": 2,
       "ingrediente_id": 18,
       "quantidade": 5,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 17,
       "receita_id": 2,
       "ingrediente_id": 19,
       "quantidade": 1,
-      "observacao": "Gema",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Gema"
     },
     {
       "id": 18,
       "receita_id": 3,
       "ingrediente_id": 20,
       "quantidade": 600,
-      "observacao": "Cortado em filés",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Cortado em filés"
     },
     {
       "id": 19,
       "receita_id": 3,
       "ingrediente_id": 5,
       "quantidade": 30,
-      "observacao": null,
-      "unidade": "mililitro"
+      "unidade": "mililitro",
+      "observacao": null
     },
     {
       "id": 20,
       "receita_id": 3,
       "ingrediente_id": 21,
       "quantidade": 5,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 21,
       "receita_id": 3,
       "ingrediente_id": 22,
       "quantidade": 2,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 22,
       "receita_id": 3,
       "ingrediente_id": 23,
       "quantidade": 300,
-      "observacao": "Cortado em cubos",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Cortado em cubos"
     },
     {
       "id": 23,
       "receita_id": 3,
       "ingrediente_id": 24,
       "quantidade": 300,
-      "observacao": "Cortada em rodelas",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Cortada em rodelas"
     },
     {
       "id": 24,
       "receita_id": 3,
       "ingrediente_id": 13,
       "quantidade": 200,
-      "observacao": "Cortada em palitos",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Cortada em palitos"
     },
     {
       "id": 25,
       "receita_id": 3,
       "ingrediente_id": 4,
       "quantidade": 3,
-      "observacao": "Dentes picados",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Dentes picados"
     },
     {
       "id": 26,
       "receita_id": 4,
       "ingrediente_id": 25,
       "quantidade": 300,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 27,
       "receita_id": 4,
       "ingrediente_id": 26,
       "quantidade": 400,
-      "observacao": "Variados, fatiados",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Variados, fatiados"
     },
     {
       "id": 28,
       "receita_id": 4,
       "ingrediente_id": 3,
       "quantidade": 1,
-      "observacao": "Picada",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Picada"
     },
     {
       "id": 29,
       "receita_id": 4,
       "ingrediente_id": 4,
       "quantidade": 2,
-      "observacao": "Dentes picados",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Dentes picados"
     },
     {
       "id": 30,
       "receita_id": 4,
       "ingrediente_id": 27,
       "quantidade": 1000,
-      "observacao": "Quente",
-      "unidade": "mililitro"
+      "unidade": "mililitro",
+      "observacao": "Quente"
     },
     {
       "id": 31,
       "receita_id": 4,
       "ingrediente_id": 28,
       "quantidade": 100,
-      "observacao": null,
-      "unidade": "mililitro"
+      "unidade": "mililitro",
+      "observacao": null
     },
     {
       "id": 32,
       "receita_id": 4,
       "ingrediente_id": 29,
       "quantidade": 30,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 33,
       "receita_id": 4,
       "ingrediente_id": 30,
       "quantidade": 50,
-      "observacao": null,
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": null
     },
     {
       "id": 34,
       "receita_id": 4,
       "ingrediente_id": 31,
       "quantidade": 10,
-      "observacao": "Picada",
-      "unidade": "grama"
+      "unidade": "grama",
+      "observacao": "Picada"
     }
   ],
   "receita_ingrediente_substitutos": [
     {
       "id": 1,
       "receita_ingrediente_id": 2,
-      "ingrediente_id": 50,
+      "ingrediente_id": 2,
       "quantidade": 2,
-      "observacao": "Pode substituir por linguiça",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Pode substituir por linguiça"
     },
     {
       "id": 2,
       "receita_ingrediente_id": 4,
       "ingrediente_id": 4,
       "quantidade": 1,
-      "observacao": "Pode usar alho em pó",
-      "unidade": "unidade"
+      "unidade": "unidade",
+      "observacao": "Pode usar alho em pó"
     }
   ],
   "receita_etapas": [
