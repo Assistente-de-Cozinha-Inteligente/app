@@ -2,7 +2,7 @@ import { Colors } from '@/constants/theme';
 import { Ingrediente } from '@/models';
 import { getUnidadesOptionsPorCategoria, Unidade } from '@/utils/unidadesHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ButtonUI } from './ui/button';
@@ -25,12 +25,11 @@ export function BottomSheetEditarItemLista({
   onClose,
   onSave,
 }: BottomSheetEditarItemListaProps) {
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [quantidade, setQuantidade] = useState('1');
   const [unidade, setUnidade] = useState<Unidade>('unidade');
 
   const snapPoints = useMemo(() => ['55%'], []);
-  const snapIndex = item ? 0 : -1;
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -49,7 +48,11 @@ export function BottomSheetEditarItemLista({
       // Atualiza quantidade e unidade imediatamente
       setQuantidade(item.quantidade.toString());
       setUnidade(item.unidade as Unidade);
+      // Abre o bottom sheet modal
+      bottomSheetRef.current?.present();
     } else {
+      // Fecha o bottom sheet modal
+      bottomSheetRef.current?.dismiss();
       // Limpa os dados quando fecha
       setQuantidade('1');
       setUnidade('unidade');
@@ -61,6 +64,7 @@ export function BottomSheetEditarItemLista({
 
     const qty = parseInt(quantidade) || 1;
     onSave(qty, unidade);
+    bottomSheetRef.current?.dismiss();
     onClose();
   };
 
@@ -70,37 +74,38 @@ export function BottomSheetEditarItemLista({
     setQuantidade(newQty.toString());
   };
 
-  if (!item) return null;
-
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={bottomSheetRef}
-      index={snapIndex}
       snapPoints={snapPoints}
       enablePanDownToClose
-      onClose={onClose}
+      onDismiss={onClose}
       backgroundStyle={styles.bottomSheetBackground}
       handleIndicatorStyle={styles.handleIndicator}
       enableDynamicSizing={false}
       backdropComponent={renderBackdrop}
     >
-      <BottomSheetView style={styles.content}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TextUI variant="semibold" style={styles.title}>
-            Editar item
-          </TextUI>
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Ionicons name="close" size={24} color={Colors.light.mainText} />
-          </TouchableOpacity>
-        </View>
+      {item && (
+        <BottomSheetView style={styles.content}>
+          {/* Header */}
+          <View style={styles.header}>
+            <TextUI variant="semibold" style={styles.title}>
+              Editar item
+            </TextUI>
+            <TouchableOpacity onPress={() => {
+              bottomSheetRef.current?.dismiss();
+              onClose();
+            }} style={styles.closeButton}>
+              <Ionicons name="close" size={24} color={Colors.light.mainText} />
+            </TouchableOpacity>
+          </View>
 
-        {/* Nome do ingrediente */}
-        <View style={styles.ingredienteInfo}>
-          <TextUI variant="semibold" style={styles.ingredienteNome}>
-            {item.ingrediente.nome}
-          </TextUI>
-        </View>
+          {/* Nome do ingrediente */}
+          <View style={styles.ingredienteInfo}>
+            <TextUI variant="semibold" style={styles.ingredienteNome}>
+              {item.ingrediente.nome}
+            </TextUI>
+          </View>
 
         {/* Quantidade */}
         <View style={styles.section}>
@@ -152,17 +157,18 @@ export function BottomSheetEditarItemLista({
           />
         </View>
 
-        {/* Botão Salvar */}
-        <View style={styles.footer}>
-          <ButtonUI
-            title="SALVAR ALTERAÇÕES"
-            onPress={handleSave}
-            variant="primary"
-            disabled={!unidade || parseInt(quantidade) < 1}
-          />
-        </View>
-      </BottomSheetView>
-    </BottomSheet>
+          {/* Botão Salvar */}
+          <View style={styles.footer}>
+            <ButtonUI
+              title="SALVAR ALTERAÇÕES"
+              onPress={handleSave}
+              variant="primary"
+              disabled={!unidade || parseInt(quantidade) < 1}
+            />
+          </View>
+        </BottomSheetView>
+      )}
+    </BottomSheetModal>
   );
 }
 
