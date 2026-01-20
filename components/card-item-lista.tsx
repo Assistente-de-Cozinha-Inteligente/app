@@ -1,6 +1,5 @@
 import { Colors } from '@/constants/theme';
 import { ListaCompras } from '@/models';
-import { getUnidadePrincipalPorCategoria } from '@/utils/unidadesHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { TextUI } from './ui/text';
@@ -18,11 +17,6 @@ export function CardItemLista({
   onItemCheck,
   onItemRemove,
 }: CardItemListaProps) {
-  // Usa a unidade do item, ou fallback para a unidade principal baseada na categoria
-  const unidade = item.unidade || (item.ingrediente?.categoria 
-    ? getUnidadePrincipalPorCategoria(item.ingrediente.categoria)
-    : 'unidade');
-
   const handlePress = () => {
     onItemPress?.(item);
   };
@@ -51,7 +45,7 @@ export function CardItemLista({
           </View>
         </TouchableOpacity>
 
-        {/* Lado esquerdo: Nome e quantidade/unidade */}
+        {/* Lado esquerdo: Nome */}
         <TouchableOpacity
           onPress={handlePress}
           style={styles.leftContent}
@@ -65,15 +59,6 @@ export function CardItemLista({
             ]}
           >
             {item.ingrediente?.nome || 'Item'}
-          </TextUI>
-          <TextUI 
-            variant="regular" 
-            style={[
-              styles.itemQuantidade,
-              item.marcado && styles.itemQuantidadeMarcada
-            ]}
-          >
-            {item.quantidade} {item.quantidade === 1 ? unidade : `${unidade}s`}
           </TextUI>
         </TouchableOpacity>
 
@@ -132,19 +117,10 @@ const styles = StyleSheet.create({
   itemNome: {
     fontSize: 14,
     color: Colors.light.mainText,
-    marginBottom: 2,
   },
   itemNomeMarcado: {
     textDecorationLine: 'line-through',
     color: Colors.light.bodyText,
-    opacity: 0.6,
-  },
-  itemQuantidade: {
-    fontSize: 12,
-    color: Colors.light.bodyText,
-  },
-  itemQuantidadeMarcada: {
-    textDecorationLine: 'line-through',
     opacity: 0.6,
   },
   rightContent: {
