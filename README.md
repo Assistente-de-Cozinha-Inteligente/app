@@ -48,14 +48,19 @@ O app **se adapta ao usuário**, e não o contrário.
 - Cache local para uso offline
 - Detalhes claros e objetivos
 
-### 🧺 Inventário
+### 🧺 Inventário (Sua Cozinha)
 - Controle simples de ingredientes
-- Não exige precisão absoluta
+- Sistema inteligente de disponibilidade (baixo/médio/alto)
+- Controle de validade para evitar desperdício
+- Não exige precisão absoluta - o app decide de forma inteligente
 - Funciona mesmo com dados incompletos
+- Agrupamento por local de armazenamento
 
 ### 🛒 Lista de compras
 - Lista prática para o dia a dia
-- Marcar itens como comprados alimenta o sistema
+- Marcar itens como comprados alimenta o inventário automaticamente
+- Agrupamento por local de compra
+- Opção de desfazer exclusões
 - Pode ser compartilhada facilmente
 
 ### 🤖 Assistente com IA
@@ -105,12 +110,13 @@ O login é opcional e serve para:
 ## 🏗️ Arquitetura (resumo técnico)
 
 - **Frontend:** React Native + Expo
-- **Backend:** Firebase
-- **Banco:** Firestore
+- **Banco Local:** SQLite (expo-sqlite) - dados offline-first
+- **Backend:** Firebase (opcional, para sincronização)
+- **Banco Cloud:** Firestore (opcional, para sincronização)
 - **Auth:** Firebase Auth (opcional)
-- **Offline-first:** dados locais como base
-- **Receitas:** leitura pública
-- **Dados do usuário:** protegidos por UID
+- **Offline-first:** SQLite local como base principal
+- **Receitas:** dados locais + cache offline
+- **Dados do usuário:** protegidos localmente e por UID quando sincronizado
 
 ---
 
@@ -128,9 +134,11 @@ Sempre que o usuário abre o app, ele verifica:
 - Se o app já foi inicializado corretamente naquele dispositivo
 
 Caso algo não exista, o app:
-- Carrega **dados iniciais diretamente do próprio app**
+- Cria as tabelas SQLite automaticamente
+- Carrega **dados iniciais diretamente do próprio app** (seeders em JSON)
 - Usa arquivos JSON simples como base
-- Persiste esses dados localmente para uso offline
+- Persiste esses dados no SQLite local para uso offline
+- Executa migrações automáticas quando necessário
 
 ---
 
@@ -162,20 +170,28 @@ Essa abordagem **não afeta performance**:
 
 ---
 
-## 💰 Por que Firebase?
+## 💰 Por que SQLite + Firebase?
 
-Este projeto utiliza **Firebase** por um motivo simples: **custo-benefício**.
+Este projeto utiliza **SQLite local** como banco principal e **Firebase** (opcional) para sincronização.
 
+### SQLite Local
+- ✅ Funciona completamente offline
+- ✅ Performance excelente para dados locais
+- ✅ Zero dependência de rede
+- ✅ Migrações automáticas
+- ✅ Dados seeders embutidos no app
+
+### Firebase (Opcional)
 Manter uma API própria + servidor dedicado **não faria sentido financeiramente** para este tipo de aplicativo, principalmente nas fases iniciais.
 
-O Firebase oferece:
+O Firebase oferece (quando o usuário opta por sincronizar):
 - 🔹 Baixo custo operacional
 - 🔹 Escalabilidade automática
 - 🔹 Backend pronto sem overhead de infraestrutura
 - 🔹 Boa integração com apps mobile
-- 🔹 Excelente suporte a apps offline-first
+- 🔹 Sincronização opcional entre dispositivos
 
-Para o escopo do projeto, o Firebase é a **melhor escolha técnica e econômica**.
+Para o escopo do projeto, **SQLite local + Firebase opcional** é a **melhor escolha técnica e econômica**.
 
 ---
 
