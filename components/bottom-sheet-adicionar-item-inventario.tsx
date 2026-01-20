@@ -1,25 +1,20 @@
 import { Colors } from '@/constants/theme';
 import { Ingrediente } from '@/models';
-import { getUnidadesOptionsPorCategoria, Unidade } from '@/utils/unidadesHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { BottomSheetModal, BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ButtonUI } from './ui/button';
-import { InputUI } from './ui/input';
-import { PickerUI } from './ui/picker';
 import { TextUI } from './ui/text';
 
 type BottomSheetAdicionarItemInventarioProps = {
   item: {
     ingrediente: Ingrediente;
-    quantidade: number;
-    unidade: string;
     validade: number | null; // timestamp (opcional)
   } | null;
   onClose: () => void;
-  onSave: (quantidade: number, unidade: string, validade: number | null) => void;
+  onSave: (validade: number | null) => void;
 };
 
 export function BottomSheetAdicionarItemInventario({
@@ -28,12 +23,10 @@ export function BottomSheetAdicionarItemInventario({
   onSave,
 }: BottomSheetAdicionarItemInventarioProps) {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const [quantidade, setQuantidade] = useState('1');
-  const [unidade, setUnidade] = useState<Unidade>('unidade');
   const [validade, setValidade] = useState<Date | null>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const snapPoints = useMemo(() => ['65%'], []);
+  const snapPoints = useMemo(() => ['40%'], []);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -49,9 +42,7 @@ export function BottomSheetAdicionarItemInventario({
 
   useEffect(() => {
     if (item) {
-      // Atualiza quantidade, unidade e validade imediatamente
-      setQuantidade(item.quantidade.toString());
-      setUnidade(item.unidade as Unidade);
+      // Atualiza validade imediatamente
       setValidade(item.validade ? new Date(item.validade) : null);
       // Abre o bottom sheet modal
       bottomSheetRef.current?.present();
@@ -59,8 +50,6 @@ export function BottomSheetAdicionarItemInventario({
       // Fecha o bottom sheet modal
       bottomSheetRef.current?.dismiss();
       // Limpa os dados quando fecha
-      setQuantidade('1');
-      setUnidade('unidade');
       setValidade(null);
     }
   }, [item]);
@@ -68,18 +57,11 @@ export function BottomSheetAdicionarItemInventario({
   const handleSave = () => {
     if (!item) return;
 
-    const qty = parseInt(quantidade) || 1;
     // Permite salvar sem validade (null) se o usuário não selecionar uma data
     const validadeTimestamp = validade ? validade.getTime() : null;
-    onSave(qty, unidade, validadeTimestamp);
+    onSave(validadeTimestamp);
     bottomSheetRef.current?.dismiss();
     onClose();
-  };
-
-  const handleQuantityChange = (delta: number) => {
-    const currentQty = parseInt(quantidade) || 1;
-    const newQty = Math.max(1, currentQty + delta);
-    setQuantidade(newQty.toString());
   };
 
   const formatDate = (date: Date | null) => {
@@ -122,56 +104,6 @@ export function BottomSheetAdicionarItemInventario({
             <TextUI variant="semibold" style={styles.ingredienteNome}>
               {item.ingrediente.nome}
             </TextUI>
-          </View>
-
-          {/* Quantidade */}
-          <View style={styles.section}>
-            <TextUI variant="regular" style={styles.label}>
-              Quantidade
-            </TextUI>
-            <View style={styles.quantityContainer}>
-              <TouchableOpacity
-                onPress={() => handleQuantityChange(-1)}
-                style={styles.quantityButton}
-              >
-                <Ionicons name="remove" size={20} color={Colors.light.mainText} />
-              </TouchableOpacity>
-              <View style={styles.quantityInputContainer}>
-                <InputUI
-                  placeholder=""
-                  value={quantidade}
-                  onChangeText={(text) => {
-                    const num = parseInt(text) || 1;
-                    setQuantidade(Math.max(1, num).toString());
-                  }}
-                  keyboardType="numeric"
-                  textAlign="center"
-                  showClearButton={false}
-                  borderColor={null}
-                  containerStyle={styles.quantityInput}
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() => handleQuantityChange(1)}
-                style={styles.quantityButton}
-              >
-                <Ionicons name="add" size={20} color={Colors.light.mainText} />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Unidade */}
-          <View style={styles.section}>
-            <TextUI variant="regular" style={styles.label}>
-              Unidade
-            </TextUI>
-            <PickerUI
-              label=""
-              selectedValue={unidade}
-              onValueChange={(value) => setUnidade(value as Unidade)}
-              items={getUnidadesOptionsPorCategoria(item.ingrediente.categoria)}
-              placeholder="Selecione a unidade"
-            />
           </View>
 
           {/* Validade */}
@@ -225,7 +157,6 @@ export function BottomSheetAdicionarItemInventario({
               title="ADICIONAR"
               onPress={handleSave}
               variant="primary"
-              disabled={!unidade || parseInt(quantidade) < 1}
             />
           </View>
         </BottomSheetView>
@@ -283,25 +214,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.light.mainText,
     marginBottom: 12,
-  },
-  quantityContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  quantityButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.light.input,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  quantityInputContainer: {
-    flex: 1,
-  },
-  quantityInput: {
-    height: 48,
   },
   dateButton: {
     flexDirection: 'row',

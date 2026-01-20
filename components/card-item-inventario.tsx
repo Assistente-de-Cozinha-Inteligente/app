@@ -1,15 +1,17 @@
 import { Colors } from '@/constants/theme';
 import { Inventario } from '@/models';
-import { getUnidadePrincipalPorCategoria } from '@/utils/unidadesHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { TextUI } from './ui/text';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 type CardItemInventarioProps = {
   item: Inventario;
   onItemPress?: (item: Inventario) => void;
   onItemRemove?: (ingrediente_id: number) => void;
   onItemSearch?: (item: Inventario) => void;
+  onItemAddToCart?: (item: Inventario) => void;
+  estaProximoVencer?: boolean; // Indica se o item está próximo de vencer (0-3 dias)
 };
 
 export function CardItemInventario({
@@ -17,12 +19,9 @@ export function CardItemInventario({
   onItemPress,
   onItemRemove,
   onItemSearch,
+  onItemAddToCart,
+  estaProximoVencer = false,
 }: CardItemInventarioProps) {
-  // Usa a unidade do item, ou fallback para a unidade principal baseada na categoria
-  const unidade = item.unidade || (item.ingrediente?.categoria
-    ? getUnidadePrincipalPorCategoria(item.ingrediente.categoria)
-    : 'unidade');
-
   // Calcula dias até a validade (só se tiver validade cadastrada)
   const temValidade = item.validade !== null && item.validade !== undefined;
   let validadeInfo: { texto: string; cor: string; bgColor: string } | null = null;
@@ -74,10 +73,14 @@ export function CardItemInventario({
     onItemSearch?.(item);
   };
 
+  const handleAddToCart = () => {
+    onItemAddToCart?.(item);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {/* Lado esquerdo: Nome, quantidade/unidade e validade */}
+        {/* Lado esquerdo: Nome e validade */}
         <TouchableOpacity
           onPress={handlePress}
           style={styles.leftContent}
@@ -86,35 +89,46 @@ export function CardItemInventario({
           <TextUI variant="regular" style={styles.itemNome}>
             {item.ingrediente?.nome || 'Item'}
           </TextUI>
-          <View style={styles.infoRow}>
-            <TextUI variant="regular" style={styles.itemQuantidade}>
-              {item.quantidade} {item.quantidade === 1 ? unidade : `${unidade}s`}
-            </TextUI>
-            {validadeInfo && (
-              <View style={[styles.validadeBadge, { backgroundColor: validadeInfo.bgColor }]}>
-                <TextUI variant="regular" style={[styles.validadeText, { color: validadeInfo.cor }]}>
-                  {validadeInfo.texto}
-                </TextUI>
-              </View>
-            )}
-          </View>
+          {validadeInfo && (
+            <View style={[styles.validadeBadge, { backgroundColor: validadeInfo.bgColor }]}>
+              <TextUI variant="regular" style={[styles.validadeText, { color: validadeInfo.cor }]}>
+                {validadeInfo.texto}
+              </TextUI>
+            </View>
+          )}
         </TouchableOpacity>
 
-        {/* Lado direito: Ícone de busca e deletar */}
+        {/* Lado direito: Ícone de busca, adicionar ao carrinho e deletar */}
         <View style={styles.rightContent}>
           <TouchableOpacity
             onPress={handleSearch}
-            style={styles.iconButton}
+            style={[
+              styles.iconButton,
+              estaProximoVencer && styles.iconButtonUrgente
+            ]}
             activeOpacity={0.7}
           >
-            <Ionicons name="search-outline" size={18} color={Colors.light.bodyText} />
+            <Ionicons
+              name="search-outline"
+              size={22}
+              color={estaProximoVencer ? Colors.light.primary : Colors.light.bodyText}
+            />
           </TouchableOpacity>
+          {onItemAddToCart && (
+            <TouchableOpacity
+              onPress={handleAddToCart}
+              style={styles.iconButton}
+              activeOpacity={0.7}
+            >
+              <MaterialCommunityIcons name="cart-plus" size={22} color={estaProximoVencer ? Colors.light.primary : Colors.light.bodyText} />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             onPress={handleRemove}
             style={styles.iconButton}
             activeOpacity={0.7}
           >
-            <Ionicons name="trash-outline" size={18} color={Colors.light.danger} />
+            <Ionicons name="trash-outline" size={22} color={Colors.light.danger} />
           </TouchableOpacity>
         </View>
       </View>
@@ -147,16 +161,6 @@ const styles = StyleSheet.create({
     color: Colors.light.mainText,
     marginBottom: 4,
   },
-  infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    flexWrap: 'wrap',
-  },
-  itemQuantidade: {
-    fontSize: 12,
-    color: Colors.light.bodyText,
-  },
   validadeBadge: {
     paddingHorizontal: 8,
     paddingVertical: 2,
@@ -172,7 +176,16 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   iconButton: {
-    padding: 4,
+    padding: 6,
+    minWidth: 36,
+    minHeight: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconButtonUrgente: {
+    backgroundColor: Colors.light.primary + '15',
+    borderRadius: 8,
+    padding: 8,
   },
 });
 
