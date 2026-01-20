@@ -24,43 +24,40 @@ export async function buscarIngredientesPorNome(
     limit: number = 6
 ): Promise<Ingrediente[]> {
     const db = getDatabase();
-    if (!db) {
-        return [];
-    }
+    if (!db) return [];
+    console.log(searchTerm, "(<<<<<<<<< Search term <<<<<<<<<)");
 
-    if (!searchTerm || searchTerm.trim().length === 0) {
-        return [];
-    }
+    if (!searchTerm?.trim()) return [];
 
-    const termoNormalizado = removerAcentos(searchTerm.trim());
-    const termo = `%${termoNormalizado}%`;
-    
-    // Busca todos os ingredientes e filtra no JavaScript para normalizar acentos
+    const termoNormalizado = removerAcentos(searchTerm.trim()).toLowerCase();
+
     const todosIngredientes = await db.getAllAsync<any>(
-        `SELECT id, nome, categoria
-         FROM ${TABLE_NAME}
+        `SELECT id, nome, categoria, local
+         FROM ${TABLE_NAME} where nome like '%${searchTerm}%'
          ORDER BY nome ASC`
     );
 
-    if (!todosIngredientes || todosIngredientes.length === 0) {
-        return [];
-    }
+    if (!Array.isArray(todosIngredientes)) return [];
 
-    // Filtra ingredientes que correspondem à busca (normalizando acentos)
     const resultados = todosIngredientes
-        .filter((row: any) => {
-            const nomeNormalizado = removerAcentos(row.nome);
+        .filter(row => {
+            if (!row?.nome) return false;
+
+            const nomeNormalizado = removerAcentos(String(row.nome)).toLowerCase();
             return nomeNormalizado.includes(termoNormalizado);
         })
         .slice(0, limit)
-        .map((row: any) => ({
+        .map(row => ({
             id: row.id,
             nome: row.nome,
-            categoria: row.categoria
-        } as Ingrediente));
+            categoria: row.categoria,
+            local: row.local
+        }));
 
+    console.log(resultados, "(<<<<<<<<< Resultados <<<<<<<<<)");
     return resultados;
 }
+
 
 /*
  * Busca todos os ingredientes
@@ -77,7 +74,7 @@ export async function getAllIngredientes(): Promise<Ingrediente[]> {
          FROM ${TABLE_NAME}
          ORDER BY nome ASC`
     );
-    
+
     return (result ?? []).map((row: any) => ({
         id: row.id,
         nome: row.nome,
@@ -85,7 +82,6 @@ export async function getAllIngredientes(): Promise<Ingrediente[]> {
         local: row.local
     } as Ingrediente));
 
-    return result ?? [];
 }
 
 /*
@@ -100,7 +96,7 @@ export async function buscarIngredientePorNomeExato(nome: string): Promise<Ingre
     }
 
     const nomeNormalizado = removerAcentos(nome.trim());
-    
+
     // Busca todos os ingredientes e filtra no JavaScript para normalizar acentos
     const todosIngredientes = await db.getAllAsync<any>(
         `SELECT id, nome, categoria

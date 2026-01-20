@@ -1,4 +1,5 @@
 import { Ingrediente, Inventario } from "@/models";
+import { decidirDisponibilidadeFinal, OrigemAdicao } from "@/utils/disponibilidade";
 import { getDatabase, getFirstAsync } from "../database";
 import { getOrCreateLocalUser } from "./usuarioDao";
 
@@ -14,8 +15,7 @@ export async function getInventario(): Promise<Inventario[]> {
         `SELECT 
             inv.usuario_id, 
             inv.ingrediente_id, 
-            inv.quantidade,
-            inv.unidade,
+            inv.disponibilidade,
             inv.validade,
             inv.precisa_sincronizar,
             inv.local,
@@ -43,8 +43,7 @@ export async function getInventario(): Promise<Inventario[]> {
         return {
             usuario_id: row.usuario_id,
             ingrediente_id: row.ingrediente_id,
-            quantidade: row.quantidade,
-            unidade: row.unidade,
+            disponibilidade: row.disponibilidade || 'medio',
             validade: row.validade || null,
             precisa_sincronizar: row.precisa_sincronizar === 1,
             local: row.local || row.ingrediente_local || undefined,
@@ -57,12 +56,14 @@ export async function getInventario(): Promise<Inventario[]> {
 
 /*
  * Insere ou atualiza item no inventário
- * Se já existir um item com o mesmo usuario_id e ingrediente_id, atualiza a quantidade
+ * Se já existir um item com o mesmo usuario_id e ingrediente_id, calcula a disponibilidade automaticamente
  * Caso contrário, insere um novo item
  * @param items Itens a serem inseridos ou atualizados
+ * @param origemAdicao Origem da adição ('manual', 'compra', 'compra_repetida')
  */
 export async function inserirAtualizarItemInventario(
-    items: Omit<Inventario, 'usuario_id' | 'atualizado_em' | 'deletado_em'>[]
+    items: Omit<Inventario, 'usuario_id' | 'atualizado_em' | 'deletado_em'>[],
+    origemAdicao: OrigemAdicao = 'manual'
 ): Promise<void> {
     const db = getDatabase();
     if (!db) {
@@ -77,47 +78,65 @@ export async function inserirAtualizarItemInventario(
     const agora = Date.now();
 
     for (const item of items) {
+        // Sempre busca o local do ingrediente no banco
+        // Como todo ingrediente tem local, sempre usa o local do ingrediente
+        const ingrediente = await getFirstAsync<any>(
+            `SELECT local FROM ingredientes WHERE id = ?`,
+            [item.ingrediente_id]
+        );
+        // Usa o local do ingrediente (do banco) se existir, senão usa o local do item
+        const localIngrediente = ingrediente?.local;
+        const localFinal = localIngrediente || item.local || null;
+
         // Verifica se já existe um item com o mesmo usuario_id e ingrediente_id (não deletado)
         const itemExistente = await getFirstAsync<any>(
-            `SELECT usuario_id, ingrediente_id, quantidade, unidade, validade, precisa_sincronizar, local, atualizado_em, deletado_em
+            `SELECT usuario_id, ingrediente_id, disponibilidade, validade, precisa_sincronizar, local, atualizado_em, deletado_em
              FROM ${TABLE_NAME}
              WHERE usuario_id = ? AND ingrediente_id = ? AND deletado_em IS NULL`,
             [usuario.id, item.ingrediente_id]
         );
 
         if (itemExistente) {
-            // Soma a quantidade existente com a nova quantidade e atualiza o timestamp
-            const novaQuantidade = itemExistente.quantidade + item.quantidade;
+            // Calcula a disponibilidade automaticamente baseado na origem e disponibilidade atual
+            const disponibilidadeCalculada = decidirDisponibilidadeFinal({
+                disponibilidadeAtual: itemExistente.disponibilidade as 'baixo' | 'medio' | 'alto',
+                origemAdicao: origemAdicao
+            });
+            
+            // Atualiza disponibilidade (calculada automaticamente), validade e timestamp
             await db.runAsync(
                 `UPDATE ${TABLE_NAME}
-                 SET quantidade = ?, unidade = ?, validade = ?, precisa_sincronizar = ?, local = ?, atualizado_em = ?
+                 SET disponibilidade = ?, validade = ?, precisa_sincronizar = ?, local = ?, atualizado_em = ?
                  WHERE usuario_id = ? AND ingrediente_id = ?`,
                 [
-                    novaQuantidade,
-                    item.unidade,
+                    disponibilidadeCalculada,
                     item.validade || null,
                     item.precisa_sincronizar ? 1 : 0,
-                    item.local || null,
+                    localFinal,
                     agora,
                     usuario.id,
                     item.ingrediente_id
                 ]
             );
         } else {
+            // Calcula a disponibilidade inicial baseado na origem
+            const disponibilidadeInicial = decidirDisponibilidadeFinal({
+                origemAdicao: origemAdicao
+            });
+            
             // Insere um novo item com timestamp de criação
             // Sempre marca precisa_sincronizar como true para novos itens
             await db.runAsync(
                 `INSERT INTO ${TABLE_NAME}
-                 (usuario_id, ingrediente_id, quantidade, unidade, validade, precisa_sincronizar, local, atualizado_em)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                 (usuario_id, ingrediente_id, disponibilidade, validade, precisa_sincronizar, local, atualizado_em)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`,
                 [
                     usuario.id,
                     item.ingrediente_id,
-                    item.quantidade,
-                    item.unidade,
+                    disponibilidadeInicial,
                     item.validade || null,
                     1, // precisa_sincronizar = true para novos itens
-                    item.local || null,
+                    localFinal,
                     agora
                 ]
             );
@@ -126,17 +145,15 @@ export async function inserirAtualizarItemInventario(
 }
 
 /*
- * Atualiza a quantidade, unidade e validade de um item no inventário
- * Substitui os valores existentes pelos novos (não soma)
+ * Atualiza a disponibilidade e validade de um item no inventário
+ * Substitui os valores existentes pelos novos
  * @param ingrediente_id ID do ingrediente
- * @param quantidade Nova quantidade (substitui a existente)
- * @param unidade Nova unidade
+ * @param disponibilidade Nova disponibilidade
  * @param validade Nova validade (timestamp ou null)
  */
-export async function atualizarQuantidadeUnidadeValidadeItemInventario(
+export async function atualizarDisponibilidadeValidadeItemInventario(
     ingrediente_id: number,
-    quantidade: number,
-    unidade: string,
+    disponibilidade: 'baixo' | 'medio' | 'alto',
     validade: number | null
 ): Promise<void> {
     const db = getDatabase();
@@ -151,14 +168,13 @@ export async function atualizarQuantidadeUnidadeValidadeItemInventario(
 
     const agora = Date.now();
 
-    // Atualiza quantidade, unidade e validade, substituindo os valores existentes
+    // Atualiza disponibilidade e validade, substituindo os valores existentes
     await db.runAsync(
         `UPDATE ${TABLE_NAME}
-         SET quantidade = ?, unidade = ?, validade = ?, precisa_sincronizar = ?, atualizado_em = ?
+         SET disponibilidade = ?, validade = ?, precisa_sincronizar = ?, atualizado_em = ?
          WHERE usuario_id = ? AND ingrediente_id = ? AND deletado_em IS NULL`,
         [
-            quantidade,
-            unidade,
+            disponibilidade,
             validade || null,
             1, // precisa_sincronizar = true para sincronizar a mudança
             agora,
