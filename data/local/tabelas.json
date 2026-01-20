@@ -59,6 +59,9 @@
   "receitas": [
     {
       "id": "INTEGER PRIMARY KEY",
+      "nome": "TEXT NOT NULL",
+      "descricao": "TEXT NOT NULL",
+      "imagem": "TEXT NOT NULL",
       "tempo_minutos": "INTEGER NOT NULL",
       "pessoas": "INTEGER",
       "calorias": "INTEGER",
@@ -75,6 +78,7 @@
       "ingrediente_id": "INTEGER NOT NULL",
       "quantidade": "INTEGER NOT NULL",
       "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
+      "papel": "TEXT CHECK (papel IN ('base','principal','secundario','complemento','tempero')) NOT NULL",
       "observacao": "TEXT"
     }
   ],
@@ -124,11 +128,13 @@
     {
       "usuario_id": "TEXT NOT NULL",
       "ingrediente_id": "INTEGER NOT NULL",
-      "quantidade": "INTEGER NOT NULL",
-      "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
+
+      "disponibilidade": "TEXT CHECK (disponibilidade IN ('baixo','medio','alto')) NOT NULL",
+      
       "validade": "INTEGER",
-      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE",
       "local": "TEXT CHECK (local IN ('frutas_vegetais','laticinios_queijos','carnes_peixes','padaria','graos_cereais','bebidas','congelados','outro'))",
+      
+      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE",
       "atualizado_em": "INTEGER NOT NULL",
       "deletado_em": "INTEGER"
     }
@@ -137,11 +143,9 @@
     {
       "usuario_id": "TEXT NOT NULL",
       "ingrediente_id": "INTEGER NOT NULL",
-      "quantidade": "INTEGER NOT NULL",
-      "unidade": "TEXT CHECK (unidade IN ('grama','kilograma','litro','mililitro','unidade','outro'))",
       "marcado": "BOOLEAN NOT NULL",
-      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE",
       "local": "TEXT CHECK (local IN ('frutas_vegetais','laticinios_queijos','carnes_peixes','padaria','graos_cereais','bebidas','congelados','outro'))",
+      "precisa_sincronizar": "BOOLEAN NOT NULL DEFAULT FALSE",
       "atualizado_em": "INTEGER NOT NULL",
       "deletado_em": "INTEGER"
     }

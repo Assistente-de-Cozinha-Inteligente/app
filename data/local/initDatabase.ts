@@ -43,30 +43,33 @@ export async function initDatabase(): Promise<void> {
 
   // Cria uma nova promise de inicialização
   initPromise = (async () => {
-    try {
-      // Abre o banco
-      await openDatabase('app.db');
+  try {
+    // Abre o banco
+    await openDatabase('app.db');
 
-      // Configurações do banco
-      await execAsync(`
-        PRAGMA journal_mode = WAL;
-        PRAGMA foreign_keys = ON;
-      `);
+    // Configurações do banco
+    await execAsync(`
+      PRAGMA journal_mode = WAL;
+      PRAGMA foreign_keys = ON;
+    `);
 
       // Criar tabelas baseadas no schema JSON
-      await createTables();
+    await createTables();
+
+      // Executar migrações
+      await runMigrations();
 
       // Aplicar seeds
       await applySeeds();
 
       isInitialized = true;
-      console.log('✅ Banco de dados inicializado com sucesso');
-    } catch (error) {
-      console.error('❌ Erro ao inicializar banco de dados:', error);
+    console.log('✅ Banco de dados inicializado com sucesso');
+  } catch (error) {
+    console.error('❌ Erro ao inicializar banco de dados:', error);
       // Reseta a promise em caso de erro para permitir nova tentativa
       initPromise = null;
-      throw error;
-    }
+    throw error;
+  }
   })();
 
   return initPromise;
@@ -81,6 +84,73 @@ async function tableExists(tableName: string): Promise<boolean> {
     tableName
   );
   return result !== null;
+}
+
+/**
+ * Verifica se uma coluna existe em uma tabela
+ */
+async function columnExists(tableName: string, columnName: string): Promise<boolean> {
+  const result = await getFirstAsync<{ sql: string }>(
+    `SELECT sql FROM sqlite_master WHERE type='table' AND name=?`,
+    tableName
+  );
+  if (!result || !result.sql) {
+    return false;
+  }
+  return result.sql.toLowerCase().includes(columnName.toLowerCase());
+}
+
+/**
+ * Executa migrações do banco de dados
+ */
+async function runMigrations(): Promise<void> {
+  console.log('🔄 Verificando migrações...');
+
+  // Migração: Remover colunas quantidade e unidade da tabela lista_compras
+  if (await tableExists('lista_compras')) {
+    const hasQuantidade = await columnExists('lista_compras', 'quantidade');
+    const hasUnidade = await columnExists('lista_compras', 'unidade');
+
+    if (hasQuantidade || hasUnidade) {
+      console.log('🔄 Removendo colunas quantidade e unidade de lista_compras...');
+      
+      // SQLite não suporta DROP COLUMN diretamente, então precisamos:
+      // 1. Criar nova tabela sem essas colunas
+      // 2. Copiar dados
+      // 3. Remover tabela antiga
+      // 4. Renomear nova tabela
+
+  await execAsync(`
+        CREATE TABLE IF NOT EXISTS lista_compras_new (
+          usuario_id TEXT NOT NULL,
+          ingrediente_id INTEGER NOT NULL,
+          marcado BOOLEAN NOT NULL,
+          local TEXT CHECK (local IN ('frutas_vegetais','laticinios_queijos','carnes_peixes','padaria','graos_cereais','bebidas','congelados','outro')),
+          precisa_sincronizar BOOLEAN NOT NULL DEFAULT FALSE,
+          atualizado_em INTEGER NOT NULL,
+          deletado_em INTEGER,
+          PRIMARY KEY (usuario_id, ingrediente_id)
+    );
+  `);
+
+      // Copia dados da tabela antiga para a nova (sem quantidade e unidade)
+  await execAsync(`
+        INSERT INTO lista_compras_new (usuario_id, ingrediente_id, marcado, local, precisa_sincronizar, atualizado_em, deletado_em)
+        SELECT usuario_id, ingrediente_id, marcado, local, precisa_sincronizar, atualizado_em, deletado_em
+        FROM lista_compras;
+      `);
+
+      // Remove tabela antiga
+      await execAsync(`DROP TABLE lista_compras;`);
+
+      // Renomeia nova tabela
+      await execAsync(`ALTER TABLE lista_compras_new RENAME TO lista_compras;`);
+
+      console.log('✅ Migração concluída: colunas quantidade e unidade removidas de lista_compras');
+    }
+  }
+
+  console.log('✅ Verificação de migrações concluída');
 }
 
 /**
@@ -199,7 +269,12 @@ async function applySeed(version: number): Promise<void> {
       if (!Array.isArray(records) || records.length === 0) {
         continue;
       }
-
+      // se for ingredientes quero o console de cada ingrediente
+      if (tableName === 'ingredientes') {
+        for (const record of records) {
+          console.log(record, "(<<<<<<<<< Ingrediente <<<<<<<<<)");
+        }
+      }
       // Pega as colunas do primeiro registro para construir o INSERT
       const firstRecord = records[0];
       const columns = Object.keys(firstRecord);
