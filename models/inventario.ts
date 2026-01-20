@@ -1,17 +1,15 @@
 import { Ingrediente, LocalIngrediente } from './ingrediente';
-import { UnidadeMedida } from './receita';
 
-export type LocalArmazenamento = 'geladeira' | 'freezer' | 'armario' | 'outro';
+export type Disponibilidade = 'baixo' | 'medio' | 'alto';
 
 export type Inventario = {
   usuario_id: string;
   ingrediente_id: number;
   ingrediente?: Ingrediente;
-  quantidade: number;
-  unidade: UnidadeMedida;
+  disponibilidade: Disponibilidade;
   validade: number | null; // INTEGER timestamp (opcional)
-  precisa_sincronizar: boolean;
   local?: LocalIngrediente;
+  precisa_sincronizar: boolean;
   atualizado_em?: number;
   deletado_em?: number;
 };

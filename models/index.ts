@@ -16,6 +16,9 @@ export type {
 // Categoria
 export type { Categoria } from './categoria';
 
+// Unidade
+export type { Unidade } from './unidade';
+
 // Ingrediente
 export type { CategoriaIngrediente, LocalIngrediente, Ingrediente } from './ingrediente';
 
@@ -23,6 +26,7 @@ export type { CategoriaIngrediente, LocalIngrediente, Ingrediente } from './ingr
 export type {
   NivelDificuldade,
   UnidadeMedida,
+  PapelIngrediente,
   Receita,
   ReceitaIngrediente,
   ReceitaIngredienteSubstituto,
@@ -33,7 +37,7 @@ export type {
 } from './receita';
 
 // Inventario
-export type { LocalArmazenamento, Inventario } from './inventario';
+export type { Disponibilidade, Inventario } from './inventario';
 
 // Lista Compras
 export type { ListaCompras } from './lista-compras';

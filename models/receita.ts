@@ -16,12 +16,15 @@ export type Receita = {
   nivel: NivelDificuldade;
 };
 
+export type PapelIngrediente = 'base' | 'principal' | 'secundario' | 'complemento' | 'tempero';
+
 export type ReceitaIngrediente = {
   id: number;
   receita_id: number;
   ingrediente_id: number;
   quantidade: number;
   unidade: UnidadeMedida | null;
+  papel: PapelIngrediente;
   observacao: string | null;
 };
 
