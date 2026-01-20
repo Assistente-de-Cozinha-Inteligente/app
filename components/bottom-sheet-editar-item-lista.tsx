@@ -1,35 +1,34 @@
 import { Colors } from '@/constants/theme';
 import { Ingrediente } from '@/models';
-import { getUnidadesOptionsPorCategoria, Unidade } from '@/utils/unidadesHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomSheetModal, BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ButtonUI } from './ui/button';
-import { InputUI } from './ui/input';
-import { PickerUI } from './ui/picker';
 import { TextUI } from './ui/text';
 
 type BottomSheetEditarItemListaProps = {
   item: {
     ingrediente: Ingrediente;
-    quantidade: number;
-    unidade: string;
   } | null;
   onClose: () => void;
-  onSave: (quantidade: number, unidade: string) => void;
+  onSave: () => void;
+  title?: string;
+  buttonTitle?: string;
 };
 
 export function BottomSheetEditarItemLista({
   item,
   onClose,
   onSave,
+  title = 'Editar item',
+  buttonTitle = 'SALVAR ALTERAÇÕES',
 }: BottomSheetEditarItemListaProps) {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const [quantidade, setQuantidade] = useState('1');
-  const [unidade, setUnidade] = useState<Unidade>('unidade');
 
-  const snapPoints = useMemo(() => ['55%'], []);
+  // Se for para adicionar à lista (title customizado), usa snapPoints menor
+  const isAddToCart = title === 'Adicionar na lista de compras';
+  const snapPoints = useMemo(() => isAddToCart ? ['45%'] : ['40%'], [isAddToCart]);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -45,33 +44,20 @@ export function BottomSheetEditarItemLista({
 
   useEffect(() => {
     if (item) {
-      // Atualiza quantidade e unidade imediatamente
-      setQuantidade(item.quantidade.toString());
-      setUnidade(item.unidade as Unidade);
       // Abre o bottom sheet modal
       bottomSheetRef.current?.present();
     } else {
       // Fecha o bottom sheet modal
       bottomSheetRef.current?.dismiss();
-      // Limpa os dados quando fecha
-      setQuantidade('1');
-      setUnidade('unidade');
     }
   }, [item]);
 
   const handleSave = () => {
     if (!item) return;
 
-    const qty = parseInt(quantidade) || 1;
-    onSave(qty, unidade);
+    onSave();
     bottomSheetRef.current?.dismiss();
     onClose();
-  };
-
-  const handleQuantityChange = (delta: number) => {
-    const currentQty = parseInt(quantidade) || 1;
-    const newQty = Math.max(1, currentQty + delta);
-    setQuantidade(newQty.toString());
   };
 
   return (
@@ -90,7 +76,7 @@ export function BottomSheetEditarItemLista({
           {/* Header */}
           <View style={styles.header}>
             <TextUI variant="semibold" style={styles.title}>
-              Editar item
+              {title}
             </TextUI>
             <TouchableOpacity onPress={() => {
               bottomSheetRef.current?.dismiss();
@@ -100,70 +86,36 @@ export function BottomSheetEditarItemLista({
             </TouchableOpacity>
           </View>
 
-          {/* Nome do ingrediente */}
-          <View style={styles.ingredienteInfo}>
-            <TextUI variant="semibold" style={styles.ingredienteNome}>
-              {item.ingrediente.nome}
-            </TextUI>
-          </View>
+          {/* Conteúdo principal */}
+          <View style={styles.mainContent}>
+            {/* Ícone visual */}
+            {isAddToCart && (
+              <View style={styles.iconContainer}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="cart" size={32} color={Colors.light.primary} />
+                </View>
+              </View>
+            )}
 
-        {/* Quantidade */}
-        <View style={styles.section}>
-          <TextUI variant="regular" style={styles.label}>
-            Quantidade
-          </TextUI>
-          <View style={styles.quantityContainer}>
-            <TouchableOpacity
-              onPress={() => handleQuantityChange(-1)}
-              style={styles.quantityButton}
-            >
-              <Ionicons name="remove" size={20} color={Colors.light.mainText} />
-            </TouchableOpacity>
-            <View style={styles.quantityInputContainer}>
-              <InputUI
-                placeholder=""
-                value={quantidade}
-                onChangeText={(text) => {
-                  const num = parseInt(text) || 1;
-                  setQuantidade(Math.max(1, num).toString());
-                }}
-                keyboardType="numeric"
-                textAlign="center"
-                showClearButton={false}
-                borderColor={null}
-                containerStyle={styles.quantityInput}
-              />
+            {/* Nome do ingrediente */}
+            <View style={styles.ingredienteInfo}>
+              <TextUI variant="semibold" style={styles.ingredienteNome}>
+                {item.ingrediente.nome}
+              </TextUI>
+              {isAddToCart && (
+                <TextUI variant="regular" style={styles.ingredienteDescription}>
+                  Este item será adicionado à sua lista de compras
+                </TextUI>
+              )}
             </View>
-            <TouchableOpacity
-              onPress={() => handleQuantityChange(1)}
-              style={styles.quantityButton}
-            >
-              <Ionicons name="add" size={20} color={Colors.light.mainText} />
-            </TouchableOpacity>
           </View>
-        </View>
-
-        {/* Unidade */}
-        <View style={styles.section}>
-          <TextUI variant="regular" style={styles.label}>
-            Unidade
-          </TextUI>
-          <PickerUI
-            label=""
-            selectedValue={unidade}
-            onValueChange={(value) => setUnidade(value as Unidade)}
-            items={getUnidadesOptionsPorCategoria(item.ingrediente.categoria)}
-            placeholder="Selecione a unidade"
-          />
-        </View>
 
           {/* Botão Salvar */}
           <View style={styles.footer}>
             <ButtonUI
-              title="SALVAR ALTERAÇÕES"
+              title={buttonTitle}
               onPress={handleSave}
               variant="primary"
-              disabled={!unidade || parseInt(quantidade) < 1}
             />
           </View>
         </BottomSheetView>
@@ -204,50 +156,41 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ingredienteInfo: {
-    marginBottom: 24,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.light.input,
-  },
-  ingredienteNome: {
-    fontSize: 18,
-    color: Colors.light.mainText,
-  },
-  section: {
-    marginBottom: 24,
-  },
-  label: {
-    fontSize: 14,
-    color: Colors.light.mainText,
-    marginBottom: 12,
-  },
-  quantityContainer: {
-    flexDirection: 'row',
+  mainContent: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 12,
+    paddingVertical: 20,
   },
-  quantityButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.light.input,
+  iconContainer: {
+    marginBottom: 24,
+    alignItems: 'center',
+  },
+  iconCircle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: Colors.light.primary + '15',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  quantityInputContainer: {
-    flex: 1,
+  ingredienteInfo: {
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
-  quantityInput: {
-    height: 48,
+  ingredienteNome: {
+    fontSize: 22,
+    color: Colors.light.mainText,
+    marginBottom: 8,
+    textAlign: 'center',
   },
-  loadingText: {
+  ingredienteDescription: {
     fontSize: 14,
     color: Colors.light.bodyText,
-    fontStyle: 'italic',
+    textAlign: 'center',
+    lineHeight: 20,
   },
   footer: {
-    marginTop: 'auto',
     paddingBottom: 20,
   },
 });
