@@ -93,7 +93,7 @@ export default function BuscarScreen() {
     },
   ];
   return (
-    <ViewContainerUI>
+    <ViewContainerUI exibirIA={true}>
       <View style={styles.header}>
         <PageTitle
           title="Buscar"

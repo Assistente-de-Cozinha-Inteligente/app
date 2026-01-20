@@ -67,7 +67,7 @@ export default function ConfiguracoesScreen() {
   };
 
   return (
-    <ViewContainerUI isTabBar={true}>
+    <ViewContainerUI isTabBar={true} exibirIA={true}>
       <ScrollViewWithPadding>
         <PageHeader
           style={{

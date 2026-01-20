@@ -1,4 +1,3 @@
-import { BottomSheetEditarItemLista } from '@/components/bottom-sheet-editar-item-lista';
 import { CardItemLista } from '@/components/card-item-lista';
 import { FloatingAddButton } from '@/components/ui/floating-add-button';
 import { PageHeader } from '@/components/ui/page-header';
@@ -7,14 +6,15 @@ import { TextUI } from '@/components/ui/text';
 import { Toast } from '@/components/ui/toast';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
-import { atualizarMarcadoItemListaCompras, atualizarQuantidadeUnidadeItemListaCompras, excluirItemListaCompras, getListaCompras } from '@/data/local/dao/listaComprasDao';
+import { inserirAtualizarItemInventario } from '@/data/local/dao/inventarioDao';
+import { atualizarMarcadoItemListaCompras, excluirItemListaCompras, getListaCompras } from '@/data/local/dao/listaComprasDao';
 import { ListaCompras, LocalIngrediente } from '@/models';
 import { handleShareCarrinho } from '@/share/shareCarrinho';
 import { getNomeLocal } from '@/utils/localHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Animated, BackHandler, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function CarrinhoScreen() {
   const [listaCompras, setListaCompras] = useState<ListaCompras[]>([]);
@@ -108,41 +108,25 @@ export default function CarrinhoScreen() {
     router.push('/adicionar-item-lista');
   };
 
-  const [editingItem, setEditingItem] = useState<ListaCompras | null>(null);
-
-  const handleItemPress = (item: ListaCompras) => {
-    // Abre o bottom sheet para editar o item
-    setEditingItem(item);
-  };
-
-  const handleSaveItem = async (quantidade: number, unidade: string) => {
-    if (!editingItem) return;
-
-    try {
-      // Atualiza apenas a quantidade e unidade (substitui, não soma)
-      await atualizarQuantidadeUnidadeItemListaCompras(
-        editingItem.ingrediente_id,
-        quantidade,
-        unidade
-      );
-
-      // Recarrega a lista do banco para garantir sincronização
-      const listaAtualizada = await getListaCompras();
-      setListaCompras(listaAtualizada);
-
-      setEditingItem(null);
-    } catch (error) {
-      console.error('Erro ao salvar item:', error);
-    }
-  };
-
   const handleAdicionarNaCozinha = async () => {
     try {
       // Guarda o número de itens antes de removê-los
       const quantidadeItens = itensMarcados.length;
 
-      // TODO: Implementar lógica para adicionar itens marcados ao inventário
-      // Por enquanto, apenas remove os itens marcados da lista de compras
+      // Adiciona os itens marcados ao inventário
+      // A disponibilidade será calculada automaticamente pelo DAO baseado na origem 'compra'
+      await inserirAtualizarItemInventario(
+        itensMarcados.map(item => ({
+          ingrediente_id: item.ingrediente_id,
+          disponibilidade: 'medio', // Valor temporário, será recalculado pelo DAO
+          validade: null,
+        precisa_sincronizar: true,
+          local: item.local || item.ingrediente?.local || undefined,
+        })),
+        'compra'
+      );
+
+      // Remove os itens marcados da lista de compras
       await excluirItemListaCompras(itensMarcados.map(item => item.ingrediente_id));
 
       // Atualiza a lista local removendo os itens marcados
@@ -160,20 +144,6 @@ export default function CarrinhoScreen() {
     handleShareCarrinho(listaCompras || []);
   };
 
-  // Handler para o botão de voltar do Android
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      // Se o bottom sheet estiver aberto, fecha ele primeiro
-      if (editingItem) {
-        setEditingItem(null);
-        return true; // Previne o comportamento padrão (voltar para tela anterior)
-      }
-      return false; // Permite o comportamento padrão
-    });
-
-    return () => backHandler.remove();
-  }, [editingItem]);
-
   useFocusEffect(
     useCallback(() => {
       getListaCompras().then((lista) => {
@@ -183,7 +153,7 @@ export default function CarrinhoScreen() {
   );
 
   return (
-    <ViewContainerUI isTabBar={true}>
+    <ViewContainerUI isTabBar={true} exibirIA={true}>
 
       <PageHeader
         style={{
@@ -283,9 +253,8 @@ export default function CarrinhoScreen() {
                     <CardItemLista
                       key={`${item.usuario_id}-${item.ingrediente_id}`}
                       item={item}
-                      onItemPress={handleItemPress}
-                      onItemCheck={handleItemCheck}
-                      onItemRemove={handleItemRemove}
+            onItemCheck={handleItemCheck}
+            onItemRemove={handleItemRemove}
                     />
                   ))}
                 </Animated.View>
@@ -300,24 +269,14 @@ export default function CarrinhoScreen() {
         visible={showSuccessMessage}
         message={`${itensEnviadosCount} ${itensEnviadosCount === 1 ? 'item enviado' : 'itens enviados'} para cozinha!`}
         type="success"
+        exitDirection="right"
         onHide={() => setShowSuccessMessage(false)}
-      />
-
-      {/* Bottom Sheet para editar item */}
-      <BottomSheetEditarItemLista
-        item={editingItem && editingItem.ingrediente ? {
-          ingrediente: editingItem.ingrediente,
-          quantidade: editingItem.quantidade,
-          unidade: editingItem.unidade,
-        } : null}
-        onClose={() => setEditingItem(null)}
-        onSave={handleSaveItem}
       />
 
       <FloatingAddButton onPress={handleAddItem} />
     </ViewContainerUI>
   );
-}
+} 
 
 const styles = StyleSheet.create({
   listContainer: {

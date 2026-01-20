@@ -1,5 +1,5 @@
-import { FloatingChatbotButton } from '@/components/ui/floating-chatbot-button';
-
+import { initDatabase } from '@/data/local/initDatabase';
+import { useAppBackground } from '@/hooks/use-app-background';
 import {
   Poppins_100Thin,
   Poppins_100Thin_Italic,
@@ -20,20 +20,18 @@ import {
   Poppins_900Black,
   Poppins_900Black_Italic,
 } from '@expo-google-fonts/poppins';
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
-import { Stack, usePathname } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Platform, StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import "../global.css";
-import { initDatabase } from '@/data/local/initDatabase';
-import { useAppBackground } from '@/hooks/use-app-background';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -50,9 +48,6 @@ const theme = {
 };
 
 function RootLayoutNav() {
-  const pathname = usePathname();
-  const shouldShowChatbot = pathname !== '/editar-perfil' && !pathname.startsWith('/receita/') && pathname !== '/chat' && pathname !== '/oferta-limitada' && pathname !== '/paywall' && pathname !== '/login' && pathname !== '/registro' && pathname !== '/resetar-senha' && pathname !== '/adicionar-item-lista' && pathname !== '/adicionar-item-inventario';
-
   return (
     <>
       <Stack>
@@ -69,9 +64,6 @@ function RootLayoutNav() {
         <Stack.Screen name="adicionar-item-lista" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="adicionar-item-inventario" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
       </Stack>
-      {shouldShowChatbot && (
-        <FloatingChatbotButton />
-      )}
       <StatusBar style="dark" />
     </>
   );
@@ -136,13 +128,13 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={styles.container}>
-    <SafeAreaProvider>
+      <SafeAreaProvider>
         <BottomSheetModalProvider>
-      <ThemeProvider value={theme}>
-        <RootLayoutNav />
-      </ThemeProvider>
+          <ThemeProvider value={theme}>
+            <RootLayoutNav />
+          </ThemeProvider>
         </BottomSheetModalProvider>
-    </SafeAreaProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
