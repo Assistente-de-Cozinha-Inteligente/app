@@ -6,18 +6,15 @@ import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { buscarIngredientesPorNome, getAllIngredientes } from '@/data/local/dao/ingredienteDao';
 import { inserirAtualizarItemInventario } from '@/data/local/dao/inventarioDao';
-import { Ingrediente, LocalIngrediente, UnidadeMedida } from '@/models';
-import { getUnidadePrincipalPorCategoria } from '@/utils/unidadesHelper';
+import { Ingrediente, LocalIngrediente } from '@/models';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { FlatList, Pressable, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ItemSelecionado = {
   ingrediente: Ingrediente;
-  quantidade: number;
-  unidade: string;
   validade: number | null; // timestamp (opcional)
   local?: LocalIngrediente;
 };
@@ -64,32 +61,15 @@ export default function AdicionarItemInventarioScreen() {
       item => item.ingrediente.id === ingrediente.id
     );
 
-    if (jaSelecionado) {
-      // Aumenta a quantidade se já estiver selecionado
-      setItensSelecionados(
-        itensSelecionados.map(item =>
-          item.ingrediente.id === ingrediente.id
-            ? { ...item, quantidade: item.quantidade + 1 }
-            : item
-        )
-      );
-    } else {
-      // Busca a unidade principal baseada na categoria do ingrediente
-      const unidadePrincipal = getUnidadePrincipalPorCategoria(ingrediente.categoria);
-
-      // Adiciona novo item sem validade (null por padrão)
+    if (!jaSelecionado) {
+      // Adiciona novo item sem validade (usuário escolhe)
       const novoItem: ItemSelecionado = {
         ingrediente,
-        quantidade: 1,
-        unidade: unidadePrincipal,
         validade: null,
         local: ingrediente.local
       };
       setItensSelecionados([...itensSelecionados, novoItem]);
     }
-
-    // Limpa o campo de pesquisa para mostrar os selecionados
-    setSearchTerm('');
   };
 
   const handleRemoverIngrediente = (ingredienteId: number) => {
@@ -98,29 +78,17 @@ export default function AdicionarItemInventarioScreen() {
     );
   };
 
-  const handleAjustarQuantidade = (ingredienteId: number, delta: number) => {
-    setItensSelecionados(
-      itensSelecionados.map(item => {
-        if (item.ingrediente.id === ingredienteId) {
-          const novaQuantidade = Math.max(1, item.quantidade + delta);
-          return { ...item, quantidade: novaQuantidade };
-        }
-        return item;
-      })
-    );
-  };
-
   const handleItemPress = (item: ItemSelecionado) => {
     setEditingItem(item);
   };
 
-  const handleSaveItem = async (quantidade: number, unidade: string, validade: number | null) => {
+  const handleSaveItem = async (validade: number | null) => {
     if (!editingItem) return;
 
     setItensSelecionados(
       itensSelecionados.map(item =>
         item.ingrediente.id === editingItem.ingrediente.id
-          ? { ...item, quantidade, unidade, validade }
+          ? { ...item, validade }
           : item
       )
     );
@@ -131,14 +99,14 @@ export default function AdicionarItemInventarioScreen() {
   const handleSalvar = async () => {
     try {
       // Insere ou atualiza os itens no inventário
+      // A disponibilidade será calculada automaticamente pelo DAO baseado na origem 'manual'
       await inserirAtualizarItemInventario(itensSelecionados.map(item => ({
         ingrediente_id: item.ingrediente.id,
-        quantidade: item.quantidade,
-        unidade: item.unidade as UnidadeMedida,
+        disponibilidade: 'baixo', // Valor temporário, será recalculado pelo DAO
         validade: item.validade,
         precisa_sincronizar: true,
         local: item.ingrediente.local,
-      })));
+      })), 'manual');
 
       router.back();
     } catch (error) {
@@ -166,9 +134,6 @@ export default function AdicionarItemInventarioScreen() {
             <TextUI variant="semibold" style={styles.itemNome}>
               {item.ingrediente.nome}
             </TextUI>
-            <TextUI variant="regular" style={styles.itemQuantidade}>
-              {item.quantidade} {item.quantidade === 1 ? item.unidade : `${item.unidade}s`}
-            </TextUI>
             {item.validade && (
               <TextUI variant="regular" style={styles.itemValidade}>
                 Vence em: {formatDate(item.validade)}
@@ -176,21 +141,6 @@ export default function AdicionarItemInventarioScreen() {
             )}
           </TouchableOpacity>
           <View style={styles.itemActions}>
-            <TouchableOpacity
-              onPress={() => handleAjustarQuantidade(item.ingrediente.id, -1)}
-              style={styles.quantityButton}
-            >
-              <Ionicons name="remove" size={18} color={Colors.light.mainText} />
-            </TouchableOpacity>
-            <TextUI variant="semibold" style={styles.quantityText}>
-              {item.quantidade}
-            </TextUI>
-            <TouchableOpacity
-              onPress={() => handleAjustarQuantidade(item.ingrediente.id, 1)}
-              style={styles.quantityButton}
-            >
-              <Ionicons name="add" size={18} color={Colors.light.mainText} />
-            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => handleRemoverIngrediente(item.ingrediente.id)}
               style={styles.removeButton}
@@ -242,108 +192,135 @@ export default function AdicionarItemInventarioScreen() {
 
   return (
     <ViewContainerUI isTabBar={false}>
-      <View style={styles.container}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => router.back()}
-            style={styles.backButton}
-          >
-            <Ionicons name="arrow-back" size={24} color={Colors.light.mainText} />
-          </TouchableOpacity>
-          <TextUI variant="semibold" style={styles.headerTitle}>
-            Adicionar itens
-          </TextUI>
-          <View style={styles.headerSpacer} />
-        </View>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+      >
+        {/* Pressable sem onPress para não consumir o evento */}
+        <Pressable style={{ flex: 1 }}>
+          <View style={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
+              <TouchableOpacity
+                onPress={() => router.back()}
+                style={styles.backButton}
+              >
+                <Ionicons
+                  name="arrow-back"
+                  size={24}
+                  color={Colors.light.mainText}
+                />
+              </TouchableOpacity>
 
-        {/* Barra de busca */}
-        <View style={styles.searchContainer}>
-          <InputUI
-            placeholder="Digite o nome do ingrediente"
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-            containerStyle={styles.searchInput}
-          />
-          <Ionicons
-            name="search"
-            size={20}
-            color={Colors.light.bodyText}
-            style={styles.searchIcon}
-          />
-        </View>
-
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Seção Selecionados - só aparece quando não está pesquisando */}
-          {itensSelecionados.length > 0 && searchTerm.trim().length === 0 && (
-            <View style={styles.section}>
-              <TextUI variant="semibold" style={styles.sectionTitle}>
-                Selecionados
+              <TextUI variant="semibold" style={styles.headerTitle}>
+                Adicionar itens
               </TextUI>
-              <FlatList
-                data={itensSelecionados}
-                renderItem={renderItemSelecionado}
-                keyExtractor={(item) => item.ingrediente.id.toString()}
-                scrollEnabled={false}
+
+              <View style={styles.headerSpacer} />
+            </View>
+
+            {/* Barra de busca */}
+            <View style={styles.searchContainer}>
+              <InputUI
+                placeholder="Digite o nome do ingrediente"
+                value={searchTerm}
+                onChangeText={setSearchTerm}
+                containerStyle={styles.searchInput}
+              />
+              <Ionicons
+                name="search"
+                size={20}
+                color={Colors.light.bodyText}
+                style={styles.searchIcon}
               />
             </View>
-          )}
 
-          {/* Seção Sugeridos */}
-          <View style={styles.section}>
-            <TextUI variant="semibold" style={styles.sectionTitle}>
-              Sugeridos
-            </TextUI>
-            {isSearching ? (
-              <View style={styles.loadingContainer}>
-                <TextUI variant="regular" style={styles.loadingText}>
-                  Buscando...
+            {/* Conteúdo */}
+            <ScrollView
+              style={styles.scrollView}
+              contentContainerStyle={styles.scrollContent}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+            >
+              {/* Selecionados */}
+              {itensSelecionados.length > 0 &&
+                searchTerm.trim().length === 0 && (
+                  <View style={styles.section}>
+                    <TextUI variant="semibold" style={styles.sectionTitle}>
+                      Selecionados
+                    </TextUI>
+
+                    <FlatList
+                      data={itensSelecionados}
+                      renderItem={renderItemSelecionado}
+                      keyExtractor={(item) =>
+                        item.ingrediente.id.toString()
+                      }
+                      scrollEnabled={false}
+                      keyboardShouldPersistTaps="handled"
+                    />
+                  </View>
+                )}
+
+              {/* Sugeridos */}
+              <View style={styles.section}>
+                <TextUI variant="semibold" style={styles.sectionTitle}>
+                  Sugeridos
                 </TextUI>
+
+                {isSearching ? (
+                  <View style={styles.loadingContainer}>
+                    <TextUI variant="regular" style={styles.loadingText}>
+                      Buscando...
+                    </TextUI>
+                  </View>
+                ) : ingredientesSugeridos.length === 0 ? (
+                  <View style={styles.emptyContainer}>
+                    <TextUI variant="regular" style={styles.emptyText}>
+                      Nenhum ingrediente encontrado
+                    </TextUI>
+                  </View>
+                ) : (
+                  <FlatList
+                    data={ingredientesSugeridos}
+                    renderItem={renderItemSugerido}
+                    keyExtractor={(item) => item.id.toString()}
+                    scrollEnabled={false}
+                    keyboardShouldPersistTaps="handled"
+                  />
+                )}
               </View>
-            ) : ingredientesSugeridos.length === 0 ? (
-              <View style={styles.emptyContainer}>
-                <TextUI variant="regular" style={styles.emptyText}>
-                  Nenhum ingrediente encontrado
-                </TextUI>
+            </ScrollView>
+
+            {/* Botão de ação */}
+            {itensSelecionados.length > 0 && (
+              <View
+                style={[
+                  styles.footer,
+                  { paddingBottom: insets.bottom + 16 },
+                ]}
+              >
+                <ButtonUI
+                  title={`Adicionar ${itensSelecionados.length} ${
+                    itensSelecionados.length === 1 ? 'item' : 'itens'
+                  }`}
+                  onPress={handleSalvar}
+                  variant="primary"
+                />
               </View>
-            ) : (
-              <FlatList
-                data={ingredientesSugeridos}
-                renderItem={renderItemSugerido}
-                keyExtractor={(item) => item.id.toString()}
-                scrollEnabled={false}
-              />
             )}
           </View>
-        </ScrollView>
 
-        {/* Botão de ação */}
-        {itensSelecionados.length > 0 && (
-          <View style={[styles.footer, { paddingBottom: insets.bottom + 16 }]}>
-            <ButtonUI
-              title={`Adicionar ${itensSelecionados.length} ${itensSelecionados.length === 1 ? 'item' : 'itens'}`}
-              onPress={handleSalvar}
-              variant="primary"
-            />
-          </View>
-        )}
-      </View>
-
-      {/* Bottom Sheet para adicionar/editar item */}
-      <BottomSheetAdicionarItemInventario
-        item={editingItem ? {
-          ingrediente: editingItem.ingrediente,
-          quantidade: editingItem.quantidade,
-          unidade: editingItem.unidade,
-          validade: editingItem.validade,
-        } : null}
-        onClose={() => setEditingItem(null)}
-        onSave={handleSaveItem}
-      />
+          {/* Bottom Sheet */}
+          <BottomSheetAdicionarItemInventario
+            item={editingItem ? {
+              ingrediente: editingItem.ingrediente,
+              validade: editingItem.validade,
+            } : null}
+            onClose={() => setEditingItem(null)}
+            onSave={handleSaveItem}
+          />
+        </Pressable>
+      </KeyboardAvoidingView>
     </ViewContainerUI>
   );
 }
@@ -426,11 +403,6 @@ const styles = StyleSheet.create({
     color: Colors.light.mainText,
     marginBottom: 2,
   },
-  itemQuantidade: {
-    fontSize: 13,
-    color: Colors.light.bodyText,
-    marginBottom: 2,
-  },
   itemValidade: {
     fontSize: 12,
     color: Colors.light.bodyText,
@@ -438,21 +410,6 @@ const styles = StyleSheet.create({
   itemActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-  },
-  quantityButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.light.input,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  quantityText: {
-    fontSize: 14,
-    color: Colors.light.mainText,
-    minWidth: 26,
-    textAlign: 'center',
   },
   removeButton: {
     width: 28,

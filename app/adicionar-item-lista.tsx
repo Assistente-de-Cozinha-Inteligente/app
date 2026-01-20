@@ -1,4 +1,3 @@
-import { BottomSheetEditarItemLista } from '@/components/bottom-sheet-editar-item-lista';
 import { ButtonUI } from '@/components/ui/button';
 import { InputUI } from '@/components/ui/input';
 import { TextUI } from '@/components/ui/text';
@@ -6,8 +5,7 @@ import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { buscarIngredientesPorNome, getAllIngredientes } from '@/data/local/dao/ingredienteDao';
 import { inserirAtualizarItemListaCompras } from '@/data/local/dao/listaComprasDao';
-import { Ingrediente, LocalIngrediente, UnidadeMedida } from '@/models';
-import { getUnidadePrincipalPorCategoria } from '@/utils/unidadesHelper';
+import { Ingrediente, LocalIngrediente } from '@/models';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -16,8 +14,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ItemSelecionado = {
   ingrediente: Ingrediente;
-  quantidade: number;
-  unidade: string;
   local?: LocalIngrediente;
 };
 
@@ -26,7 +22,6 @@ export default function AdicionarItemListaScreen() {
   const [ingredientesSugeridos, setIngredientesSugeridos] = useState<Ingrediente[]>([]);
   const [itensSelecionados, setItensSelecionados] = useState<ItemSelecionado[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [editingItem, setEditingItem] = useState<ItemSelecionado | null>(null);
   const insets = useSafeAreaInsets();
 
   // Carrega ingredientes iniciais
@@ -63,28 +58,13 @@ export default function AdicionarItemListaScreen() {
       item => item.ingrediente.id === ingrediente.id
     );
 
-    if (jaSelecionado) {
-      // Aumenta a quantidade
-      setItensSelecionados(
-        itensSelecionados.map(item =>
-          item.ingrediente.id === ingrediente.id
-            ? { ...item, quantidade: item.quantidade + 1 }
-            : item
-        )
-      );
-    } else {
-      // Busca a unidade principal baseada na categoria do ingrediente
-      const unidadePrincipal = getUnidadePrincipalPorCategoria(ingrediente.categoria);
-
-      // Adiciona novo item com a unidade principal
+    if (!jaSelecionado) {
+      // Adiciona novo item
       setItensSelecionados([
         ...itensSelecionados,
-        { ingrediente, quantidade: 1, unidade: unidadePrincipal, local: ingrediente.local }
+        { ingrediente, local: ingrediente.local }
       ]);
     }
-
-    // Limpa o campo de pesquisa para mostrar os selecionados
-    setSearchTerm('');
   };
 
   const handleRemoverIngrediente = (ingredienteId: number) => {
@@ -93,43 +73,12 @@ export default function AdicionarItemListaScreen() {
     );
   };
 
-  const handleAjustarQuantidade = (ingredienteId: number, delta: number) => {
-    setItensSelecionados(
-      itensSelecionados.map(item => {
-        if (item.ingrediente.id === ingredienteId) {
-          const novaQuantidade = Math.max(1, item.quantidade + delta);
-          return { ...item, quantidade: novaQuantidade };
-        }
-        return item;
-      })
-    );
-  };
-
-  const handleItemPress = (item: ItemSelecionado) => {
-    setEditingItem(item);
-  };
-
-  const handleSaveItem = async (quantidade: number, unidade: string) => {
-    if (!editingItem) return;
-
-    setItensSelecionados(
-      itensSelecionados.map(item =>
-        item.ingrediente.id === editingItem.ingrediente.id
-          ? { ...item, quantidade, unidade }
-          : item
-      )
-    );
-
-    setEditingItem(null);
-  };
 
   const handleSalvar = async () => {
     try {
       // Insere ou atualiza os itens na lista de compras
       await inserirAtualizarItemListaCompras(itensSelecionados.map(item => ({
         ingrediente_id: item.ingrediente.id,
-        quantidade: item.quantidade,
-        unidade: item.unidade as UnidadeMedida,
         marcado: false,
         precisa_sincronizar: true,
         local: item.ingrediente.local,
@@ -144,34 +93,12 @@ export default function AdicionarItemListaScreen() {
   const renderItemSelecionado = ({ item }: { item: ItemSelecionado }) => (
     <View style={styles.itemCard}>
       <View style={styles.itemCardContent}>
-        <TouchableOpacity
-          onPress={() => handleItemPress(item)}
-          style={styles.itemInfo}
-          activeOpacity={0.7}
-        >
+        <View style={styles.itemInfo}>
           <TextUI variant="semibold" style={styles.itemNome}>
             {item.ingrediente.nome}
           </TextUI>
-          <TextUI variant="regular" style={styles.itemQuantidade}>
-            {item.quantidade} {item.quantidade === 1 ? item.unidade : `${item.unidade}s`}
-          </TextUI>
-        </TouchableOpacity>
+        </View>
         <View style={styles.itemActions}>
-          <TouchableOpacity
-            onPress={() => handleAjustarQuantidade(item.ingrediente.id, -1)}
-            style={styles.quantityButton}
-          >
-            <Ionicons name="remove" size={18} color={Colors.light.mainText} />
-          </TouchableOpacity>
-          <TextUI variant="semibold" style={styles.quantityText}>
-            {item.quantidade}
-          </TextUI>
-          <TouchableOpacity
-            onPress={() => handleAjustarQuantidade(item.ingrediente.id, 1)}
-            style={styles.quantityButton}
-          >
-            <Ionicons name="add" size={18} color={Colors.light.mainText} />
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handleRemoverIngrediente(item.ingrediente.id)}
             style={styles.removeButton}
@@ -221,7 +148,12 @@ export default function AdicionarItemListaScreen() {
   };
 
   return (
-    <ViewContainerUI isTabBar={false}>
+<ViewContainerUI isTabBar={false}>
+  <KeyboardAvoidingView
+    style={{ flex: 1 }}
+  >
+    {/* Pressable sem onPress para não consumir o evento */}
+    <Pressable style={{ flex: 1 }}>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
@@ -229,97 +161,114 @@ export default function AdicionarItemListaScreen() {
             onPress={() => router.back()}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.light.mainText} />
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color={Colors.light.mainText}
+            />
           </TouchableOpacity>
+
           <TextUI variant="semibold" style={styles.headerTitle}>
             Adicionar itens
           </TextUI>
+
           <View style={styles.headerSpacer} />
         </View>
 
-          {/* Barra de busca */}
-          <View style={styles.searchContainer}>
-            <InputUI
-              placeholder="Digite o nome do ingrediente"
-              value={searchTerm}
-              onChangeText={setSearchTerm}
-              containerStyle={styles.searchInput}
-            />
-            <Ionicons
-              name="search"
-              size={20}
-              color={Colors.light.bodyText}
-              style={styles.searchIcon}
-            />
-          </View>
+        {/* Barra de busca */}
+        <View style={styles.searchContainer}>
+          <InputUI
+            placeholder="Digite o nome do ingrediente"
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            containerStyle={styles.searchInput}
+          />
+          <Ionicons
+            name="search"
+            size={20}
+            color={Colors.light.bodyText}
+            style={styles.searchIcon}
+          />
+        </View>
 
-          <ScrollView
-            style={styles.scrollView}
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false}
-          >
-            {/* Seção Selecionados - só aparece quando não está pesquisando */}
-            {itensSelecionados.length > 0 && searchTerm.trim().length === 0 && (
+        {/* Conteúdo */}
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Selecionados */}
+          {itensSelecionados.length > 0 &&
+            searchTerm.trim().length === 0 && (
               <View style={styles.section}>
                 <TextUI variant="semibold" style={styles.sectionTitle}>
                   Selecionados
                 </TextUI>
+
                 <FlatList
                   data={itensSelecionados}
                   renderItem={renderItemSelecionado}
-                  keyExtractor={(item) => item.ingrediente.id.toString()}
+                  keyExtractor={(item) =>
+                    item.ingrediente.id.toString()
+                  }
                   scrollEnabled={false}
+                  keyboardShouldPersistTaps="handled"
                 />
               </View>
             )}
 
-            {/* Seção Sugeridos */}
-            <View style={styles.section}>
-              <TextUI variant="semibold" style={styles.sectionTitle}>
-                Sugeridos
-              </TextUI>
-              {isSearching ? (
-                <View style={styles.loadingContainer}>
-                  <TextUI variant="regular" style={styles.loadingText}>
-                    Buscando...
-                  </TextUI>
-                </View>
-              ) : ingredientesSugeridos.length === 0 ? (
-                <View style={styles.emptyContainer}>
-                  <TextUI variant="regular" style={styles.emptyText}>
-                    Nenhum ingrediente encontrado
-                  </TextUI>
-                </View>
-              ) : (
-                <FlatList
-                  data={ingredientesSugeridos}
-                  renderItem={renderItemSugerido}
-                  keyExtractor={(item) => item.id.toString()}
-                  scrollEnabled={false}
-                />
-              )}
-            </View>
-          </ScrollView>
+          {/* Sugeridos */}
+          <View style={styles.section}>
+            <TextUI variant="semibold" style={styles.sectionTitle}>
+              Sugeridos
+            </TextUI>
+
+            {isSearching ? (
+              <View style={styles.loadingContainer}>
+                <TextUI variant="regular" style={styles.loadingText}>
+                  Buscando...
+                </TextUI>
+              </View>
+            ) : ingredientesSugeridos.length === 0 ? (
+              <View style={styles.emptyContainer}>
+                <TextUI variant="regular" style={styles.emptyText}>
+                  Nenhum ingrediente encontrado
+                </TextUI>
+              </View>
+            ) : (
+              <FlatList
+                data={ingredientesSugeridos}
+                renderItem={renderItemSugerido}
+                keyExtractor={(item) => item.id.toString()}
+                scrollEnabled={false}
+                keyboardShouldPersistTaps="handled"
+              />
+            )}
+          </View>
+        </ScrollView>
 
         {/* Botão de ação */}
         {itensSelecionados.length > 0 && (
-          <View style={[styles.footer, { paddingBottom: insets.bottom + 16 }]}>
+          <View
+            style={[
+              styles.footer,
+              { paddingBottom: insets.bottom + 16 },
+            ]}
+          >
             <ButtonUI
-              title={`Adicionar ${itensSelecionados.length} ${itensSelecionados.length === 1 ? 'item' : 'itens'}`}
+              title={`Adicionar ${itensSelecionados.length} ${
+                itensSelecionados.length === 1 ? 'item' : 'itens'
+              }`}
               onPress={handleSalvar}
               variant="primary"
             />
           </View>
         )}
       </View>
-
-      {/* Bottom Sheet para editar item */}
-      <BottomSheetEditarItemLista
-        item={editingItem}
-        onClose={() => setEditingItem(null)}
-        onSave={handleSaveItem}
-      />
-    </ViewContainerUI>
+    </Pressable>
+  </KeyboardAvoidingView>
+</ViewContainerUI>
   );
 }
 
@@ -401,28 +350,9 @@ const styles = StyleSheet.create({
     color: Colors.light.mainText,
     marginBottom: 2,
   },
-  itemQuantidade: {
-    fontSize: 13,
-    color: Colors.light.bodyText,
-  },
   itemActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-  },
-  quantityButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.light.input,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  quantityText: {
-    fontSize: 14,
-    color: Colors.light.mainText,
-    minWidth: 26,
-    textAlign: 'center',
   },
   removeButton: {
     width: 28,
