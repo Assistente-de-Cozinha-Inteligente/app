@@ -1,8 +1,8 @@
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type FloatingChatbotButtonProps = {
   onPress?: () => void;
@@ -10,8 +10,8 @@ type FloatingChatbotButtonProps = {
 
 export function FloatingChatbotButton({ onPress }: FloatingChatbotButtonProps) {
   const insets = useSafeAreaInsets();
-  // Altura aproximada da tab bar (80px) + padding bottom safe area
-  const bottomOffset = 80 + insets.bottom;
+  // Altura aproximada da tab bar (80px) + altura do botão de adicionar (56px) + gap (16px) + padding bottom safe area
+  const bottomOffset = insets.bottom;
 
   const handlePress = () => {
     if (onPress) {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     right: 20,
-    zIndex: 1000,
+    zIndex: 100, // Menor que os bottom sheets (que usam z-index muito alto)
   },
   button: {
     width: 56,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
-    elevation: 8,
+    elevation: 1, // Menor elevation no Android para ficar abaixo dos bottom sheets
   },
 });
 

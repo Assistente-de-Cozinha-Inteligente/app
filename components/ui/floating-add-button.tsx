@@ -9,8 +9,8 @@ type FloatingAddButtonProps = {
 
 export function FloatingAddButton({ onPress }: FloatingAddButtonProps) {
   const insets = useSafeAreaInsets();
-  // Altura aproximada da tab bar (80px) + padding bottom safe area + altura do botão do chatbot (56px) + gap (16px)
-  const bottomOffset = insets.bottom + 56 ;
+  // Altura aproximada da tab bar (80px) + padding bottom safe area
+  const bottomOffset = 80 + insets.bottom;
 
   return (
     <View style={[styles.container, { bottom: bottomOffset }]}>
