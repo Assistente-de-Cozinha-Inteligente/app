@@ -2,6 +2,7 @@ import { TextUI } from '@/components/ui/text';
 import { Colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Network from 'expo-network';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -17,7 +18,30 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
         minutes: 59,
         seconds: 59,
     });
+    const [hasInternet, setHasInternet] = useState(true);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    // Verifica conexão com internet
+    useEffect(() => {
+        const checkNetwork = async () => {
+            try {
+                const networkState = await Network.getNetworkStateAsync();
+                setHasInternet(networkState.isConnected ?? false);
+            } catch (error) {
+                console.error('Erro ao verificar conexão:', error);
+                setHasInternet(false);
+            }
+        };
+
+        checkNetwork();
+        
+        // Verifica a cada 5 segundos
+        const networkInterval = setInterval(checkNetwork, 5000);
+
+        return () => {
+            clearInterval(networkInterval);
+        };
+    }, []);
 
     useEffect(() => {
         // Inicia o cronômetro regressivo
@@ -76,7 +100,7 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
                                 </TextUI>
                                 <View style={styles.compactBadge}>
                                     <TextUI variant="bold" style={styles.compactBadgeText}>
-                                        -57%
+                                        EXCLUSIVA
                                     </TextUI>
                                 </View>
                             </View>
@@ -123,25 +147,39 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
                             </View>
                         </View>
                         
-                        <View style={styles.compactPriceContainer}>
-                            <View style={styles.compactPriceSection}>
-                                <View style={styles.compactPriceRow}>
-                                    <TextUI variant="regular" style={styles.compactOldPrice}>
-                                        R$ 12,90
-                                    </TextUI>
-                                    <TextUI variant="bold" style={styles.compactNewPrice}>
-                                        R$ 8,90
-                                    </TextUI>
-                                    <TextUI variant="regular" style={styles.compactPricePeriod}>
-                                        /mês
+                        {hasInternet ? (
+                            <View style={styles.compactPriceContainer}>
+                                <View style={styles.compactPriceSection}>
+                                    <View style={styles.compactPriceRow}>
+                                        <TextUI variant="regular" style={styles.compactOldPrice}>
+                                            R$ 12,90
+                                        </TextUI>
+                                        <TextUI variant="bold" style={styles.compactNewPrice}>
+                                            R$ 8,90
+                                        </TextUI>
+                                        <TextUI variant="regular" style={styles.compactPricePeriod}>
+                                            /mês
+                                        </TextUI>
+                                    </View>
+                                    <TextUI variant="regular" style={styles.compactPriceSubtext}>
+                                        Desconto vitalício enquanto mantiver assinatura
                                     </TextUI>
                                 </View>
-                                <TextUI variant="regular" style={styles.compactPriceSubtext}>
-                                    Desconto vitalício enquanto mantiver assinatura
-                                </TextUI>
+                                <Ionicons name="chevron-forward-outline" size={20} color={Colors.light.primary} />
                             </View>
-                            <Ionicons name="chevron-forward-outline" size={20} color={Colors.light.primary} />
-                        </View>
+                        ) : (
+                            <View style={styles.compactPriceContainer}>
+                                <View style={styles.compactPriceSection}>
+                                    <View style={styles.compactOfflineContainer}>
+                                        <Ionicons name="cloud-offline-outline" size={18} color={Colors.light.bodyText} />
+                                        <TextUI variant="regular" style={styles.compactOfflineText}>
+                                            Conecte-se à internet para ver o preço
+                                        </TextUI>
+                                    </View>
+                                </View>
+                                <Ionicons name="chevron-forward-outline" size={20} color={Colors.light.primary} />
+                            </View>
+                        )}
                     </View>
                 </View>
             </Pressable>
@@ -408,6 +446,16 @@ const styles = StyleSheet.create({
     compactPriceSubtext: {
         fontSize: 12,
         color: Colors.light.bodyText,
+    },
+    compactOfflineContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    compactOfflineText: {
+        fontSize: 12,
+        color: Colors.light.bodyText,
+        flex: 1,
     },
 });
 
