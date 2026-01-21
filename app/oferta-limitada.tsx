@@ -3,8 +3,11 @@ import { ButtonUI } from '@/components/ui/button';
 import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
+import { getOrCreateLocalUser } from '@/data/local/dao/usuarioDao';
+import { Usuario } from '@/models';
 import { haptics } from '@/utils/haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Network from 'expo-network';
@@ -16,16 +19,30 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export default function OfertaLimitadaScreen() {
     const insets = useSafeAreaInsets();
     const [hasInternet, setHasInternet] = useState(true);
+    const [usuario, setUsuario] = useState<Usuario | null>(null);
 
     // Animações de entrada
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const scaleAnim = useRef(new Animated.Value(0.8)).current;
     const slideAnim = useRef(new Animated.Value(50)).current;
 
+    // Busca o usuário apenas uma vez quando a tela é montada
+    useEffect(() => {
+        let mounted = true;
+        getOrCreateLocalUser().then((user) => {
+            if (mounted && user) {
+                setUsuario(user);
+            }
+        });
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
     // quando iniciar tela 
     useEffect(() => {
         haptics.heavy();
-
+        AsyncStorage.setItem('ganhou_oferta', '1');
         // Animação de entrada - fade + scale + slide
         Animated.parallel([
             Animated.timing(fadeAnim, {
@@ -110,9 +127,15 @@ export default function OfertaLimitadaScreen() {
                         <TextUI variant="regular" style={styles.description}>
                             Você desbloqueou uma oferta limitada exclusiva!
                         </TextUI>
+                        <View style={styles.newUserBadge}>
+                            <Ionicons name="person-add" size={14} color={Colors.light.primary} />
+                            <TextUI variant="semibold" style={styles.newUserText}>
+                                Exclusivo para novos usuários
+                            </TextUI>
+                        </View>
                     </View>
 
-                    <CronometroOferta variant="full" />
+                    <CronometroOferta variant="full" criadoEm={usuario?.criado_em} />
 
                     <View style={styles.priceCardContainer}>
                         {hasInternet ? (
@@ -433,6 +456,40 @@ const styles = StyleSheet.create({
     savingsText: {
         fontSize: 13,
         color: Colors.light.white,
+    },
+    newUserBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        marginTop: 12,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        backgroundColor: Colors.light.primary + '15',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: Colors.light.primary + '30',
+    },
+    newUserText: {
+        fontSize: 12,
+        color: Colors.light.primary,
+    },
+    newUserInfoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginTop: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+    },
+    newUserInfoText: {
+        fontSize: 12,
+        color: Colors.light.white,
+        flex: 1,
+        lineHeight: 16,
     },
     fixedButtonContainer: {
         position: 'absolute',

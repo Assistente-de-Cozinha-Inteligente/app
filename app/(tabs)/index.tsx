@@ -9,15 +9,47 @@ import { SectionUI } from '@/components/ui/section';
 import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
-import { testInsertUpdateDao, testSelectDao } from '@/data/local/dao/testDao';
 import { getOrCreateLocalUser } from '@/data/local/dao/usuarioDao';
+import { Usuario } from '@/models';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFocusEffect } from 'expo-router';
-import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router, useFocusEffect } from 'expo-router';
 import { useState } from 'react';
+import { Pressable, View } from 'react-native';
 
 export default function HomeScreen() {
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [showCronometro, setShowCronometro] = useState(false);
+
+  // Verifica se o usuário tem menos de 23 horas desde a criação E se ganhou a oferta
+  const checkShouldShowCronometro = async (usuario: Usuario | null) => {
+    if (!usuario || !usuario.criado_em) {
+      return false;
+    }
+
+    // Verifica se ganhou a oferta no storage
+    const ganhouOferta = await AsyncStorage.getItem('ganhou_oferta');
+    if (ganhouOferta !== '1') {
+      return false;
+    }
+
+    const agora = Date.now();
+    const tempoDecorrido = agora - usuario.criado_em;
+    const vinteTresHoras = 23 * 60 * 60 * 1000; // 23 horas em milissegundos
+
+    return tempoDecorrido < vinteTresHoras;
+  };
+
+  useFocusEffect(() => {
+    getOrCreateLocalUser().then(async (user) => {
+      if (user) {
+        setUsuario(user);
+        const shouldShow = await checkShouldShowCronometro(user);
+        setShowCronometro(shouldShow);
+      }
+      console.log(user, "(<<<<<<<<< ID do usuário <<<<<<<<<)");
+    });
+  });
 
   const receitasFazer = [
     {
@@ -79,12 +111,6 @@ export default function HomeScreen() {
     },
   ];
 
-  useFocusEffect(() => {
-    getOrCreateLocalUser().then((user) => {
-      console.log(user, "(<<<<<<<<< ID do usuário <<<<<<<<<)");
-    });
-  });
-
   const testHandler = async () => {
     // 15 dias antes de hoje
     // testSelectDao(`select * from perfis_usuario`).then((result) => {
@@ -109,12 +135,14 @@ export default function HomeScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <ButtonUI title="Testar" onPress={testHandler} />
-        <SectionUI title="" style={{
-          paddingHorizontal: 20,
-          marginBottom: 20,
-        }}>
-          <CronometroOferta variant="compact" />
-        </SectionUI>
+        {showCronometro && usuario?.criado_em && (
+          <SectionUI title="" style={{
+            paddingHorizontal: 20,
+            marginBottom: 20,
+          }}>
+            <CronometroOferta variant="compact" criadoEm={usuario.criado_em} />
+          </SectionUI>
+        )}
 
         <SectionUI title="" style={{
           paddingHorizontal: 20,
@@ -129,18 +157,19 @@ export default function HomeScreen() {
           />
         </SectionUI>
 
+        <ButtonUI title="Oferta limitada" onPress={() => router.push('/oferta-limitada')} style={{
+          marginBottom: 20,
+        }} />
+
         <ButtonUI title="PAGAR" onPress={() => router.push('/paywall')} style={{
-          marginHorizontal: 20,
           marginBottom: 20,
         }} />
 
         <ButtonUI title="Login" onPress={() => router.push('/login?modo=assinatura')} style={{
-          marginHorizontal: 20,
           marginBottom: 20,
         }} />
 
         <ButtonUI title="Registrar" onPress={() => router.push('/registro?modo=assinatura')} style={{
-          marginHorizontal: 20,
           marginBottom: 20,
         }} />
 
