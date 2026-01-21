@@ -1,4 +1,4 @@
-import { ModalSelecao } from '@/components/modal-selecao';
+import { BottomSheetSelecao } from '@/components/bottom-sheet-selecao';
 import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { SectionUI } from '@/components/ui/section';
@@ -6,64 +6,265 @@ import { TextUI } from '@/components/ui/text';
 import { Toggle } from '@/components/ui/toggle';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
+import { atualizarAlergias, atualizarPerfilUsuario, atualizarPrioridades, atualizarRestricoesAlimentares, getPerfilCompleto } from '@/data/local/dao/perfilUsuarioDao';
+import { Alergia, RestricaoAlimentar } from '@/models';
+import { getRecomendacoesOptions, mapDBtoUI, mapUItoDB } from '@/utils/perfilOptions';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
-import { useState } from 'react';
-import { Image, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Alert, BackHandler, Image, Linking, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 // Variável de controle de login
 const logado = false; // Altere para false para ver a versão não logada
 
-// Opções para cada tipo de recomendação
-const recomendacoesOptions = {
-  restricaoAlimentar: ['Nenhuma', 'Vegetariano', 'Vegano', 'Sem glúten', 'Sem lactose'],
-  alergias: ['Nenhuma', 'Lactose', 'Glúten', 'Amendoim', 'Frutos do mar', 'Ovos', 'Soja'],
-  prioridade: ['Rapidez', 'Economia', 'Saúde', 'Sabor'],
-  preferenciaReceita: ['Balanciada', 'Proteínas', 'Carboidratos', 'Vegetais', 'Sobremesas'],
-  nivelCozinha: ['Iniciante', 'Intermediário', 'Avançado'],
-};
-
 export default function ConfiguracoesScreen() {
   const [dailySuggestions, setDailySuggestions] = useState(true);
+  const [perfilId, setPerfilId] = useState<number | null>(null);
 
-  // Estados para valores selecionados
-  const [restricaoAlimentar, setRestricaoAlimentar] = useState('Vegetariano');
-  const [alergias, setAlergias] = useState<string[]>(['Lactose', 'Glúten']);
-  const [prioridade, setPrioridade] = useState('Rapidez');
-  const [preferenciaReceita, setPreferenciaReceita] = useState('Balanciada');
-  const [nivelCozinha, setNivelCozinha] = useState('Iniciante');
+  // Opções baseadas no schema do banco
+  const recomendacoesOptions = useMemo(() => getRecomendacoesOptions(), []);
 
-  // Estados para controlar qual modal está aberto
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalOptions, setModalOptions] = useState<string[]>([]);
-  const [modalSelectedValue, setModalSelectedValue] = useState<string | string[]>('');
-  const [modalOnSelect, setModalOnSelect] = useState<(value: string | string[]) => void>(() => { });
-  const [modalMultiple, setModalMultiple] = useState(false);
+  // Estados para valores selecionados (valores da UI)
+  const [restricaoAlimentar, setRestricaoAlimentar] = useState<string[]>([]);
+  const [alergias, setAlergias] = useState<string[]>([]);
+  const [prioridade, setPrioridade] = useState<string>('Rapidez');
+  const [nivelCozinha, setNivelCozinha] = useState<string>('Iniciante');
+
+  // Estados para controlar qual bottom sheet está aberto
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const [bottomSheetTitle, setBottomSheetTitle] = useState('');
+  const [bottomSheetOptions, setBottomSheetOptions] = useState<string[]>([]);
+  const [bottomSheetSelectedValue, setBottomSheetSelectedValue] = useState<string | string[]>('');
+  const [bottomSheetOnSelect, setBottomSheetOnSelect] = useState<(value: string | string[]) => void>(() => { });
+  const [bottomSheetMultiple, setBottomSheetMultiple] = useState(false);
+
+  // Handler para o botão de voltar do Android
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Se o bottom sheet estiver aberto, fecha ele primeiro
+      if (bottomSheetVisible) {
+        closeBottomSheet();
+        return true; // Previne o comportamento padrão (voltar para tela anterior)
+      }
+      return false; // Permite o comportamento padrão
+    });
+
+    return () => backHandler.remove();
+  }, [bottomSheetVisible]);
+
+  // Carrega dados do banco
+  useFocusEffect(
+    useCallback(() => {
+      const loadPerfil = async () => {
+        try {
+          const perfilCompleto = await getPerfilCompleto();
+          if (perfilCompleto) {
+            setPerfilId(perfilCompleto.perfil.id);
+            setDailySuggestions(perfilCompleto.perfil.receber_sugestao_dia);
+            setNivelCozinha(mapDBtoUI.nivelCozinha(perfilCompleto.perfil.nivel_cozinha));
+
+            // Mapeia restrições DB -> UI
+            const restricoesUI = perfilCompleto.restricoes
+              .map(r => mapDBtoUI.restricaoAlimentar(r))
+              .filter(r => r !== 'Nenhuma');
+            setRestricaoAlimentar(restricoesUI.length > 0 ? restricoesUI : ['Nenhuma']);
+
+            // Mapeia alergias DB -> UI
+            const alergiasUI = perfilCompleto.alergias
+              .map(a => mapDBtoUI.alergia(a))
+              .filter(a => a !== 'Nenhuma');
+            setAlergias(alergiasUI.length > 0 ? alergiasUI : ['Nenhuma']);
+
+            // Mapeia prioridades DB -> UI (pega a primeira)
+            if (perfilCompleto.prioridades.length > 0) {
+              setPrioridade(mapDBtoUI.prioridade(perfilCompleto.prioridades[0]));
+            }
+          }
+        } catch (error) {
+          console.error('Erro ao carregar perfil:', error);
+        }
+      };
+      loadPerfil();
+    }, [])
+  );
 
   const formatAlergias = (alergiasArray: string[]): string => {
-    if (alergiasArray.length === 0) return 'Nenhuma';
-    if (alergiasArray.length <= 2) return alergiasArray.join(', ');
-    return `${alergiasArray.slice(0, 2).join(', ')}...`;
+    const filtered = alergiasArray.filter(a => a !== 'Nenhuma');
+    if (filtered.length === 0) return 'Nenhuma';
+
+    const MAX_LENGTH = 25; // Limite de caracteres
+    const text = filtered.join(', ');
+
+    if (text.length <= MAX_LENGTH) return text;
+
+    // Tenta mostrar pelo menos 2 itens
+    if (filtered.length <= 2) {
+      return `${text.substring(0, MAX_LENGTH - 3)}...`;
+    }
+
+    // Mostra os primeiros itens que cabem no limite
+    let result = '';
+    for (let i = 0; i < filtered.length; i++) {
+      const nextItem = i === 0 ? filtered[i] : `, ${filtered[i]}`;
+      if ((result + nextItem).length <= MAX_LENGTH - 3) {
+        result += nextItem;
+      } else {
+        break;
+      }
+    }
+    return `${result}...`;
   };
 
-  const openModal = (
+  const formatRestricoes = (restricoesArray: string[]): string => {
+    const filtered = restricoesArray.filter(r => r !== 'Nenhuma');
+    if (filtered.length === 0) return 'Nenhuma';
+
+    const MAX_LENGTH = 25; // Limite de caracteres
+    const text = filtered.join(', ');
+
+    if (text.length <= MAX_LENGTH) return text;
+
+    // Tenta mostrar pelo menos 2 itens
+    if (filtered.length <= 2) {
+      return `${text.substring(0, MAX_LENGTH - 3)}...`;
+    }
+
+    // Mostra os primeiros itens que cabem no limite
+    let result = '';
+    for (let i = 0; i < filtered.length; i++) {
+      const nextItem = i === 0 ? filtered[i] : `, ${filtered[i]}`;
+      if ((result + nextItem).length <= MAX_LENGTH - 3) {
+        result += nextItem;
+      } else {
+        break;
+      }
+    }
+    return `${result}...`;
+  };
+
+  const openBottomSheet = (
     title: string,
     options: string[],
     selectedValue: string | string[],
     onSelect: (value: string | string[]) => void,
     multiple: boolean = false
   ) => {
-    setModalTitle(title);
-    setModalOptions(options);
-    setModalSelectedValue(selectedValue);
-    setModalOnSelect(() => onSelect);
-    setModalMultiple(multiple);
-    setModalVisible(true);
+    setBottomSheetTitle(title);
+    setBottomSheetOptions(options);
+    setBottomSheetSelectedValue(selectedValue);
+    setBottomSheetOnSelect(() => onSelect);
+    setBottomSheetMultiple(multiple);
+    setBottomSheetVisible(true);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const closeBottomSheet = () => {
+    setBottomSheetVisible(false);
+  };
+
+  const handleRestricaoAlimentarSelect = async (value: string | string[]) => {
+    const values = Array.isArray(value) ? value : [value];
+    const filtered = values.filter(v => v !== 'Nenhuma');
+    setRestricaoAlimentar(filtered.length > 0 ? filtered : ['Nenhuma']);
+
+    if (perfilId) {
+      try {
+        const restricoesDB = filtered
+          .map(r => mapUItoDB.restricaoAlimentar(r))
+          .filter((r): r is RestricaoAlimentar => r !== null);
+        await atualizarRestricoesAlimentares(perfilId, restricoesDB);
+      } catch (error) {
+        console.error('Erro ao salvar restrições:', error);
+      }
+    }
+  };
+
+  const handleAlergiasSelect = async (value: string | string[]) => {
+    const values = Array.isArray(value) ? value : [value];
+    const filtered = values.filter(v => v !== 'Nenhuma');
+    setAlergias(filtered.length > 0 ? filtered : ['Nenhuma']);
+
+    if (perfilId) {
+      try {
+        const alergiasDB = filtered
+          .map(a => mapUItoDB.alergia(a))
+          .filter((a): a is Alergia => a !== null);
+        await atualizarAlergias(perfilId, alergiasDB);
+      } catch (error) {
+        console.error('Erro ao salvar alergias:', error);
+      }
+    }
+  };
+
+  const handlePrioridadeSelect = async (value: string | string[]) => {
+    const prioridadeValue = Array.isArray(value) ? value[0] : value;
+    setPrioridade(prioridadeValue);
+
+    if (perfilId) {
+      try {
+        const prioridadeDB = mapUItoDB.prioridade(prioridadeValue);
+        if (prioridadeDB) {
+          await atualizarPrioridades(perfilId, [prioridadeDB]);
+        }
+      } catch (error) {
+        console.error('Erro ao salvar prioridade:', error);
+      }
+    }
+  };
+
+  const handleNivelCozinhaSelect = async (value: string | string[]) => {
+    const nivelValue = Array.isArray(value) ? value[0] : value;
+    setNivelCozinha(nivelValue);
+
+    if (perfilId) {
+      try {
+        const nivelDB = mapUItoDB.nivelCozinha(nivelValue);
+        await atualizarPerfilUsuario(nivelDB, dailySuggestions);
+      } catch (error) {
+        console.error('Erro ao salvar nível de cozinha:', error);
+      }
+    }
+  };
+
+  const handleDailySuggestionsChange = async (value: boolean) => {
+    setDailySuggestions(value);
+
+    if (perfilId) {
+      try {
+        const nivelDB = mapUItoDB.nivelCozinha(nivelCozinha);
+        await atualizarPerfilUsuario(nivelDB, value);
+      } catch (error) {
+        console.error('Erro ao salvar sugestões diárias:', error);
+      }
+    }
+  };
+
+  const handleOpenURL = async (url: string) => {
+    try {
+      const canOpen = await Linking.canOpenURL(url);
+      if (canOpen) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Erro', 'Não foi possível abrir o link');
+      }
+    } catch (error) {
+      console.error('Erro ao abrir URL:', error);
+      Alert.alert('Erro', 'Não foi possível abrir o link');
+    }
+  };
+
+  const handleOpenEmail = async (email: string) => {
+    try {
+      const emailUrl = `mailto:${email}`;
+      const canOpen = await Linking.canOpenURL(emailUrl);
+      if (canOpen) {
+        await Linking.openURL(emailUrl);
+      } else {
+        Alert.alert('Erro', 'Não foi possível abrir o cliente de email');
+      }
+    } catch (error) {
+      console.error('Erro ao abrir email:', error);
+      Alert.alert('Erro', 'Não foi possível abrir o cliente de email');
+    }
   };
 
   return (
@@ -118,7 +319,7 @@ export default function ConfiguracoesScreen() {
               <Ionicons name="chevron-forward" size={20} color={Colors.light.bodyText} />
             </Pressable>
           ) : (
-            <Pressable 
+            <Pressable
               style={styles.profileCard}
               onPress={() => router.push('/login')}
             >
@@ -150,11 +351,12 @@ export default function ConfiguracoesScreen() {
           <Pressable
             style={styles.recommendationItem}
             onPress={() =>
-              openModal(
+              openBottomSheet(
                 'Restrição alimentar',
                 recomendacoesOptions.restricaoAlimentar,
                 restricaoAlimentar,
-                (value) => setRestricaoAlimentar(value as string)
+                handleRestricaoAlimentarSelect,
+                true // múltipla seleção
               )
             }
           >
@@ -166,7 +368,7 @@ export default function ConfiguracoesScreen() {
             </View>
             <View style={styles.recommendationRight}>
               <TextUI variant="regular" style={styles.recommendationValue}>
-                {restricaoAlimentar}
+                {formatRestricoes(restricaoAlimentar)}
               </TextUI>
               <Ionicons name="chevron-forward" size={20} color={Colors.light.bodyText} />
             </View>
@@ -175,11 +377,11 @@ export default function ConfiguracoesScreen() {
           <Pressable
             style={styles.recommendationItem}
             onPress={() =>
-              openModal(
+              openBottomSheet(
                 'Alergias',
                 recomendacoesOptions.alergias,
                 alergias,
-                (value) => setAlergias(value as string[]),
+                handleAlergiasSelect,
                 true // múltipla seleção
               )
             }
@@ -201,11 +403,11 @@ export default function ConfiguracoesScreen() {
           <Pressable
             style={styles.recommendationItem}
             onPress={() =>
-              openModal(
+              openBottomSheet(
                 'Prioridade',
                 recomendacoesOptions.prioridade,
                 prioridade,
-                (value) => setPrioridade(value as string)
+                handlePrioridadeSelect
               )
             }
           >
@@ -226,36 +428,11 @@ export default function ConfiguracoesScreen() {
           <Pressable
             style={styles.recommendationItem}
             onPress={() =>
-              openModal(
-                'Preferência de receita',
-                recomendacoesOptions.preferenciaReceita,
-                preferenciaReceita,
-                (value) => setPreferenciaReceita(value as string)
-              )
-            }
-          >
-            <View style={styles.recommendationLeft}>
-              <Ionicons name="moon-outline" size={20} color={Colors.light.mainText} />
-              <TextUI variant="regular" style={styles.recommendationText}>
-                Preferência de receita
-              </TextUI>
-            </View>
-            <View style={styles.recommendationRight}>
-              <TextUI variant="regular" style={styles.recommendationValue}>
-                {preferenciaReceita}
-              </TextUI>
-              <Ionicons name="chevron-forward" size={20} color={Colors.light.bodyText} />
-            </View>
-          </Pressable>
-
-          <Pressable
-            style={styles.recommendationItem}
-            onPress={() =>
-              openModal(
+              openBottomSheet(
                 'Nível na cozinha',
                 recomendacoesOptions.nivelCozinha,
                 nivelCozinha,
-                (value) => setNivelCozinha(value as string)
+                handleNivelCozinhaSelect
               )
             }
           >
@@ -290,9 +467,9 @@ export default function ConfiguracoesScreen() {
             </TextUI>
             <Toggle
               value={dailySuggestions}
-              onValueChange={setDailySuggestions}
+              onValueChange={handleDailySuggestionsChange}
             />
-    </View>
+          </View>
         </SectionUI>
 
         {/* Divisor */}
@@ -305,21 +482,30 @@ export default function ConfiguracoesScreen() {
             paddingHorizontal: 20,
           }}
         >
-          <Pressable style={styles.supportItem}>
+          <Pressable 
+            style={styles.supportItem}
+            onPress={() => handleOpenURL('https://example.com/')}
+          >
             <TextUI variant="regular" style={styles.supportText}>
               Política de Privacidade
             </TextUI>
             <Ionicons name="chevron-forward" size={20} color={Colors.light.bodyText} />
           </Pressable>
 
-          <Pressable style={styles.supportItem}>
+          <Pressable 
+            style={styles.supportItem}
+            onPress={() => handleOpenURL('https://example.com/')}
+          >
             <TextUI variant="regular" style={styles.supportText}>
               Termos de Uso
             </TextUI>
             <Ionicons name="chevron-forward" size={20} color={Colors.light.bodyText} />
           </Pressable>
 
-          <Pressable style={styles.supportItem}>
+          <Pressable 
+            style={styles.supportItem}
+            onPress={() => handleOpenEmail('guilherme.araujo1535@gmail.com')}
+          >
             <TextUI variant="regular" style={styles.supportText}>
               Fale Conosco
             </TextUI>
@@ -331,7 +517,7 @@ export default function ConfiguracoesScreen() {
         <View style={styles.divider} />
 
         {/* Seção Acesso */}
-        <SectionUI
+        {logado && <SectionUI
           title="Acesso"
           style={{
             paddingHorizontal: 20,
@@ -350,18 +536,19 @@ export default function ConfiguracoesScreen() {
             </TextUI>
             <Ionicons name="chevron-forward" size={20} color={Colors.light.danger} />
           </Pressable>
-        </SectionUI>
+        </SectionUI>}
       </ScrollViewWithPadding>
 
-      {/* Modal de Seleção */}
-      <ModalSelecao
-        visible={modalVisible}
-        onClose={closeModal}
-        title={modalTitle}
-        options={modalOptions}
-        selectedValue={modalSelectedValue}
-        onSelect={modalOnSelect}
-        multiple={modalMultiple}
+      {/* Bottom Sheet de Seleção */}
+      <BottomSheetSelecao
+        visible={bottomSheetVisible}
+        onClose={closeBottomSheet}
+        title={bottomSheetTitle}
+        options={bottomSheetOptions}
+        selectedValue={bottomSheetSelectedValue}
+        onSelect={bottomSheetOnSelect}
+        multiple={bottomSheetMultiple}
+        showConfirmButton={bottomSheetTitle === 'Prioridade' || bottomSheetTitle === 'Nível na cozinha'}
       />
     </ViewContainerUI>
   );
