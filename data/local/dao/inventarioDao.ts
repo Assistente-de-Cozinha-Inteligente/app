@@ -1,5 +1,5 @@
 import { Ingrediente, Inventario } from "@/models";
-import { decidirDisponibilidadeFinal, OrigemAdicao } from "@/utils/disponibilidade";
+import { decidirDisponibilidadeFinal, diminuirDisponibilidadePorTempo, OrigemAdicao } from "@/utils/disponibilidade";
 import { getDatabase, getFirstAsync } from "../database";
 import { getOrCreateLocalUser } from "./usuarioDao";
 
@@ -97,10 +97,20 @@ export async function inserirAtualizarItemInventario(
         );
 
         if (itemExistente) {
+            // REGRA 4: Detecta compra repetida se houve atualização recente (últimos 14 dias)
+            let origemFinal = origemAdicao;
+            if (origemAdicao === 'compra') {
+                const diasDesdeUltimaAtualizacao = Math.floor((agora - (itemExistente.atualizado_em || 0)) / (1000 * 60 * 60 * 24));
+                // Se foi atualizado nos últimos 14 dias, considera compra repetida
+                if (diasDesdeUltimaAtualizacao <= 14) {
+                    origemFinal = 'compra_repetida';
+                }
+            }
+            
             // Calcula a disponibilidade automaticamente baseado na origem e disponibilidade atual
             const disponibilidadeCalculada = decidirDisponibilidadeFinal({
                 disponibilidadeAtual: itemExistente.disponibilidade as 'baixo' | 'medio' | 'alto',
-                origemAdicao: origemAdicao
+                origemAdicao: origemFinal
             });
             
             // Atualiza disponibilidade (calculada automaticamente), validade e timestamp
@@ -215,6 +225,74 @@ export async function excluirItemInventario(ingrediente_ids: number[]): Promise<
                 ingrediente_id
             ]
         );
+    }
+}
+
+/*
+ * REGRA 5: Atualiza a disponibilidade dos itens baseado no tempo sem atualização
+ * Diminui a disponibilidade automaticamente quando o tempo passa sem atualização
+ * - alto → medio após 30 dias
+ * - medio → baixo após 60 dias
+ * 
+ * QUANDO CHAMAR:
+ * - Ao abrir o app
+ * - Antes de calcular status de receitas
+ * - Em rotinas de manutenção offline
+ */
+export async function atualizarDisponibilidadePorTempo(): Promise<void> {
+    const db = getDatabase();
+    if (!db) {
+        throw new Error("Banco de dados não inicializado");
+    }
+
+    const usuario = await getOrCreateLocalUser();
+    if (!usuario) {
+        throw new Error("Usuário não encontrado");
+    }
+
+    const agora = Date.now();
+
+    // Busca todos os itens do inventário (não deletados)
+    const itens = await db.getAllAsync<any>(
+        `SELECT ingrediente_id, disponibilidade, atualizado_em
+         FROM ${TABLE_NAME}
+         WHERE usuario_id = ? AND deletado_em IS NULL`,
+        [usuario.id]
+    );
+
+    if (!itens || itens.length === 0) {
+        return;
+    }
+
+    // Processa cada item e atualiza se necessário
+    for (const item of itens) {
+        const disponibilidadeAtual = item.disponibilidade as 'baixo' | 'medio' | 'alto';
+        const atualizadoEm = item.atualizado_em || 0;
+        
+        // Calcula dias sem atualização
+        const diasSemAtualizacao = Math.floor((agora - atualizadoEm) / (1000 * 60 * 60 * 24));
+        
+        // Aplica a regra de diminuição por tempo
+        const novaDisponibilidade = diminuirDisponibilidadePorTempo(
+            disponibilidadeAtual,
+            diasSemAtualizacao
+        );
+        
+        // Atualiza apenas se a disponibilidade mudou
+        if (novaDisponibilidade !== disponibilidadeAtual) {
+            await db.runAsync(
+                `UPDATE ${TABLE_NAME}
+                 SET disponibilidade = ?, precisa_sincronizar = ?
+                 WHERE usuario_id = ? AND ingrediente_id = ? AND deletado_em IS NULL`,
+                [
+                    novaDisponibilidade,
+                    1, // precisa_sincronizar = true para sincronizar a mudança
+                    usuario.id,
+                    item.ingrediente_id
+                ]
+            );
+        }
+        console.log(novaDisponibilidade, disponibilidadeAtual, diasSemAtualizacao, item.ingrediente_id, "(<<<<<<<<< Nova disponibilidade <<<<<<<<<)");
     }
 }
 

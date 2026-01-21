@@ -1,3 +1,4 @@
+import { atualizarDisponibilidadePorTempo } from '@/data/local/dao/inventarioDao';
 import { initDatabase } from '@/data/local/initDatabase';
 import { useAppBackground } from '@/hooks/use-app-background';
 import {
@@ -28,7 +29,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { AppState, Platform, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import "../global.css";
@@ -95,6 +96,15 @@ export default function RootLayout() {
     async function prepare() {
       try {
         await initDatabase(); // SQLite + migrations + FTS
+        
+        // REGRA 5: Atualiza disponibilidade baseada no tempo sem atualização
+        // Executa ao abrir o app
+        try {
+          await atualizarDisponibilidadePorTempo();
+        } catch (e) {
+          console.error('Erro ao atualizar disponibilidade por tempo:', e);
+          // Não bloqueia o app se houver erro
+        }
       } catch (e) {
         console.error('Erro ao iniciar DB', e);
       } finally {
@@ -114,6 +124,23 @@ export default function RootLayout() {
       `Agora vamos sincronizar lista e cozinha`
     );
   });
+
+  // REGRA 5: Atualiza disponibilidade quando o app volta do background
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', async (nextAppState) => {
+      if (nextAppState === 'active') {
+        // App voltou para o foreground
+        try {
+          await atualizarDisponibilidadePorTempo();
+        } catch (e) {
+          console.error('Erro ao atualizar disponibilidade por tempo:', e);
+          // Não bloqueia o app se houver erro
+        }
+      }
+    });
+
+    return () => subscription.remove();
+  }, []);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
