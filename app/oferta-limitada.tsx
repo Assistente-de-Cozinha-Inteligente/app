@@ -7,13 +7,15 @@ import { haptics } from '@/utils/haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Network from 'expo-network';
 import { router } from 'expo-router';
-import { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function OfertaLimitadaScreen() {
     const insets = useSafeAreaInsets();
+    const [hasInternet, setHasInternet] = useState(true);
 
     // Animações de entrada
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -43,6 +45,26 @@ export default function OfertaLimitadaScreen() {
                 useNativeDriver: true,
             }),
         ]).start();
+    }, []);
+
+    // Verifica conexão com internet
+    useEffect(() => {
+        const checkNetwork = async () => {
+            try {
+                const networkState = await Network.getNetworkStateAsync();
+                setHasInternet(networkState.isConnected ?? false);
+            } catch (error) {
+                console.error('Erro ao verificar conexão:', error);
+                setHasInternet(false);
+            }
+        };
+
+        checkNetwork();
+        const networkInterval = setInterval(checkNetwork, 5000);
+
+        return () => {
+            clearInterval(networkInterval);
+        };
     }, []);
 
     return (
@@ -93,64 +115,77 @@ export default function OfertaLimitadaScreen() {
                     <CronometroOferta variant="full" />
 
                     <View style={styles.priceCardContainer}>
-                        <LinearGradient
-                            colors={[Colors.light.primary, Colors.light.primary + 'DD']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 1 }}
-                            style={styles.priceCard}
-                        >
-                            <View style={styles.priceHeader}>
-                                <View style={styles.priceHeaderLeft}>
-                                    <Ionicons name="star" size={18} color={Colors.light.white} />
-                                    <TextUI variant="bold" style={styles.priceCardTitle}>
-                                        Plano Premium
-                                    </TextUI>
+                        {hasInternet ? (
+                            <LinearGradient
+                                colors={[Colors.light.primary, Colors.light.primary + 'DD']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 1 }}
+                                style={styles.priceCard}
+                            >
+                                <View style={styles.priceHeader}>
+                                    <View style={styles.priceHeaderLeft}>
+                                        <Ionicons name="star" size={18} color={Colors.light.white} />
+                                        <TextUI variant="bold" style={styles.priceCardTitle}>
+                                            Plano Premium
+                                        </TextUI>
+                                    </View>
+
+                                    <View style={styles.badge}>
+                                        <TextUI variant="bold" style={styles.badgeText}>
+                                            -31%
+                                        </TextUI>
+                                    </View>
                                 </View>
 
-                                <View style={styles.badge}>
-                                    <TextUI variant="bold" style={styles.badgeText}>
-                                        -31%
+                                <View style={styles.priceComparison}>
+                                    <View style={styles.oldPriceContainer}>
+                                        <TextUI variant="regular" style={styles.oldPrice}>
+                                            R$ 12,90
+                                        </TextUI>
+                                        <TextUI variant="regular" style={styles.oldPricePeriod}>
+                                            /mês
+                                        </TextUI>
+                                    </View>
+
+                                    <View style={styles.newPriceContainer}>
+                                        <TextUI variant="bold" style={styles.newPrice}>
+                                            R$ 8,90
+                                        </TextUI>
+                                        <TextUI variant="regular" style={styles.newPricePeriod}>
+                                            /mês
+                                        </TextUI>
+                                    </View>
+                                </View>
+
+                                <View style={styles.priceInfo}>
+                                    <View style={styles.vitalicioContainer}>
+                                        <Ionicons name="infinite" size={18} color={Colors.light.white} />
+                                        <TextUI variant="bold" style={styles.vitalicioText}>
+                                            Preço especial mantido enquanto a assinatura estiver ativa
+                                        </TextUI>
+                                    </View>
+
+                                    <View style={styles.priceInfoRow}>
+                                        <Ionicons name="checkmark-circle" size={16} color={Colors.light.white} />
+                                        <TextUI variant="semibold" style={styles.savingsText}>
+                                            Preço exclusivo para você
+                                        </TextUI>
+                                    </View>
+                                </View>
+                            </LinearGradient>
+                        ) : (
+                            <View style={styles.priceCardOffline}>
+                                <View style={styles.priceOfflineRow}>
+                                    <Ionicons name="cloud-offline-outline" size={18} color={Colors.light.bodyText} />
+                                    <TextUI variant="semibold" style={styles.priceOfflineTitle}>
+                                        Sem internet
                                     </TextUI>
                                 </View>
+                                <TextUI variant="regular" style={styles.priceOfflineText}>
+                                    Conecte-se à internet para ver o preço e aproveitar a oferta.
+                                </TextUI>
                             </View>
-
-                            <View style={styles.priceComparison}>
-                                <View style={styles.oldPriceContainer}>
-                                    <TextUI variant="regular" style={styles.oldPrice}>
-                                        R$ 12,90
-                                    </TextUI>
-                                    <TextUI variant="regular" style={styles.oldPricePeriod}>
-                                        /mês
-                                    </TextUI>
-                                </View>
-
-                                <View style={styles.newPriceContainer}>
-                                    <TextUI variant="bold" style={styles.newPrice}>
-                                        R$ 8,90
-                                    </TextUI>
-                                    <TextUI variant="regular" style={styles.newPricePeriod}>
-                                        /mês
-                                    </TextUI>
-                                </View>
-                            </View>
-
-                            <View style={styles.priceInfo}>
-                                <View style={styles.vitalicioContainer}>
-                                    <Ionicons name="infinite" size={18} color={Colors.light.white} />
-                                    <TextUI variant="bold" style={styles.vitalicioText}>
-                                        Preço especial mantido enquanto a assinatura estiver ativa
-                                    </TextUI>
-                                </View>
-
-                                <View style={styles.priceInfoRow}>
-                                    <Ionicons name="checkmark-circle" size={16} color={Colors.light.white} />
-                                    <TextUI variant="semibold" style={styles.savingsText}>
-                                        Preço exclusivo para você
-                                    </TextUI>
-                                </View>
-                            </View>
-                        </LinearGradient>
-
+                        )}
                     </View>
                 </Animated.View>
             </View>
@@ -159,6 +194,14 @@ export default function OfertaLimitadaScreen() {
                 <ButtonUI
                     title="Aproveitar Oferta"
                     onPress={() => {
+                        if (!hasInternet) {
+                            haptics.error();
+                            Alert.alert(
+                                'Sem internet',
+                                'Conecte-se à internet para ver o preço e aproveitar a oferta.'
+                            );
+                            return;
+                        }
                         haptics.medium();
                         // Adicione a ação desejada aqui
                     }}
@@ -253,6 +296,28 @@ const styles = StyleSheet.create({
     },
     priceCardContainer: {
         width: '100%',
+    },
+    priceCardOffline: {
+        borderRadius: 20,
+        padding: 18,
+        backgroundColor: Colors.light.white,
+        borderWidth: 1,
+        borderColor: '#EBEBEB',
+    },
+    priceOfflineRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 8,
+    },
+    priceOfflineTitle: {
+        fontSize: 14,
+        color: Colors.light.mainText,
+    },
+    priceOfflineText: {
+        fontSize: 13,
+        color: Colors.light.bodyText,
+        lineHeight: 18,
     },
     priceCard: {
         borderRadius: 20,
