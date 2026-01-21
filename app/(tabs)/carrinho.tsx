@@ -1,9 +1,11 @@
 import { CardItemLista } from '@/components/card-item-lista';
+import { EmptyStateCard } from '@/components/ui/empty-state-card';
 import { FloatingAddButton } from '@/components/ui/floating-add-button';
 import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { TextUI } from '@/components/ui/text';
 import { Toast } from '@/components/ui/toast';
+import { ToastWithUndo } from '@/components/ui/toast-with-undo';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { inserirAtualizarItemInventario } from '@/data/local/dao/inventarioDao';
@@ -13,7 +15,7 @@ import { handleShareCarrinho } from '@/share/shareCarrinho';
 import { getNomeLocal } from '@/utils/localHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function CarrinhoScreen() {
@@ -22,6 +24,16 @@ export default function CarrinhoScreen() {
   const [animations, setAnimations] = useState<Record<string, Animated.Value>>({});
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [itensEnviadosCount, setItensEnviadosCount] = useState(0);
+  const [deletingItems, setDeletingItems] = useState<ListaCompras[]>([]);
+  const [showUndoToast, setShowUndoToast] = useState(false);
+  const [toastUndoKey, setToastUndoKey] = useState(0);
+
+  // Ref para armazenar os itens sendo excluídos, para usar no cleanup
+  const deletingItemsRef = useRef<ListaCompras[]>([]);
+
+  useEffect(() => {
+    deletingItemsRef.current = deletingItems;
+  }, [deletingItems]);
 
   // Calcula quantos itens estão marcados
   const itensMarcados = useMemo(() => {
@@ -97,11 +109,67 @@ export default function CarrinhoScreen() {
   };
 
   const handleItemRemove = async (ingrediente_id: number) => {
-    // Remove localmente
-    setListaCompras(listaCompras.filter(item => item.ingrediente_id !== ingrediente_id));
+    const itemToDelete = listaCompras.find(item => item.ingrediente_id === ingrediente_id);
+    if (!itemToDelete) return;
 
-    // Remove no banco (soft delete)
-    await excluirItemListaCompras([ingrediente_id]);
+    // Remove visualmente da lista (mas mantém os dados para possível restauração)
+    setListaCompras(prev => prev.filter(item => item.ingrediente_id !== ingrediente_id));
+
+    // Adiciona o item à lista de itens sendo excluídos (suporta múltiplos)
+    setDeletingItems(prev => {
+      const exists = prev.some(item => item.ingrediente_id === ingrediente_id);
+      if (exists) return prev;
+      return [...prev, itemToDelete];
+    });
+
+    // Força reset do timer quando um novo item é adicionado
+    setToastUndoKey(prev => prev + 1);
+    setShowUndoToast(true);
+  };
+
+  const handleUndoDelete = () => {
+    if (deletingItems.length === 0) return;
+
+    const itemsToRestore = [...deletingItems];
+
+    setListaCompras(prev => {
+      const restored: ListaCompras[] = [];
+      itemsToRestore.forEach(itemToRestore => {
+        const exists = prev.some(item => item.ingrediente_id === itemToRestore.ingrediente_id);
+        if (!exists) restored.push(itemToRestore);
+      });
+      return [...prev, ...restored].sort((a, b) =>
+        (a.ingrediente?.nome || '').localeCompare(b.ingrediente?.nome || '')
+      );
+    });
+
+    setDeletingItems([]);
+    setShowUndoToast(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deletingItems.length === 0) return;
+
+    const itemsToDelete = [...deletingItems];
+    const ingredienteIds = itemsToDelete.map(item => item.ingrediente_id);
+
+    try {
+      await excluirItemListaCompras(ingredienteIds);
+    } catch (error) {
+      console.error('Erro ao excluir itens do carrinho:', error);
+      // Em caso de erro, restaura visualmente
+      setListaCompras(prev => {
+        const restored: ListaCompras[] = [];
+        itemsToDelete.forEach(itemToRestore => {
+          const exists = prev.some(item => item.ingrediente_id === itemToRestore.ingrediente_id);
+          if (!exists) restored.push(itemToRestore);
+        });
+        return [...prev, ...restored];
+      });
+    } finally {
+      setDeletingItems([]);
+      setShowUndoToast(false);
+    }
   };
 
   const handleAddItem = () => {
@@ -148,7 +216,30 @@ export default function CarrinhoScreen() {
     useCallback(() => {
       getListaCompras().then((lista) => {
         setListaCompras(lista);
+        // Limpa o estado de exclusão pendente se os itens não existem mais
+        setDeletingItems(prev => {
+          const stillExist = prev.filter(item =>
+            lista.some(lc => lc.ingrediente_id === item.ingrediente_id)
+          );
+          if (stillExist.length !== prev.length) {
+            setShowUndoToast(false);
+          }
+          return stillExist;
+        });
       });
+
+      // Cleanup: quando sair da tela, confirma automaticamente todas as exclusões pendentes
+      return () => {
+        const itemsToDelete = deletingItemsRef.current;
+        if (itemsToDelete.length > 0) {
+          const ingredienteIds = itemsToDelete.map(item => item.ingrediente_id);
+          excluirItemListaCompras(ingredienteIds).catch((error) => {
+            console.error('Erro ao confirmar exclusões pendentes no carrinho:', error);
+          });
+          setDeletingItems([]);
+          setShowUndoToast(false);
+        }
+      };
     }, [])
   );
 
@@ -172,6 +263,18 @@ export default function CarrinhoScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.listContainer}>
+          {/* Estado vazio */}
+          {listaCompras.length === 0 && (
+            <EmptyStateCard
+              title="Vazio"
+              description="Sua lista de compras está vazia. Cadastre um item para começar."
+              iconName="cart-outline"
+              actionLabel="Adicionar"
+              onPress={handleAddItem}
+              style={{ marginBottom: 16 }}
+            />
+          )}
+
           {/* Card para enviar itens comprados */}
           {temItensMarcados && (
             <TouchableOpacity
@@ -271,6 +374,21 @@ export default function CarrinhoScreen() {
         type="success"
         exitDirection="right"
         onHide={() => setShowSuccessMessage(false)}
+      />
+
+      {/* Toast de desfazer exclusão */}
+      <ToastWithUndo
+        key={`toast-undo-carrinho-${toastUndoKey}`}
+        visible={showUndoToast}
+        message={
+          deletingItems.length === 1
+            ? 'Item excluído'
+            : `${deletingItems.length} itens excluídos`
+        }
+        onUndo={handleUndoDelete}
+        onConfirm={handleConfirmDelete}
+        onHide={() => setShowUndoToast(false)}
+        duration={5}
       />
 
       <FloatingAddButton onPress={handleAddItem} />

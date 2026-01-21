@@ -3,6 +3,7 @@ import { BottomSheetEditarItemLista } from '@/components/bottom-sheet-editar-ite
 import { BottomSheetInfoCozinha } from '@/components/bottom-sheet-info-cozinha';
 import { CardItemInventario } from '@/components/card-item-inventario';
 import { CardItemProximoVencer } from '@/components/card-item-proximo-vencer';
+import { EmptyStateCard } from '@/components/ui/empty-state-card';
 import { FloatingAddButton } from '@/components/ui/floating-add-button';
 import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
@@ -19,7 +20,7 @@ import { calcularPesoValidade, getItemMaisPrioritario } from '@/utils/validadeHe
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, BackHandler, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function ListaScreen() {
@@ -37,6 +38,14 @@ export default function ListaScreen() {
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   const INFO_CARD_KEY = 'info_card_cozinha_closed';
+
+  // Ref para armazenar os itens sendo excluídos, para usar no cleanup
+  const deletingItemsRef = useRef<Inventario[]>([]);
+  
+  // Atualiza a ref sempre que deletingItems mudar
+  useEffect(() => {
+    deletingItemsRef.current = deletingItems;
+  }, [deletingItems]);
 
   // Obtém o item mais prioritário próximo de vencer (0-3 dias)
   // Prioridade = peso da categoria + dias para vencer (menor = mais urgente)
@@ -378,7 +387,33 @@ export default function ListaScreen() {
     useCallback(() => {
       getInventario().then((lista) => {
         setInventario(lista);
+        // Limpa o estado de exclusão pendente se os itens não existem mais
+        setDeletingItems(prev => {
+          const stillExist = prev.filter(item => 
+            lista.some(inv => inv.ingrediente_id === item.ingrediente_id)
+          );
+          if (stillExist.length !== prev.length) {
+            // Se alguns itens foram removidos, limpa o toast também
+            setShowUndoToast(false);
+          }
+          return stillExist;
+        });
       });
+
+      // Cleanup: quando sair da tela, confirma automaticamente todas as exclusões pendentes
+      return () => {
+        const itemsToDelete = deletingItemsRef.current;
+        if (itemsToDelete.length > 0) {
+          // Confirma as exclusões pendentes ao sair da tela
+          const ingredienteIds = itemsToDelete.map(item => item.ingrediente_id);
+          excluirItemInventario(ingredienteIds).catch((error) => {
+            console.error('Erro ao confirmar exclusões pendentes ao sair da tela:', error);
+          });
+          // Limpa o estado local
+          setDeletingItems([]);
+          setShowUndoToast(false);
+        }
+      };
     }, [])
   );
 
@@ -401,6 +436,18 @@ export default function ListaScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.listContainer}>
+          {/* Estado vazio */}
+          {inventario.length === 0 && (
+            <EmptyStateCard
+              title="Vazio"
+              description="Sua cozinha ainda está vazia. Cadastre um item para começar."
+              iconName="restaurant-outline"
+              actionLabel="Adicionar"
+              onPress={handleAddItem}
+              style={{ marginBottom: 16 }}
+            />
+          )}
+
           {/* Card informativo */}
           {showInfoCard && (
             <View style={styles.infoCard}>
