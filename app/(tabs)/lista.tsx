@@ -41,7 +41,7 @@ export default function ListaScreen() {
 
   // Ref para armazenar os itens sendo excluídos, para usar no cleanup
   const deletingItemsRef = useRef<Inventario[]>([]);
-  
+
   // Atualiza a ref sempre que deletingItems mudar
   useEffect(() => {
     deletingItemsRef.current = deletingItems;
@@ -92,7 +92,7 @@ export default function ListaScreen() {
     return Object.entries(grupos)
       .map(([local, itens]) => {
         const agora = Date.now();
-        
+
         // Separa itens próximos de vencer (0-3 dias) dos demais
         const itensProximosVencer = itens.filter(item => {
           if (!item.validade) return false;
@@ -185,7 +185,7 @@ export default function ListaScreen() {
   const handleItemRemove = async (ingrediente_id: number) => {
     // Encontra o item que será excluído
     const itemToDelete = inventario.find(item => item.ingrediente_id === ingrediente_id);
-    
+
     if (!itemToDelete) return;
 
     // Remove visualmente da lista (mas mantém os dados para possível restauração)
@@ -214,7 +214,7 @@ export default function ListaScreen() {
     // Restaura todos os itens na lista
     setInventario(prev => {
       const restoredItems: Inventario[] = [];
-      
+
       itemsToRestore.forEach(itemToRestore => {
         // Verifica se o item já não está na lista
         const exists = prev.some(item => item.ingrediente_id === itemToRestore.ingrediente_id);
@@ -222,7 +222,7 @@ export default function ListaScreen() {
           restoredItems.push(itemToRestore);
         }
       });
-      
+
       return [...prev, ...restoredItems];
     });
 
@@ -245,14 +245,14 @@ export default function ListaScreen() {
       // Em caso de erro, restaura todos os itens na lista
       setInventario(prev => {
         const restoredItems: Inventario[] = [];
-        
+
         itemsToDelete.forEach(itemToRestore => {
           const exists = prev.some(item => item.ingrediente_id === itemToRestore.ingrediente_id);
           if (!exists) {
             restoredItems.push(itemToRestore);
           }
         });
-        
+
         return [...prev, ...restoredItems];
       });
     } finally {
@@ -389,7 +389,7 @@ export default function ListaScreen() {
         setInventario(lista);
         // Limpa o estado de exclusão pendente se os itens não existem mais
         setDeletingItems(prev => {
-          const stillExist = prev.filter(item => 
+          const stillExist = prev.filter(item =>
             lista.some(inv => inv.ingrediente_id === item.ingrediente_id)
           );
           if (stillExist.length !== prev.length) {
@@ -435,19 +435,8 @@ export default function ListaScreen() {
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.listContainer}>
-          {/* Estado vazio */}
-          {inventario.length === 0 && (
-            <EmptyStateCard
-              title="Vazio"
-              description="Sua cozinha ainda está vazia. Cadastre um item para começar."
-              iconName="restaurant-outline"
-              actionLabel="Adicionar"
-              onPress={handleAddItem}
-              style={{ marginBottom: 16 }}
-            />
-          )}
 
+        <View style={styles.listContainer}>
           {/* Card informativo */}
           {showInfoCard && (
             <View style={styles.infoCard}>
@@ -471,6 +460,18 @@ export default function ListaScreen() {
               </View>
             </View>
           )}
+          {/* Estado vazio */}
+          {inventario.length === 0 && (
+            <EmptyStateCard
+              title="Vazio"
+              description="Sua cozinha ainda está vazia. Cadastre um item para começar."
+              iconName="restaurant-outline"
+              actionLabel="Adicionar"
+              onPress={handleAddItem}
+              style={{ marginBottom: 16 }}
+            />
+          )}
+
 
           {/* Card de item próximo de vencer */}
           {itemMaisPrioritario && (
@@ -543,21 +544,21 @@ export default function ListaScreen() {
                     // Verifica se o item está próximo de vencer (0-3 dias)
                     const estaProximoVencer = item.validade !== null && item.validade !== undefined
                       ? (() => {
-                          const agora = Date.now();
-                          const diasRestantes = Math.ceil((item.validade! - agora) / (1000 * 60 * 60 * 24));
-                          return diasRestantes >= 0 && diasRestantes <= 3;
-                        })()
+                        const agora = Date.now();
+                        const diasRestantes = Math.ceil((item.validade! - agora) / (1000 * 60 * 60 * 24));
+                        return diasRestantes >= 0 && diasRestantes <= 3;
+                      })()
                       : false;
 
                     return (
                       <CardItemInventario
                         key={`${item.usuario_id}-${item.ingrediente_id}`}
                         item={item}
-            onItemPress={handleItemPress}
-            onItemRemove={handleItemRemove}
+                        onItemPress={handleItemPress}
+                        onItemRemove={handleItemRemove}
                         onItemAddToCart={handleAddToCart}
                         estaProximoVencer={estaProximoVencer}
-          />
+                      />
                     );
                   })}
                 </Animated.View>

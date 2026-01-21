@@ -14,10 +14,11 @@ import { getOrCreateLocalUser } from '@/data/local/dao/usuarioDao';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from 'expo-router';
 import { router } from 'expo-router';
-import { useEffect } from 'react';
 import { Pressable, View } from 'react-native';
+import { useState } from 'react';
 
 export default function HomeScreen() {
+
   const receitasFazer = [
     {
       imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
@@ -79,17 +80,20 @@ export default function HomeScreen() {
   ];
 
   useFocusEffect(() => {
-    const user = getOrCreateLocalUser().then((user) => {
+    getOrCreateLocalUser().then((user) => {
       console.log(user, "(<<<<<<<<< ID do usuário <<<<<<<<<)");
     });
   });
+
+  const testHandler = async () => {
+    // 15 dias antes de hoje
+    // testSelectDao(`select * from perfis_usuario`).then((result) => {
+    //   console.log(result, "(<<<<<<<<< Resultado da consulta <<<<<<<<<)");
+    // })
+  }
+
   return (
     <ViewContainerUI isTabBar={true} exibirIA={true}>
-      <ButtonUI title="Testar" onPress={() =>
-        // 15 dias antes de hoje
-        testInsertUpdateDao(`UPDATE inventario SET atualizado_em = ${Date.now() - 31 * 24 * 60 * 60 * 1000} WHERE ingrediente_id > 0`).then((result) => {
-          console.log(result, "(<<<<<<<<< Resultado da consulta <<<<<<<<<)");
-        })} />
       <PageHeader
         style={{
           marginBottom: 15,
@@ -104,6 +108,7 @@ export default function HomeScreen() {
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
+        <ButtonUI title="Testar" onPress={testHandler} />
         <SectionUI title="" style={{
           paddingHorizontal: 20,
           marginBottom: 20,
