@@ -10,16 +10,38 @@ import { Pressable, StyleSheet, View } from 'react-native';
 type CronometroOfertaProps = {
     variant?: 'full' | 'compact';
     onPress?: () => void;
+    criadoEm?: number; // Timestamp da criação do usuário
 };
 
-export function CronometroOferta({ variant = 'full', onPress }: CronometroOfertaProps) {
+export function CronometroOferta({ variant = 'full', onPress, criadoEm }: CronometroOfertaProps) {
     const [timeRemaining, setTimeRemaining] = useState({
-        hours: 23,
-        minutes: 59,
-        seconds: 59,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
     });
     const [hasInternet, setHasInternet] = useState(true);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    // Calcula o tempo inicial baseado na data de criação
+    const calculateInitialTime = (criadoEm?: number) => {
+        if (!criadoEm) {
+            return { hours: 0, minutes: 0, seconds: 0 };
+        }
+
+        const agora = Date.now();
+        const tempoDecorrido = agora - criadoEm;
+        const tempoRestante = (23 * 60 * 60 * 1000) - tempoDecorrido; // 23 horas em milissegundos
+
+        if (tempoRestante <= 0) {
+            return { hours: 0, minutes: 0, seconds: 0 };
+        }
+
+        const horas = Math.floor(tempoRestante / (1000 * 60 * 60));
+        const minutos = Math.floor((tempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((tempoRestante % (1000 * 60)) / 1000);
+
+        return { hours: horas, minutes: minutos, seconds: segundos };
+    };
 
     // Verifica conexão com internet
     useEffect(() => {
@@ -42,6 +64,12 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
             clearInterval(networkInterval);
         };
     }, []);
+
+    // Inicializa o tempo baseado na data de criação
+    useEffect(() => {
+        const initialTime = calculateInitialTime(criadoEm);
+        setTimeRemaining(initialTime);
+    }, [criadoEm]);
 
     useEffect(() => {
         // Inicia o cronômetro regressivo
@@ -74,7 +102,7 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
                 clearInterval(intervalRef.current);
             }
         };
-    }, []);
+    }, [criadoEm]);
 
     const formatTime = (value: number) => {
         return value.toString().padStart(2, '0');
@@ -164,6 +192,12 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
                                     <TextUI variant="regular" style={styles.compactPriceSubtext}>
                                         Desconto vitalício enquanto mantiver assinatura
                                     </TextUI>
+                                    <View style={styles.compactNewUserBadge}>
+                                        <Ionicons name="person-add-outline" size={12} color={Colors.light.primary} />
+                                        <TextUI variant="semibold" style={styles.compactNewUserText}>
+                                            Exclusivo para novos usuários
+                                        </TextUI>
+                                    </View>
                                 </View>
                                 <Ionicons name="chevron-forward-outline" size={20} color={Colors.light.primary} />
                             </View>
@@ -174,6 +208,12 @@ export function CronometroOferta({ variant = 'full', onPress }: CronometroOferta
                                         <Ionicons name="cloud-offline-outline" size={18} color={Colors.light.bodyText} />
                                         <TextUI variant="regular" style={styles.compactOfflineText}>
                                             Conecte-se à internet para ver o preço
+                                        </TextUI>
+                                    </View>
+                                    <View style={styles.compactNewUserBadge}>
+                                        <Ionicons name="person-add-outline" size={12} color={Colors.light.primary} />
+                                        <TextUI variant="semibold" style={styles.compactNewUserText}>
+                                            Exclusivo para novos usuários
                                         </TextUI>
                                     </View>
                                 </View>
@@ -456,6 +496,19 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: Colors.light.bodyText,
         flex: 1,
+    },
+    compactNewUserBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        marginTop: 8,
+        paddingTop: 8,
+        borderTopWidth: 1,
+        borderTopColor: '#EBEBEB',
+    },
+    compactNewUserText: {
+        fontSize: 11,
+        color: Colors.light.primary,
     },
 });
 
