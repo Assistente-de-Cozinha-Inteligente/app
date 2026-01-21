@@ -299,7 +299,7 @@ export function Toast({
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 180,
+    top: 150,
     left: 20,
     right: 20,
     zIndex: 2000,
