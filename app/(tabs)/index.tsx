@@ -9,7 +9,7 @@ import { SectionUI } from '@/components/ui/section';
 import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
-import { testSelectDao } from '@/data/local/dao/testDao';
+import { testInsertUpdateDao, testSelectDao } from '@/data/local/dao/testDao';
 import { getOrCreateLocalUser } from '@/data/local/dao/usuarioDao';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from 'expo-router';
@@ -86,7 +86,8 @@ export default function HomeScreen() {
   return (
     <ViewContainerUI isTabBar={true} exibirIA={true}>
       <ButtonUI title="Testar" onPress={() =>
-        testSelectDao(`SELECT * FROM ingredientes where id = 1`).then((result) => {
+        // 15 dias antes de hoje
+        testInsertUpdateDao(`UPDATE inventario SET atualizado_em = ${Date.now() - 31 * 24 * 60 * 60 * 1000} WHERE ingrediente_id > 0`).then((result) => {
           console.log(result, "(<<<<<<<<< Resultado da consulta <<<<<<<<<)");
         })} />
       <PageHeader

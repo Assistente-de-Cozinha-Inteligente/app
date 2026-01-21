@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { Image, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 // Variável de controle de login
-const logado = true; // Altere para false para ver a versão não logada
+const logado = false; // Altere para false para ver a versão não logada
 
 // Opções para cada tipo de recomendação
 const recomendacoesOptions = {
