@@ -8,7 +8,7 @@ import { buscarIngredientesPorNome, getAllIngredientes } from '@/data/local/dao/
 import { inserirAtualizarItemInventario } from '@/data/local/dao/inventarioDao';
 import { Ingrediente, LocalIngrediente } from '@/models';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,6 +20,7 @@ type ItemSelecionado = {
 };
 
 export default function AdicionarItemInventarioScreen() {
+  const { from } = useLocalSearchParams<{ from?: string }>();
   const [searchTerm, setSearchTerm] = useState('');
   const [ingredientesSugeridos, setIngredientesSugeridos] = useState<Ingrediente[]>([]);
   const [itensSelecionados, setItensSelecionados] = useState<ItemSelecionado[]>([]);
@@ -108,7 +109,12 @@ export default function AdicionarItemInventarioScreen() {
         local: item.ingrediente.local,
       })), 'manual');
 
-      router.back();
+      // Se veio da index, redireciona para a tela de cozinha
+      if (from === 'index') {
+        router.replace('/(tabs)/lista');
+      } else {
+        router.back();
+      }
     } catch (error) {
       console.error('Erro ao salvar itens:', error);
     }

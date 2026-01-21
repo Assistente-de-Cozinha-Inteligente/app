@@ -1,5 +1,6 @@
 import { CardPreferenciasIA } from '@/components/card-preferencias-ia';
 import { CronometroOferta } from '@/components/cronometro-oferta';
+import { EmptyCozinhaCard } from '@/components/empty-cozinha-card';
 import { ReceitaSlider } from '@/components/receita-slider';
 import { ReceitaSliderFazer } from '@/components/receita-slider-fazer';
 import { ButtonUI } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { SectionUI } from '@/components/ui/section';
 import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
+import { getInventario } from '@/data/local/dao/inventarioDao';
 import { getOrCreateLocalUser } from '@/data/local/dao/usuarioDao';
 import { Usuario } from '@/models';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -20,6 +22,8 @@ import { Pressable, View } from 'react-native';
 export default function HomeScreen() {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [showCronometro, setShowCronometro] = useState(false);
+  const [showPreferenciasIA, setShowPreferenciasIA] = useState(false);
+  const [hasIngredientes, setHasIngredientes] = useState(true);
 
   // Verifica se o usuário tem menos de 23 horas desde a criação E se ganhou a oferta
   const checkShouldShowCronometro = async (usuario: Usuario | null) => {
@@ -41,6 +45,8 @@ export default function HomeScreen() {
   };
 
   useFocusEffect(() => {
+    setShowCronometro(false);
+
     getOrCreateLocalUser().then(async (user) => {
       if (user) {
         setUsuario(user);
@@ -48,6 +54,11 @@ export default function HomeScreen() {
         setShowCronometro(shouldShow);
       }
       console.log(user, "(<<<<<<<<< ID do usuário <<<<<<<<<)");
+    });
+
+    // Verifica se o usuário tem ingredientes
+    getInventario().then((inventario) => {
+      setHasIngredientes(inventario.length > 0);
     });
   });
 
@@ -111,12 +122,6 @@ export default function HomeScreen() {
     },
   ];
 
-  const testHandler = async () => {
-    // 15 dias antes de hoje
-    // testSelectDao(`select * from perfis_usuario`).then((result) => {
-    //   console.log(result, "(<<<<<<<<< Resultado da consulta <<<<<<<<<)");
-    // })
-  }
 
   return (
     <ViewContainerUI isTabBar={true} exibirIA={true}>
@@ -134,7 +139,16 @@ export default function HomeScreen() {
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
-        <ButtonUI title="Testar" onPress={testHandler} />
+
+        {/* Card para quando não tem ingredientes */}
+        {!hasIngredientes && (
+          <SectionUI title="" style={{
+            paddingHorizontal: 20,
+          }}>
+            <EmptyCozinhaCard onAddIngredients={() => router.push('/adicionar-item-inventario?from=index')} />
+          </SectionUI>
+        )}
+
         {showCronometro && usuario?.criado_em && (
           <SectionUI title="" style={{
             paddingHorizontal: 20,
@@ -144,9 +158,8 @@ export default function HomeScreen() {
           </SectionUI>
         )}
 
-        <SectionUI title="" style={{
+        {showPreferenciasIA && <SectionUI title="" style={{
           paddingHorizontal: 20,
-          marginBottom: 20,
         }}>
           <CardPreferenciasIA
             preferencias={[
@@ -155,23 +168,7 @@ export default function HomeScreen() {
               { id: '3', text: 'Você usa frango com frequência.', icon: 'restaurant-outline' },
             ]}
           />
-        </SectionUI>
-
-        <ButtonUI title="Oferta limitada" onPress={() => router.push('/oferta-limitada')} style={{
-          marginBottom: 20,
-        }} />
-
-        <ButtonUI title="PAGAR" onPress={() => router.push('/paywall')} style={{
-          marginBottom: 20,
-        }} />
-
-        <ButtonUI title="Login" onPress={() => router.push('/login?modo=assinatura')} style={{
-          marginBottom: 20,
-        }} />
-
-        <ButtonUI title="Registrar" onPress={() => router.push('/registro?modo=assinatura')} style={{
-          marginBottom: 20,
-        }} />
+        </SectionUI>}
 
         <SectionUI title="Sugestão rápida" style={{
           paddingHorizontal: 20,

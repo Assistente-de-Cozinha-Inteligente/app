@@ -13,7 +13,6 @@ export type Receita = {
   proteinas: number | null;
   carboidratos: number | null;
   gorduras: number | null;
-  nivel: NivelDificuldade;
 };
 
 export type PapelIngrediente = 'base' | 'principal' | 'secundario' | 'complemento' | 'tempero';
@@ -62,5 +61,24 @@ export type ReceitaCategoria = {
   receita_id: number;
   categoria_id: number;
   principal: boolean;
+};
+
+export type ReceitaNivel = {
+  receita_id: number;
+  nivel: NivelDificuldade;
+};
+
+export type RestricaoReceita = 'vegetariano' | 'vegano' | 'sem_gluten' | 'sem_lactose' | 'outro';
+
+export type ReceitaRestricao = {
+  receita_id: number;
+  restricao: RestricaoReceita;
+};
+
+export type AlergiaReceita = 'lactose' | 'gluten' | 'amendoim' | 'frutos_do_mar' | 'ovos' | 'soja';
+
+export type ReceitaAlergia = {
+  receita_id: number;
+  alergia: AlergiaReceita;
 };
 

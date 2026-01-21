@@ -34,6 +34,11 @@ export type {
   ReceitaEtapaTarefa,
   ReceitaPontoAtencao,
   ReceitaCategoria,
+  ReceitaNivel,
+  RestricaoReceita,
+  ReceitaRestricao,
+  AlergiaReceita,
+  ReceitaAlergia,
 } from './receita';
 
 // Inventario
