@@ -13,6 +13,7 @@ import { inserirAtualizarItemInventario } from '@/data/local/dao/inventarioDao';
 import { atualizarMarcadoItemListaCompras, excluirItemListaCompras, getListaCompras } from '@/data/local/dao/listaComprasDao';
 import { useExpandableLocal } from '@/hooks/use-expandable-local';
 import { useLocalGrouping } from '@/hooks/use-local-grouping';
+import { useScreenEntrance } from '@/hooks/use-screen-entrance';
 import { useUndoDelete } from '@/hooks/use-undo-delete';
 import { ListaCompras } from '@/models';
 import { handleShareCarrinho } from '@/share/shareCarrinho';
@@ -25,6 +26,9 @@ export default function CarrinhoScreen() {
   const [listaCompras, setListaCompras] = useState<ListaCompras[]>([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [itensEnviadosCount, setItensEnviadosCount] = useState(0);
+
+  // Animação de entrada suave
+  const { animatedStyle } = useScreenEntrance({ duration: 400, delay: 100 });
 
   // Calcula quantos itens estão marcados
   const itensMarcados = useMemo(() => {
@@ -159,7 +163,7 @@ export default function CarrinhoScreen() {
         }
       />
       <ScrollViewWithPadding keyboardShouldPersistTaps="handled">
-        <View style={styles.listContainer}>
+        <Animated.View style={[styles.listContainer, animatedStyle]}>
           {/* Estado vazio */}
           {listaCompras.length === 0 && (
             <EmptyStateCard
@@ -214,7 +218,7 @@ export default function CarrinhoScreen() {
               />
             );
           })}
-        </View>
+        </Animated.View>
       </ScrollViewWithPadding>
 
       {/* Mensagem de confirmação */}

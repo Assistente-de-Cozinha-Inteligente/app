@@ -17,6 +17,7 @@ import { atualizarDisponibilidadeValidadeItemInventario, excluirItemInventario, 
 import { inserirAtualizarItemListaCompras } from '@/data/local/dao/listaComprasDao';
 import { useExpandableLocal } from '@/hooks/use-expandable-local';
 import { useInventarioGrouping } from '@/hooks/use-inventario-grouping';
+import { useScreenEntrance } from '@/hooks/use-screen-entrance';
 import { useUndoDelete } from '@/hooks/use-undo-delete';
 import { Inventario } from '@/models';
 import { getItemMaisPrioritario } from '@/utils/validadeHelper';
@@ -36,6 +37,9 @@ export default function ListaScreen() {
   const [toastKey, setToastKey] = useState(0);
   const [showInfoCard, setShowInfoCard] = useState(true);
   const [showInfoModal, setShowInfoModal] = useState(false);
+
+  // Animação de entrada suave
+  const { animatedStyle } = useScreenEntrance({ duration: 400, delay: 100 });
 
   // Obtém o item mais prioritário próximo de vencer
   const itemMaisPrioritario = useMemo(() => {
@@ -234,7 +238,7 @@ export default function ListaScreen() {
         }
       />
       <ScrollViewWithPadding keyboardShouldPersistTaps="handled">
-        <View style={styles.listContainer}>
+        <Animated.View style={[styles.listContainer, animatedStyle]}>
           {/* Card informativo */}
           {showInfoCard && (
             <View style={styles.infoCard}>
@@ -317,7 +321,7 @@ export default function ListaScreen() {
               />
             );
           })}
-        </View>
+        </Animated.View>
       </ScrollViewWithPadding>
 
       {/* Mensagem de confirmação */}

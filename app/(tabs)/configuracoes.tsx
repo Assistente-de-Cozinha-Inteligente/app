@@ -10,13 +10,14 @@ import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { useBottomSheetSelecao } from '@/hooks/use-bottom-sheet-selecao';
 import { usePerfilConfig } from '@/hooks/use-perfil-config';
+import { useScreenEntrance } from '@/hooks/use-screen-entrance';
 import { formatListForDisplay } from '@/utils/formatText';
 import { openEmail, openURL } from '@/utils/linkingHelper';
 import { getRecomendacoesOptions } from '@/utils/perfilOptions';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BackHandler, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, BackHandler, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 // Variável de controle de login
 const logado = false;
@@ -26,6 +27,9 @@ export default function ConfiguracoesScreen() {
   
   // Opções baseadas no schema do banco
   const recomendacoesOptions = useMemo(() => getRecomendacoesOptions(), []);
+
+  // Animação de entrada suave
+  const { animatedStyle } = useScreenEntrance({ duration: 400, delay: 100 });
 
   // Gerencia estado e lógica do perfil
   const perfil = usePerfilConfig();
@@ -75,7 +79,8 @@ export default function ConfiguracoesScreen() {
 
   return (
     <ViewContainerUI isTabBar={true} exibirIA={true}>
-      <ScrollViewWithPadding>
+      <Animated.View style={animatedStyle}>
+        <ScrollViewWithPadding>
         <PageHeader
           style={{
             paddingHorizontal: 20,
@@ -248,6 +253,7 @@ export default function ConfiguracoesScreen() {
           </SectionUI>
         )}
       </ScrollViewWithPadding>
+      </Animated.View>
 
       {/* Bottom Sheet de Seleção */}
       <BottomSheetSelecao
