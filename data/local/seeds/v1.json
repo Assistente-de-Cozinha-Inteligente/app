@@ -642,8 +642,7 @@
       "calorias": 320,
       "proteinas": 12,
       "carboidratos": 45,
-      "gorduras": 8,
-      "nivel": "facil"
+      "gorduras": 8
     },
     {
       "id": 2,
@@ -655,8 +654,7 @@
       "calorias": 280,
       "proteinas": 8,
       "carboidratos": 20,
-      "gorduras": 18,
-      "nivel": "facil"
+      "gorduras": 18
     },
     {
       "id": 3,
@@ -668,8 +666,7 @@
       "calorias": 350,
       "proteinas": 35,
       "carboidratos": 25,
-      "gorduras": 12,
-      "nivel": "medio"
+      "gorduras": 12
     },
     {
       "id": 4,
@@ -681,8 +678,57 @@
       "calorias": 420,
       "proteinas": 12,
       "carboidratos": 65,
-      "gorduras": 15,
+      "gorduras": 15
+    }
+  ],
+  "receita_niveis": [
+    {
+      "receita_id": 1,
+      "nivel": "facil"
+    },
+    {
+      "receita_id": 2,
+      "nivel": "facil"
+    },
+    {
+      "receita_id": 3,
       "nivel": "medio"
+    },
+    {
+      "receita_id": 4,
+      "nivel": "medio"
+    }
+  ],
+  "receita_restricoes": [
+    {
+      "receita_id": 1,
+      "restricao": "vegetariano"
+    },
+    {
+      "receita_id": 2,
+      "restricao": "vegetariano"
+    },
+    {
+      "receita_id": 4,
+      "restricao": "vegetariano"
+    }
+  ],
+  "receita_alergias": [
+    {
+      "receita_id": 1,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 2,
+      "alergia": "lactose"
+    },
+    {
+      "receita_id": 2,
+      "alergia": "ovos"
+    },
+    {
+      "receita_id": 4,
+      "alergia": "lactose"
     }
   ],
   "receita_ingredientes": [
