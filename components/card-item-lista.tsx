@@ -69,7 +69,7 @@ export function CardItemLista({
             style={styles.iconButton}
             activeOpacity={0.7}
           >
-            <Ionicons name="trash-outline" size={18} color={Colors.light.danger} />
+            <Ionicons name="trash-outline" size={22} color={Colors.light.danger} />
           </TouchableOpacity>
         </View>
       </View>
@@ -129,7 +129,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   iconButton: {
-    padding: 4,
+    padding: 6,
+    minWidth: 36,
+    minHeight: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
