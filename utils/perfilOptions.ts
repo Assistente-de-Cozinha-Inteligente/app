@@ -59,7 +59,7 @@ export const mapDBtoUI = {
       'iniciante': 'Iniciante',
       'intermediario': 'Intermediário',
       'avancado': 'Avançado',
-      'outro': 'Iniciante',
+      'outro': 'Outro',
     };
     return map[db] || 'Iniciante';
   },
@@ -102,6 +102,7 @@ export const mapUItoDB = {
       'Iniciante': 'iniciante',
       'Intermediário': 'intermediario',
       'Avançado': 'avancado',
+      'Outro': 'outro',
     };
     return map[ui] || 'iniciante';
   },

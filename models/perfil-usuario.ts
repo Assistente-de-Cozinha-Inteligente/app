@@ -1,10 +1,10 @@
 export type NivelCozinha = 'iniciante' | 'intermediario' | 'avancado' | 'outro';
 
-export type RestricaoAlimentar = 'vegetariano' | 'vegano' | 'sem_gluten' | 'sem_lactose' | 'outro';
+export type RestricaoAlimentar = 'vegetariano' | 'vegano' | 'sem_gluten' | 'sem_lactose' ;
 
-export type Alergia = 'lactose' | 'gluten' | 'amendoim' | 'frutos_do_mar' | 'ovos' | 'soja' | 'outro';
+export type Alergia = 'lactose' | 'gluten' | 'amendoim' | 'frutos_do_mar' | 'ovos' | 'soja' ;
 
-export type Prioridade = 'rapidez' | 'economia' | 'saude' | 'sabor' | 'outro';
+export type Prioridade = 'rapidez' | 'economia' | 'saude';
 
 export type PerfilUsuario = {
   id: number;

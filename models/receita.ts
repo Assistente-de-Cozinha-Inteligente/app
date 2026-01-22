@@ -1,4 +1,4 @@
-export type NivelDificuldade = 'facil' | 'medio' | 'dificil';
+export type NivelDificuldade = 'iniciante' | 'intermediario' | 'avancado' | 'outro';
 
 export type UnidadeMedida = 'grama' | 'kilograma' | 'litro' | 'mililitro' | 'unidade' | 'outro';
 

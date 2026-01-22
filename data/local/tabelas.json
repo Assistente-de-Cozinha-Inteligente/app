@@ -33,7 +33,7 @@
   "perfil_prioridades": [
     {
       "perfil_id": "INTEGER NOT NULL",
-      "prioridade": "TEXT CHECK (prioridade IN ('rapidez','economia','saude','sabor'))",
+      "prioridade": "TEXT CHECK (prioridade IN ('rapidez','economia','saude'))",
       "PRIMARY KEY": "(perfil_id, prioridade)"
     }
   ],
@@ -71,10 +71,17 @@
       "gorduras": "INTEGER"
     }
   ],
+  "receita_prioridades": [
+    {
+      "receita_id": "INTEGER NOT NULL",
+      "prioridade": "TEXT CHECK (prioridade IN ('rapidez','economia','saude'))",
+      "PRIMARY KEY": "(receita_id, prioridade)"
+    }
+  ],
   "receita_restricoes": [
     {
       "receita_id": "INTEGER NOT NULL",
-      "restricao": "TEXT CHECK (restricao IN ('vegetariano','vegano','sem_gluten','sem_lactose','outro'))",
+      "restricao": "TEXT CHECK (restricao IN ('vegetariano','vegano','sem_gluten','sem_lactose'))",
       "PRIMARY KEY": "(receita_id, restricao)"
     }
   ],
@@ -88,7 +95,7 @@
   "receita_niveis": [
     {
       "receita_id": "INTEGER NOT NULL",
-      "nivel": "TEXT CHECK (nivel IN ('facil','medio','dificil')) NOT NULL",
+      "nivel": "TEXT CHECK (nivel IN ('iniciante','intermediario','avancado','outro')) NOT NULL",
       "PRIMARY KEY": "(receita_id, nivel)"
     }
   ],
