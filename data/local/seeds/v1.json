@@ -629,88 +629,738 @@
       "nome": "Chuchu",
       "categoria": "legume",
       "local": "frutas_vegetais"
+    },
+    {
+      "id": 101,
+      "nome": "Queijo mussarela",
+      "categoria": "laticíneo",
+      "local": "laticinios_queijos"
+    },
+    {
+      "id": 102,
+      "nome": "Champignon",
+      "categoria": "verdura",
+      "local": "frutas_vegetais"
+    },
+    {
+      "id": 103,
+      "nome": "Pão de hambúrguer",
+      "categoria": "panificacao_massas",
+      "local": "padaria"
+    },
+    {
+      "id": 104,
+      "nome": "Alho poró",
+      "categoria": "verdura",
+      "local": "frutas_vegetais"
+    },
+    {
+      "id": 105,
+      "nome": "Louro",
+      "categoria": "tempero",
+      "local": "outro"
+    },
+    {
+      "id": 106,
+      "nome": "Quinoa",
+      "categoria": "grão",
+      "local": "graos_cereais"
+    },
+    {
+      "id": 107,
+      "nome": "Tofu",
+      "categoria": "proteína",
+      "local": "carnes_peixes"
+    },
+    {
+      "id": 108,
+      "nome": "Tortilha",
+      "categoria": "panificacao_massas",
+      "local": "padaria"
     }
   ],
   "receitas": [
     {
       "id": 1,
-      "nome": "Sushi",
-      "descricao": "Uma receita simples, equilibrada e fácil de preparar.",
-      "imagem": "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
-      "tempo_minutos": 35,
-      "pessoas": 2,
-      "calorias": 320,
-      "proteinas": 12,
-      "carboidratos": 45,
-      "gorduras": 8
+      "nome": "Lasanha à Bolonhesa",
+      "descricao": "Uma lasanha tradicional italiana com molho bolonhesa, queijo e massa fresca.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 90,
+      "pessoas": 6,
+      "calorias": 450,
+      "proteinas": 25,
+      "carboidratos": 40,
+      "gorduras": 20
     },
     {
       "id": 2,
-      "nome": "Salada Caesar",
-      "descricao": "Uma salada clássica e refrescante, perfeita para qualquer refeição.",
-      "imagem": "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=550&h=360&fit=crop",
-      "tempo_minutos": 15,
-      "pessoas": 4,
-      "calorias": 280,
-      "proteinas": 8,
-      "carboidratos": 20,
-      "gorduras": 18
+      "nome": "Feijoada",
+      "descricao": "O prato mais tradicional do Brasil, com feijão preto, carnes e acompanhamentos.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 180,
+      "pessoas": 8,
+      "calorias": 520,
+      "proteinas": 35,
+      "carboidratos": 45,
+      "gorduras": 22
     },
     {
       "id": 3,
-      "nome": "Frango Grelhado com Legumes",
-      "descricao": "Uma refeição completa, nutritiva e saborosa, ideal para o dia a dia.",
-      "imagem": "https://images.unsplash.com/photo-1534939561126-855b8675edd7?w=550&h=360&fit=crop",
+      "nome": "Strogonoff de Frango",
+      "descricao": "Um clássico brasileiro com frango, creme de leite e molho cremoso.",
+      "imagem": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=550&h=360&fit=crop",
       "tempo_minutos": 40,
       "pessoas": 4,
-      "calorias": 350,
-      "proteinas": 35,
-      "carboidratos": 25,
-      "gorduras": 12
+      "calorias": 380,
+      "proteinas": 28,
+      "carboidratos": 20,
+      "gorduras": 22
     },
     {
       "id": 4,
-      "nome": "Risotto de Cogumelos",
-      "descricao": "Um risotto cremoso e saboroso, perfeito para uma refeição especial.",
-      "imagem": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=550&h=360&fit=crop",
-      "tempo_minutos": 45,
+      "nome": "Hambúrguer Artesanal",
+      "descricao": "Hambúrguer caseiro com carne moída temperada e acompanhamentos frescos.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 30,
       "pessoas": 4,
       "calorias": 420,
+      "proteinas": 22,
+      "carboidratos": 35,
+      "gorduras": 20
+    },
+    {
+      "id": 5,
+      "nome": "Panqueca",
+      "descricao": "Panquecas doces e fofas, perfeitas para o café da manhã ou lanche.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 20,
+      "pessoas": 4,
+      "calorias": 180,
+      "proteinas": 6,
+      "carboidratos": 28,
+      "gorduras": 5
+    },
+    {
+      "id": 6,
+      "nome": "Salada de Grão de Bico",
+      "descricao": "Salada fresca e nutritiva com grão de bico, vegetais e temperos.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 15,
+      "pessoas": 2,
+      "calorias": 250,
       "proteinas": 12,
-      "carboidratos": 65,
-      "gorduras": 15
+      "carboidratos": 35,
+      "gorduras": 8
+    },
+    {
+      "id": 7,
+      "nome": "Risoto de Cogumelos",
+      "descricao": "Risoto cremoso com cogumelos frescos e queijo parmesão.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 35,
+      "pessoas": 4,
+      "calorias": 320,
+      "proteinas": 10,
+      "carboidratos": 45,
+      "gorduras": 12
+    },
+    {
+      "id": 8,
+      "nome": "Frango Grelhado com Legumes",
+      "descricao": "Frango grelhado acompanhado de legumes assados.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 25,
+      "pessoas": 4,
+      "calorias": 280,
+      "proteinas": 30,
+      "carboidratos": 15,
+      "gorduras": 10
+    },
+    {
+      "id": 9,
+      "nome": "Sopa de Legumes",
+      "descricao": "Sopa cremosa e reconfortante com diversos legumes.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 30,
+      "pessoas": 4,
+      "calorias": 150,
+      "proteinas": 5,
+      "carboidratos": 25,
+      "gorduras": 4
+    },
+    {
+      "id": 10,
+      "nome": "Salmão ao Forno",
+      "descricao": "Salmão assado com ervas e limão, acompanhado de vegetais.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 20,
+      "pessoas": 2,
+      "calorias": 350,
+      "proteinas": 35,
+      "carboidratos": 5,
+      "gorduras": 20
+    },
+    {
+      "id": 11,
+      "nome": "Omelete de Vegetais",
+      "descricao": "Omelete fofinho recheado com vegetais frescos.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 10,
+      "pessoas": 2,
+      "calorias": 200,
+      "proteinas": 15,
+      "carboidratos": 8,
+      "gorduras": 12
+    },
+    {
+      "id": 12,
+      "nome": "Arroz com Feijão e Salada",
+      "descricao": "Prato tradicional brasileiro com arroz, feijão e salada fresca.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 30,
+      "pessoas": 4,
+      "calorias": 380,
+      "proteinas": 15,
+      "carboidratos": 60,
+      "gorduras": 8
+    },
+    {
+      "id": 13,
+      "nome": "Camarão ao Alho e Óleo",
+      "descricao": "Camarões refogados com alho, azeite e ervas.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 15,
+      "pessoas": 2,
+      "calorias": 220,
+      "proteinas": 25,
+      "carboidratos": 5,
+      "gorduras": 10
+    },
+    {
+      "id": 14,
+      "nome": "Tofu Grelhado com Vegetais",
+      "descricao": "Tofu temperado e grelhado com mix de vegetais.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 20,
+      "pessoas": 2,
+      "calorias": 180,
+      "proteinas": 18,
+      "carboidratos": 12,
+      "gorduras": 8
+    },
+    {
+      "id": 15,
+      "nome": "Smoothie Verde",
+      "descricao": "Bebida nutritiva com frutas e vegetais verdes.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 5,
+      "pessoas": 2,
+      "calorias": 120,
+      "proteinas": 3,
+      "carboidratos": 25,
+      "gorduras": 2
+    },
+    {
+      "id": 16,
+      "nome": "Macarrão com Molho de Tomate",
+      "descricao": "Macarrão simples com molho de tomate caseiro.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 20,
+      "pessoas": 4,
+      "calorias": 320,
+      "proteinas": 12,
+      "carboidratos": 55,
+      "gorduras": 8
+    },
+    {
+      "id": 17,
+      "nome": "Quiche de Legumes",
+      "descricao": "Torta salgada com massa e recheio de legumes.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 45,
+      "pessoas": 6,
+      "calorias": 280,
+      "proteinas": 10,
+      "carboidratos": 30,
+      "gorduras": 14
+    },
+    {
+      "id": 18,
+      "nome": "Frango à Parmegiana",
+      "descricao": "Frango empanado com molho de tomate e queijo derretido.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 40,
+      "pessoas": 4,
+      "calorias": 420,
+      "proteinas": 35,
+      "carboidratos": 25,
+      "gorduras": 20
+    },
+    {
+      "id": 19,
+      "nome": "Salada Caesar",
+      "descricao": "Salada clássica com alface, croutons e molho caesar.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 15,
+      "pessoas": 2,
+      "calorias": 250,
+      "proteinas": 8,
+      "carboidratos": 20,
+      "gorduras": 16
+    },
+    {
+      "id": 20,
+      "nome": "Bolo de Chocolate",
+      "descricao": "Bolo fofinho de chocolate para sobremesa.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 50,
+      "pessoas": 8,
+      "calorias": 350,
+      "proteinas": 6,
+      "carboidratos": 45,
+      "gorduras": 16
+    },
+    {
+      "id": 21,
+      "nome": "Tacos de Frango",
+      "descricao": "Tacos mexicanos com frango temperado e acompanhamentos.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 25,
+      "pessoas": 4,
+      "calorias": 380,
+      "proteinas": 28,
+      "carboidratos": 35,
+      "gorduras": 14
+    },
+    {
+      "id": 22,
+      "nome": "Pasta Carbonara",
+      "descricao": "Massa italiana cremosa com bacon e queijo.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 20,
+      "pessoas": 4,
+      "calorias": 450,
+      "proteinas": 18,
+      "carboidratos": 50,
+      "gorduras": 20
+    },
+    {
+      "id": 23,
+      "nome": "Ratatouille",
+      "descricao": "Prato francês com legumes assados e ervas.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 60,
+      "pessoas": 4,
+      "calorias": 180,
+      "proteinas": 5,
+      "carboidratos": 25,
+      "gorduras": 8
+    },
+    {
+      "id": 24,
+      "nome": "Sushi Caseiro",
+      "descricao": "Rolos de sushi com peixe fresco e vegetais.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 90,
+      "pessoas": 4,
+      "calorias": 280,
+      "proteinas": 15,
+      "carboidratos": 40,
+      "gorduras": 6
+    },
+    {
+      "id": 25,
+      "nome": "Chili Vegetariano",
+      "descricao": "Prato apimentado com feijão e vegetais.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 45,
+      "pessoas": 6,
+      "calorias": 220,
+      "proteinas": 12,
+      "carboidratos": 35,
+      "gorduras": 5
+    },
+    {
+      "id": 26,
+      "nome": "Frango Teriyaki",
+      "descricao": "Frango grelhado com molho teriyaki doce.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 30,
+      "pessoas": 4,
+      "calorias": 320,
+      "proteinas": 32,
+      "carboidratos": 20,
+      "gorduras": 12
+    },
+    {
+      "id": 27,
+      "nome": "Cuscuz Marroquino",
+      "descricao": "Prato tradicional com sêmola e vegetais.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 25,
+      "pessoas": 4,
+      "calorias": 280,
+      "proteinas": 8,
+      "carboidratos": 50,
+      "gorduras": 6
+    },
+    {
+      "id": 28,
+      "nome": "Wrap de Frango",
+      "descricao": "Tortilha recheada com frango e vegetais frescos.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 15,
+      "pessoas": 2,
+      "calorias": 300,
+      "proteinas": 25,
+      "carboidratos": 30,
+      "gorduras": 10
+    },
+    {
+      "id": 29,
+      "nome": "Curry de Legumes",
+      "descricao": "Curry indiano com legumes e especiarias.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 35,
+      "pessoas": 4,
+      "calorias": 250,
+      "proteinas": 8,
+      "carboidratos": 40,
+      "gorduras": 8
+    },
+    {
+      "id": 30,
+      "nome": "Bowl de Quinoa",
+      "descricao": "Bowl nutritivo com quinoa, vegetais e proteína.",
+      "imagem": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=550&h=360&fit=crop",
+      "tempo_minutos": 20,
+      "pessoas": 2,
+      "calorias": 350,
+      "proteinas": 15,
+      "carboidratos": 45,
+      "gorduras": 12
     }
   ],
   "receita_niveis": [
     {
       "receita_id": 1,
-      "nivel": "facil"
+      "nivel": "intermediario"
     },
     {
       "receita_id": 2,
-      "nivel": "facil"
+      "nivel": "avancado"
     },
     {
       "receita_id": 3,
-      "nivel": "medio"
+      "nivel": "iniciante"
     },
     {
       "receita_id": 4,
-      "nivel": "medio"
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 5,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 6,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 7,
+      "nivel": "intermediario"
+    },
+    {
+      "receita_id": 8,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 9,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 10,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 11,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 12,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 13,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 14,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 15,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 16,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 17,
+      "nivel": "intermediario"
+    },
+    {
+      "receita_id": 18,
+      "nivel": "intermediario"
+    },
+    {
+      "receita_id": 19,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 20,
+      "nivel": "intermediario"
+    },
+    {
+      "receita_id": 21,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 22,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 23,
+      "nivel": "avancado"
+    },
+    {
+      "receita_id": 24,
+      "nivel": "avancado"
+    },
+    {
+      "receita_id": 25,
+      "nivel": "intermediario"
+    },
+    {
+      "receita_id": 26,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 27,
+      "nivel": "intermediario"
+    },
+    {
+      "receita_id": 28,
+      "nivel": "iniciante"
+    },
+    {
+      "receita_id": 29,
+      "nivel": "intermediario"
+    },
+    {
+      "receita_id": 30,
+      "nivel": "iniciante"
     }
   ],
   "receita_restricoes": [
     {
-      "receita_id": 1,
+      "receita_id": 6,
       "restricao": "vegetariano"
+    },
+    {
+      "receita_id": 7,
+      "restricao": "vegetariano"
+    },
+    {
+      "receita_id": 9,
+      "restricao": "vegetariano"
+    },
+    {
+      "receita_id": 14,
+      "restricao": "vegano"
+    },
+    {
+      "receita_id": 15,
+      "restricao": "vegano"
+    },
+    {
+      "receita_id": 23,
+      "restricao": "vegano"
+    },
+    {
+      "receita_id": 25,
+      "restricao": "vegano"
+    },
+    {
+      "receita_id": 14,
+      "restricao": "sem_lactose"
+    },
+    {
+      "receita_id": 15,
+      "restricao": "sem_lactose"
+    },
+    {
+      "receita_id": 23,
+      "restricao": "sem_lactose"
+    },
+    {
+      "receita_id": 25,
+      "restricao": "sem_lactose"
+    }
+  ],
+  "receita_prioridades": [
+    {
+      "receita_id": 1,
+      "prioridade": "economia"
     },
     {
       "receita_id": 2,
-      "restricao": "vegetariano"
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 2,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 3,
+      "prioridade": "rapidez"
     },
     {
       "receita_id": 4,
-      "restricao": "vegetariano"
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 5,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 5,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 6,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 6,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 7,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 8,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 8,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 9,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 9,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 10,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 11,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 12,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 13,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 14,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 15,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 15,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 16,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 17,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 18,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 19,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 20,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 21,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 22,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 23,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 23,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 24,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 25,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 25,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 26,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 27,
+      "prioridade": "economia"
+    },
+    {
+      "receita_id": 28,
+      "prioridade": "rapidez"
+    },
+    {
+      "receita_id": 29,
+      "prioridade": "saude"
+    },
+    {
+      "receita_id": 30,
+      "prioridade": "saude"
     }
   ],
   "receita_alergias": [
@@ -719,707 +1369,2053 @@
       "alergia": "gluten"
     },
     {
-      "receita_id": 2,
+      "receita_id": 1,
       "alergia": "lactose"
     },
     {
-      "receita_id": 2,
-      "alergia": "ovos"
+      "receita_id": 3,
+      "alergia": "lactose"
     },
     {
       "receita_id": 4,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 5,
       "alergia": "lactose"
+    },
+    {
+      "receita_id": 5,
+      "alergia": "ovos"
+    },
+    {
+      "receita_id": 7,
+      "alergia": "lactose"
+    },
+    {
+      "receita_id": 10,
+      "alergia": "frutos_do_mar"
+    },
+    {
+      "receita_id": 11,
+      "alergia": "ovos"
+    },
+    {
+      "receita_id": 13,
+      "alergia": "frutos_do_mar"
+    },
+    {
+      "receita_id": 14,
+      "alergia": "soja"
+    },
+    {
+      "receita_id": 16,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 17,
+      "alergia": "lactose"
+    },
+    {
+      "receita_id": 17,
+      "alergia": "ovos"
+    },
+    {
+      "receita_id": 17,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 18,
+      "alergia": "lactose"
+    },
+    {
+      "receita_id": 18,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 19,
+      "alergia": "lactose"
+    },
+    {
+      "receita_id": 19,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 20,
+      "alergia": "lactose"
+    },
+    {
+      "receita_id": 20,
+      "alergia": "ovos"
+    },
+    {
+      "receita_id": 20,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 21,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 22,
+      "alergia": "lactose"
+    },
+    {
+      "receita_id": 22,
+      "alergia": "ovos"
+    },
+    {
+      "receita_id": 22,
+      "alergia": "gluten"
+    },
+    {
+      "receita_id": 24,
+      "alergia": "frutos_do_mar"
     }
   ],
   "receita_ingredientes": [
     {
       "id": 1,
       "receita_id": 1,
-      "ingrediente_id": 1,
-      "quantidade": 400,
+      "ingrediente_id": 71,
+      "quantidade": 500,
       "unidade": "grama",
       "papel": "base",
-      "observacao": "Do dia anterior"
+      "observacao": "Massa de lasanha"
     },
     {
       "id": 2,
       "receita_id": 1,
-      "ingrediente_id": 2,
-      "quantidade": 2,
-      "unidade": "unidade",
+      "ingrediente_id": 48,
+      "quantidade": 500,
+      "unidade": "grama",
       "papel": "principal",
-      "observacao": "Fatiada"
+      "observacao": "Carne moída"
     },
     {
       "id": 3,
+      "receita_id": 1,
+      "ingrediente_id": 72,
+      "quantidade": 400,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Molho de tomate"
+    },
+    {
+      "id": 4,
+      "receita_id": 1,
+      "ingrediente_id": 101,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Queijo mussarela ralado"
+    },
+    {
+      "id": 5,
+      "receita_id": 1,
+      "ingrediente_id": 30,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Queijo parmesão ralado"
+    },
+    {
+      "id": 6,
       "receita_id": 1,
       "ingrediente_id": 3,
       "quantidade": 1,
       "unidade": "unidade",
       "papel": "secundario",
-      "observacao": "Picada"
-    },
-    {
-      "id": 4,
-      "receita_id": 1,
-      "ingrediente_id": 4,
-      "quantidade": 2,
-      "unidade": "unidade",
-      "papel": "tempero",
-      "observacao": "Dentes"
-    },
-    {
-      "id": 5,
-      "receita_id": 1,
-      "ingrediente_id": 6,
-      "quantidade": 15,
-      "unidade": "mililitro",
-      "papel": "complemento",
-      "observacao": "1 colher de sopa"
-    },
-    {
-      "id": 6,
-      "receita_id": 1,
-      "ingrediente_id": 7,
-      "quantidade": 30,
-      "unidade": "mililitro",
-      "papel": "tempero",
-      "observacao": null
+      "observacao": "Cebola picada"
     },
     {
       "id": 7,
       "receita_id": 1,
-      "ingrediente_id": 8,
-      "quantidade": 15,
-      "unidade": "mililitro",
+      "ingrediente_id": 4,
+      "quantidade": 3,
+      "unidade": "unidade",
       "papel": "tempero",
-      "observacao": null
+      "observacao": "Dentes de alho"
     },
     {
       "id": 8,
       "receita_id": 1,
-      "ingrediente_id": 9,
-      "quantidade": 5,
-      "unidade": "grama",
-      "papel": "tempero",
-      "observacao": null
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "papel": "complemento",
+      "observacao": "Azeite"
     },
     {
       "id": 9,
       "receita_id": 1,
-      "ingrediente_id": 10,
+      "ingrediente_id": 21,
       "quantidade": 5,
       "unidade": "grama",
-      "papel": "complemento",
-      "observacao": "Torrado"
+      "papel": "tempero",
+      "observacao": "Sal"
     },
     {
       "id": 10,
       "receita_id": 1,
-      "ingrediente_id": 11,
-      "quantidade": 10,
+      "ingrediente_id": 22,
+      "quantidade": 2,
       "unidade": "grama",
-      "papel": "complemento",
-      "observacao": "Picada"
+      "papel": "tempero",
+      "observacao": "Pimenta do reino"
     },
     {
       "id": 11,
-      "receita_id": 2,
-      "ingrediente_id": 14,
-      "quantidade": 200,
+      "receita_id": 1,
+      "ingrediente_id": 33,
+      "quantidade": 5,
       "unidade": "grama",
-      "papel": "base",
-      "observacao": "Lavada e picada"
+      "papel": "tempero",
+      "observacao": "Orégano"
     },
     {
       "id": 12,
       "receita_id": 2,
-      "ingrediente_id": 15,
-      "quantidade": 50,
+      "ingrediente_id": 45,
+      "quantidade": 500,
       "unidade": "grama",
-      "papel": "complemento",
-      "observacao": null
+      "papel": "base",
+      "observacao": "Feijão preto"
     },
     {
       "id": 13,
       "receita_id": 2,
-      "ingrediente_id": 16,
-      "quantidade": 30,
+      "ingrediente_id": 48,
+      "quantidade": 300,
       "unidade": "grama",
-      "papel": "complemento",
-      "observacao": "Ralado"
+      "papel": "principal",
+      "observacao": "Carne moída"
     },
     {
       "id": 14,
+      "receita_id": 2,
+      "ingrediente_id": 50,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Linguiça calabresa"
+    },
+    {
+      "id": 15,
+      "receita_id": 2,
+      "ingrediente_id": 51,
+      "quantidade": 150,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Bacon"
+    },
+    {
+      "id": 16,
+      "receita_id": 2,
+      "ingrediente_id": 52,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Presunto"
+    },
+    {
+      "id": 17,
+      "receita_id": 2,
+      "ingrediente_id": 3,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebolas grandes"
+    },
+    {
+      "id": 18,
+      "receita_id": 2,
+      "ingrediente_id": 4,
+      "quantidade": 5,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Dentes de alho"
+    },
+    {
+      "id": 19,
       "receita_id": 2,
       "ingrediente_id": 5,
       "quantidade": 30,
       "unidade": "mililitro",
       "papel": "complemento",
-      "observacao": null
+      "observacao": "Azeite"
     },
     {
-      "id": 15,
+      "id": 20,
       "receita_id": 2,
-      "ingrediente_id": 17,
-      "quantidade": 1,
-      "unidade": "unidade",
-      "papel": "tempero",
-      "observacao": "Suco"
-    },
-    {
-      "id": 16,
-      "receita_id": 2,
-      "ingrediente_id": 18,
-      "quantidade": 5,
+      "ingrediente_id": 21,
+      "quantidade": 10,
       "unidade": "grama",
       "papel": "tempero",
-      "observacao": null
+      "observacao": "Sal"
     },
     {
-      "id": 17,
+      "id": 21,
       "receita_id": 2,
-      "ingrediente_id": 19,
-      "quantidade": 1,
-      "unidade": "unidade",
-      "papel": "complemento",
-      "observacao": "Gema"
+      "ingrediente_id": 22,
+      "quantidade": 3,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Pimenta do reino"
     },
     {
-      "id": 18,
+      "id": 22,
+      "receita_id": 2,
+      "ingrediente_id": 105,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Folhas de louro"
+    },
+    {
+      "id": 23,
       "receita_id": 3,
       "ingrediente_id": 20,
       "quantidade": 600,
       "unidade": "grama",
       "papel": "principal",
-      "observacao": "Cortado em filés"
+      "observacao": "Peito de frango cortado em cubos"
     },
     {
-      "id": 19,
+      "id": 24,
+      "receita_id": 3,
+      "ingrediente_id": 102,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Champignon fatiado"
+    },
+    {
+      "id": 25,
+      "receita_id": 3,
+      "ingrediente_id": 60,
+      "quantidade": 200,
+      "unidade": "mililitro",
+      "papel": "complemento",
+      "observacao": "Creme de leite"
+    },
+    {
+      "id": 26,
+      "receita_id": 3,
+      "ingrediente_id": 74,
+      "quantidade": 30,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Ketchup"
+    },
+    {
+      "id": 27,
+      "receita_id": 3,
+      "ingrediente_id": 18,
+      "quantidade": 10,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Mostarda"
+    },
+    {
+      "id": 28,
+      "receita_id": 3,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebola picada"
+    },
+    {
+      "id": 29,
+      "receita_id": 3,
+      "ingrediente_id": 4,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Dentes de alho"
+    },
+    {
+      "id": 30,
       "receita_id": 3,
       "ingrediente_id": 5,
       "quantidade": 30,
       "unidade": "mililitro",
       "papel": "complemento",
-      "observacao": null
+      "observacao": "Azeite"
     },
     {
-      "id": 20,
+      "id": 31,
       "receita_id": 3,
       "ingrediente_id": 21,
       "quantidade": 5,
       "unidade": "grama",
       "papel": "tempero",
-      "observacao": null
+      "observacao": "Sal"
     },
     {
-      "id": 21,
+      "id": 32,
       "receita_id": 3,
       "ingrediente_id": 22,
       "quantidade": 2,
       "unidade": "grama",
       "papel": "tempero",
-      "observacao": null
+      "observacao": "Pimenta do reino"
     },
     {
-      "id": 22,
-      "receita_id": 3,
-      "ingrediente_id": 23,
-      "quantidade": 300,
-      "unidade": "grama",
-      "papel": "secundario",
-      "observacao": "Cortado em cubos"
-    },
-    {
-      "id": 23,
-      "receita_id": 3,
-      "ingrediente_id": 24,
-      "quantidade": 300,
-      "unidade": "grama",
-      "papel": "secundario",
-      "observacao": "Cortada em rodelas"
-    },
-    {
-      "id": 24,
-      "receita_id": 3,
-      "ingrediente_id": 13,
-      "quantidade": 200,
-      "unidade": "grama",
-      "papel": "secundario",
-      "observacao": "Cortada em palitos"
-    },
-    {
-      "id": 25,
-      "receita_id": 3,
-      "ingrediente_id": 4,
-      "quantidade": 3,
-      "unidade": "unidade",
-      "papel": "tempero",
-      "observacao": "Dentes picados"
-    },
-    {
-      "id": 26,
+      "id": 33,
       "receita_id": 4,
-      "ingrediente_id": 25,
-      "quantidade": 300,
-      "unidade": "grama",
-      "papel": "base",
-      "observacao": null
-    },
-    {
-      "id": 27,
-      "receita_id": 4,
-      "ingrediente_id": 26,
-      "quantidade": 400,
+      "ingrediente_id": 48,
+      "quantidade": 500,
       "unidade": "grama",
       "papel": "principal",
-      "observacao": "Variados, fatiados"
+      "observacao": "Carne moída"
     },
     {
-      "id": 28,
+      "id": 34,
+      "receita_id": 4,
+      "ingrediente_id": 103,
+      "quantidade": 4,
+      "unidade": "unidade",
+      "papel": "base",
+      "observacao": "Pães de hambúrguer"
+    },
+    {
+      "id": 35,
+      "receita_id": 4,
+      "ingrediente_id": 101,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Queijo mussarela"
+    },
+    {
+      "id": 36,
+      "receita_id": 4,
+      "ingrediente_id": 14,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Alface"
+    },
+    {
+      "id": 37,
+      "receita_id": 4,
+      "ingrediente_id": 23,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Tomate fatiado"
+    },
+    {
+      "id": 38,
+      "receita_id": 4,
+      "ingrediente_id": 74,
+      "quantidade": 50,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Ketchup"
+    },
+    {
+      "id": 39,
+      "receita_id": 4,
+      "ingrediente_id": 75,
+      "quantidade": 30,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Maionese"
+    },
+    {
+      "id": 40,
       "receita_id": 4,
       "ingrediente_id": 3,
       "quantidade": 1,
       "unidade": "unidade",
       "papel": "secundario",
-      "observacao": "Picada"
+      "observacao": "Cebola roxa"
     },
     {
-      "id": 29,
+      "id": 41,
       "receita_id": 4,
       "ingrediente_id": 4,
       "quantidade": 2,
       "unidade": "unidade",
       "papel": "tempero",
-      "observacao": "Dentes picados"
+      "observacao": "Dentes de alho"
     },
     {
-      "id": 30,
+      "id": 42,
       "receita_id": 4,
-      "ingrediente_id": 27,
-      "quantidade": 1000,
+      "ingrediente_id": 21,
+      "quantidade": 5,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Sal"
+    },
+    {
+      "id": 43,
+      "receita_id": 4,
+      "ingrediente_id": 22,
+      "quantidade": 2,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Pimenta do reino"
+    },
+    {
+      "id": 44,
+      "receita_id": 5,
+      "ingrediente_id": 63,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Farinha de trigo"
+    },
+    {
+      "id": 45,
+      "receita_id": 5,
+      "ingrediente_id": 58,
+      "quantidade": 300,
       "unidade": "mililitro",
       "papel": "base",
-      "observacao": "Quente"
+      "observacao": "Leite"
     },
     {
-      "id": 31,
-      "receita_id": 4,
-      "ingrediente_id": 28,
-      "quantidade": 100,
+      "id": 46,
+      "receita_id": 5,
+      "ingrediente_id": 19,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "base",
+      "observacao": "Ovos"
+    },
+    {
+      "id": 47,
+      "receita_id": 5,
+      "ingrediente_id": 5,
+      "quantidade": 30,
       "unidade": "mililitro",
       "papel": "complemento",
-      "observacao": null
+      "observacao": "Azeite"
     },
     {
-      "id": 32,
-      "receita_id": 4,
-      "ingrediente_id": 29,
-      "quantidade": 30,
+      "id": 48,
+      "receita_id": 5,
+      "ingrediente_id": 21,
+      "quantidade": 5,
       "unidade": "grama",
-      "papel": "complemento",
-      "observacao": null
+      "papel": "tempero",
+      "observacao": "Sal"
     },
     {
-      "id": 33,
-      "receita_id": 4,
+      "id": 49,
+      "receita_id": 5,
+      "ingrediente_id": 9,
+      "quantidade": 20,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Açúcar"
+    },
+    {
+      "id": 50,
+      "receita_id": 6,
+      "ingrediente_id": 46,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Grão de bico cozido"
+    },
+    {
+      "id": 51,
+      "receita_id": 6,
+      "ingrediente_id": 23,
+      "quantidade": 150,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Tomate picado"
+    },
+    {
+      "id": 52,
+      "receita_id": 6,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebola"
+    },
+    {
+      "id": 53,
+      "receita_id": 6,
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "papel": "complemento",
+      "observacao": "Azeite"
+    },
+    {
+      "id": 54,
+      "receita_id": 6,
+      "ingrediente_id": 17,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Limão"
+    },
+    {
+      "id": 55,
+      "receita_id": 7,
+      "ingrediente_id": 25,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Arroz arbóreo"
+    },
+    {
+      "id": 56,
+      "receita_id": 7,
+      "ingrediente_id": 26,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Cogumelos"
+    },
+    {
+      "id": 57,
+      "receita_id": 7,
       "ingrediente_id": 30,
       "quantidade": 50,
       "unidade": "grama",
       "papel": "complemento",
-      "observacao": null
+      "observacao": "Queijo parmesão"
     },
     {
-      "id": 34,
-      "receita_id": 4,
+      "id": 58,
+      "receita_id": 7,
+      "ingrediente_id": 27,
+      "quantidade": 500,
+      "unidade": "mililitro",
+      "papel": "base",
+      "observacao": "Caldo de legumes"
+    },
+    {
+      "id": 59,
+      "receita_id": 8,
+      "ingrediente_id": 20,
+      "quantidade": 500,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Peito de frango"
+    },
+    {
+      "id": 60,
+      "receita_id": 8,
+      "ingrediente_id": 13,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Cenoura"
+    },
+    {
+      "id": 61,
+      "receita_id": 8,
+      "ingrediente_id": 24,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Abobrinha"
+    },
+    {
+      "id": 62,
+      "receita_id": 8,
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "papel": "complemento",
+      "observacao": "Azeite"
+    },
+    {
+      "id": 63,
+      "receita_id": 9,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebola"
+    },
+    {
+      "id": 64,
+      "receita_id": 9,
+      "ingrediente_id": 13,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Cenoura"
+    },
+    {
+      "id": 65,
+      "receita_id": 9,
+      "ingrediente_id": 37,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Batata"
+    },
+    {
+      "id": 66,
+      "receita_id": 9,
+      "ingrediente_id": 27,
+      "quantidade": 500,
+      "unidade": "mililitro",
+      "papel": "base",
+      "observacao": "Caldo de legumes"
+    },
+    {
+      "id": 67,
+      "receita_id": 10,
+      "ingrediente_id": 55,
+      "quantidade": 400,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Salmão"
+    },
+    {
+      "id": 68,
+      "receita_id": 10,
+      "ingrediente_id": 17,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Limão"
+    },
+    {
+      "id": 69,
+      "receita_id": 10,
       "ingrediente_id": 31,
+      "quantidade": 20,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Salsinha"
+    },
+    {
+      "id": 70,
+      "receita_id": 11,
+      "ingrediente_id": 19,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "principal",
+      "observacao": "Ovos"
+    },
+    {
+      "id": 71,
+      "receita_id": 11,
+      "ingrediente_id": 23,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Tomate"
+    },
+    {
+      "id": 72,
+      "receita_id": 11,
+      "ingrediente_id": 14,
+      "quantidade": 50,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Alface"
+    },
+    {
+      "id": 73,
+      "receita_id": 12,
+      "ingrediente_id": 1,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Arroz cozido"
+    },
+    {
+      "id": 74,
+      "receita_id": 12,
+      "ingrediente_id": 45,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Feijão preto"
+    },
+    {
+      "id": 75,
+      "receita_id": 12,
+      "ingrediente_id": 14,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Alface"
+    },
+    {
+      "id": 76,
+      "receita_id": 13,
+      "ingrediente_id": 57,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Camarão"
+    },
+    {
+      "id": 77,
+      "receita_id": 13,
+      "ingrediente_id": 4,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Alho"
+    },
+    {
+      "id": 78,
+      "receita_id": 13,
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "papel": "complemento",
+      "observacao": "Azeite"
+    },
+    {
+      "id": 79,
+      "receita_id": 16,
+      "ingrediente_id": 69,
+      "quantidade": 400,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Macarrão"
+    },
+    {
+      "id": 80,
+      "receita_id": 16,
+      "ingrediente_id": 72,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Molho de tomate"
+    },
+    {
+      "id": 81,
+      "receita_id": 16,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebola"
+    },
+    {
+      "id": 82,
+      "receita_id": 16,
+      "ingrediente_id": 4,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Alho"
+    },
+    {
+      "id": 83,
+      "receita_id": 14,
+      "ingrediente_id": 107,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Tofu"
+    },
+    {
+      "id": 84,
+      "receita_id": 14,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebola"
+    },
+    {
+      "id": 85,
+      "receita_id": 14,
+      "ingrediente_id": 4,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Alho"
+    },
+    {
+      "id": 86,
+      "receita_id": 14,
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "papel": "complemento",
+      "observacao": "Azeite"
+    },
+    {
+      "id": 87,
+      "receita_id": 14,
+      "ingrediente_id": 13,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Cenoura"
+    },
+    {
+      "id": 88,
+      "receita_id": 14,
+      "ingrediente_id": 24,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Abobrinha"
+    },
+    {
+      "id": 89,
+      "receita_id": 14,
+      "ingrediente_id": 21,
+      "quantidade": 5,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Sal"
+    },
+    {
+      "id": 90,
+      "receita_id": 15,
+      "ingrediente_id": 83,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "principal",
+      "observacao": "Banana"
+    },
+    {
+      "id": 91,
+      "receita_id": 15,
+      "ingrediente_id": 84,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "principal",
+      "observacao": "Maçã"
+    },
+    {
+      "id": 92,
+      "receita_id": 15,
+      "ingrediente_id": 95,
+      "quantidade": 50,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Espinafre"
+    },
+    {
+      "id": 93,
+      "receita_id": 15,
+      "ingrediente_id": 59,
+      "quantidade": 200,
+      "unidade": "mililitro",
+      "papel": "base",
+      "observacao": "Leite de coco"
+    },
+    {
+      "id": 94,
+      "receita_id": 17,
+      "ingrediente_id": 63,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Farinha de trigo"
+    },
+    {
+      "id": 94,
+      "receita_id": 17,
+      "ingrediente_id": 19,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "base",
+      "observacao": "Ovos"
+    },
+    {
+      "id": 95,
+      "receita_id": 17,
+      "ingrediente_id": 13,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Cenoura"
+    },
+    {
+      "id": 96,
+      "receita_id": 17,
+      "ingrediente_id": 24,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Abobrinha"
+    },
+    {
+      "id": 97,
+      "receita_id": 17,
+      "ingrediente_id": 101,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Queijo mussarela"
+    },
+    {
+      "id": 98,
+      "receita_id": 18,
+      "ingrediente_id": 20,
+      "quantidade": 500,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Peito de frango"
+    },
+    {
+      "id": 99,
+      "receita_id": 18,
+      "ingrediente_id": 64,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Farinha de rosca"
+    },
+    {
+      "id": 100,
+      "receita_id": 18,
+      "ingrediente_id": 72,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Molho de tomate"
+    },
+    {
+      "id": 101,
+      "receita_id": 18,
+      "ingrediente_id": 101,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Queijo mussarela"
+    },
+    {
+      "id": 102,
+      "receita_id": 19,
+      "ingrediente_id": 14,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Alface"
+    },
+    {
+      "id": 103,
+      "receita_id": 19,
+      "ingrediente_id": 15,
+      "quantidade": 50,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Croutons"
+    },
+    {
+      "id": 104,
+      "receita_id": 19,
+      "ingrediente_id": 30,
+      "quantidade": 30,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Queijo parmesão"
+    },
+    {
+      "id": 105,
+      "receita_id": 20,
+      "ingrediente_id": 63,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Farinha de trigo"
+    },
+    {
+      "id": 106,
+      "receita_id": 20,
+      "ingrediente_id": 81,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Chocolate em pó"
+    },
+    {
+      "id": 107,
+      "receita_id": 20,
+      "ingrediente_id": 19,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "base",
+      "observacao": "Ovos"
+    },
+    {
+      "id": 108,
+      "receita_id": 20,
+      "ingrediente_id": 58,
+      "quantidade": 200,
+      "unidade": "mililitro",
+      "papel": "base",
+      "observacao": "Leite"
+    },
+    {
+      "id": 109,
+      "receita_id": 21,
+      "ingrediente_id": 20,
+      "quantidade": 400,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Peito de frango"
+    },
+    {
+      "id": 110,
+      "receita_id": 21,
+      "ingrediente_id": 108,
+      "quantidade": 8,
+      "unidade": "unidade",
+      "papel": "base",
+      "observacao": "Tortilhas"
+    },
+    {
+      "id": 111,
+      "receita_id": 21,
+      "ingrediente_id": 14,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Alface"
+    },
+    {
+      "id": 112,
+      "receita_id": 21,
+      "ingrediente_id": 23,
+      "quantidade": 150,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Tomate"
+    },
+    {
+      "id": 113,
+      "receita_id": 22,
+      "ingrediente_id": 69,
+      "quantidade": 400,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Macarrão"
+    },
+    {
+      "id": 114,
+      "receita_id": 22,
+      "ingrediente_id": 51,
+      "quantidade": 150,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Bacon"
+    },
+    {
+      "id": 115,
+      "receita_id": 22,
+      "ingrediente_id": 19,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "principal",
+      "observacao": "Ovos"
+    },
+    {
+      "id": 116,
+      "receita_id": 22,
+      "ingrediente_id": 30,
+      "quantidade": 50,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Queijo parmesão"
+    },
+    {
+      "id": 117,
+      "receita_id": 23,
+      "ingrediente_id": 23,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Tomate"
+    },
+    {
+      "id": 118,
+      "receita_id": 23,
+      "ingrediente_id": 24,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Abobrinha"
+    },
+    {
+      "id": 119,
+      "receita_id": 23,
+      "ingrediente_id": 92,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Pimentão"
+    },
+    {
+      "id": 120,
+      "receita_id": 23,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebola"
+    },
+    {
+      "id": 121,
+      "receita_id": 23,
+      "ingrediente_id": 4,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Alho"
+    },
+    {
+      "id": 122,
+      "receita_id": 23,
+      "ingrediente_id": 32,
       "quantidade": 10,
       "unidade": "grama",
       "papel": "tempero",
-      "observacao": "Picada"
-    }
-  ],
-  "receita_ingrediente_substitutos": [
-    {
-      "id": 1,
-      "receita_ingrediente_id": 2,
-      "ingrediente_id": 2,
-      "quantidade": 2,
-      "unidade": "unidade",
-      "observacao": "Pode substituir por linguiça"
+      "observacao": "Manjericão"
     },
     {
-      "id": 2,
-      "receita_ingrediente_id": 4,
-      "ingrediente_id": 4,
+      "id": 123,
+      "receita_id": 24,
+      "ingrediente_id": 55,
+      "quantidade": 400,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Salmão"
+    },
+    {
+      "id": 124,
+      "receita_id": 24,
+      "ingrediente_id": 1,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Arroz"
+    },
+    {
+      "id": 125,
+      "receita_id": 24,
+      "ingrediente_id": 11,
+      "quantidade": 20,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Cebolinha"
+    },
+    {
+      "id": 126,
+      "receita_id": 25,
+      "ingrediente_id": 44,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Feijão carioca"
+    },
+    {
+      "id": 127,
+      "receita_id": 25,
+      "ingrediente_id": 23,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Tomate"
+    },
+    {
+      "id": 128,
+      "receita_id": 25,
+      "ingrediente_id": 3,
       "quantidade": 1,
       "unidade": "unidade",
-      "observacao": "Pode usar alho em pó"
+      "papel": "secundario",
+      "observacao": "Cebola"
+    },
+    {
+      "id": 129,
+      "receita_id": 25,
+      "ingrediente_id": 4,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Alho"
+    },
+    {
+      "id": 130,
+      "receita_id": 25,
+      "ingrediente_id": 92,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Pimentão"
+    },
+    {
+      "id": 131,
+      "receita_id": 25,
+      "ingrediente_id": 12,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Pimenta"
+    },
+    {
+      "id": 132,
+      "receita_id": 26,
+      "ingrediente_id": 20,
+      "quantidade": 500,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Peito de frango"
+    },
+    {
+      "id": 133,
+      "receita_id": 26,
+      "ingrediente_id": 7,
+      "quantidade": 50,
+      "unidade": "mililitro",
+      "papel": "base",
+      "observacao": "Molho de soja"
+    },
+    {
+      "id": 134,
+      "receita_id": 26,
+      "ingrediente_id": 9,
+      "quantidade": 30,
+      "unidade": "grama",
+      "papel": "tempero",
+      "observacao": "Açúcar"
+    },
+    {
+      "id": 135,
+      "receita_id": 26,
+      "ingrediente_id": 4,
+      "quantidade": 2,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Alho"
+    },
+    {
+      "id": 136,
+      "receita_id": 27,
+      "ingrediente_id": 65,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Farinha de milho"
+    },
+    {
+      "id": 137,
+      "receita_id": 27,
+      "ingrediente_id": 13,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Cenoura"
+    },
+    {
+      "id": 138,
+      "receita_id": 27,
+      "ingrediente_id": 24,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Abobrinha"
+    },
+    {
+      "id": 139,
+      "receita_id": 27,
+      "ingrediente_id": 3,
+      "quantidade": 1,
+      "unidade": "unidade",
+      "papel": "secundario",
+      "observacao": "Cebola"
+    },
+    {
+      "id": 140,
+      "receita_id": 28,
+      "ingrediente_id": 20,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Peito de frango"
+    },
+    {
+      "id": 141,
+      "receita_id": 28,
+      "ingrediente_id": 108,
+      "quantidade": 4,
+      "unidade": "unidade",
+      "papel": "base",
+      "observacao": "Tortilhas"
+    },
+    {
+      "id": 142,
+      "receita_id": 28,
+      "ingrediente_id": 14,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Alface"
+    },
+    {
+      "id": 143,
+      "receita_id": 28,
+      "ingrediente_id": 23,
+      "quantidade": 150,
+      "unidade": "grama",
+      "papel": "complemento",
+      "observacao": "Tomate"
+    },
+    {
+      "id": 144,
+      "receita_id": 29,
+      "ingrediente_id": 13,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Cenoura"
+    },
+    {
+      "id": 145,
+      "receita_id": 29,
+      "ingrediente_id": 24,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "principal",
+      "observacao": "Abobrinha"
+    },
+    {
+      "id": 146,
+      "receita_id": 29,
+      "ingrediente_id": 37,
+      "quantidade": 300,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Batata"
+    },
+    {
+      "id": 147,
+      "receita_id": 29,
+      "ingrediente_id": 59,
+      "quantidade": 200,
+      "unidade": "mililitro",
+      "papel": "base",
+      "observacao": "Leite de coco"
+    },
+    {
+      "id": 148,
+      "receita_id": 29,
+      "ingrediente_id": 4,
+      "quantidade": 3,
+      "unidade": "unidade",
+      "papel": "tempero",
+      "observacao": "Alho"
+    },
+    {
+      "id": 149,
+      "receita_id": 30,
+      "ingrediente_id": 106,
+      "quantidade": 200,
+      "unidade": "grama",
+      "papel": "base",
+      "observacao": "Quinoa"
+    },
+    {
+      "id": 150,
+      "receita_id": 30,
+      "ingrediente_id": 13,
+      "quantidade": 150,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Cenoura"
+    },
+    {
+      "id": 151,
+      "receita_id": 30,
+      "ingrediente_id": 95,
+      "quantidade": 100,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Espinafre"
+    },
+    {
+      "id": 152,
+      "receita_id": 30,
+      "ingrediente_id": 23,
+      "quantidade": 150,
+      "unidade": "grama",
+      "papel": "secundario",
+      "observacao": "Tomate"
+    },
+    {
+      "id": 153,
+      "receita_id": 30,
+      "ingrediente_id": 5,
+      "quantidade": 30,
+      "unidade": "mililitro",
+      "papel": "complemento",
+      "observacao": "Azeite"
     }
   ],
+  "receita_ingrediente_substitutos": [],
   "receita_etapas": [
     {
       "id": 1,
       "receita_id": 1,
       "ordem": 1,
-      "titulo": "Preparação",
-      "tempo_minutos": 5
+      "titulo": "Preparando o molho bolonhesa",
+      "tempo_minutos": 20
     },
     {
       "id": 2,
       "receita_id": 1,
       "ordem": 2,
-      "titulo": "Cozinhando a linguiça",
-      "tempo_minutos": 5
+      "titulo": "Montando a lasanha",
+      "tempo_minutos": 15
     },
     {
       "id": 3,
       "receita_id": 1,
       "ordem": 3,
-      "titulo": "Finalizando o prato",
-      "tempo_minutos": 10
+      "titulo": "Assando a lasanha",
+      "tempo_minutos": 40
     },
     {
       "id": 4,
       "receita_id": 2,
       "ordem": 1,
-      "titulo": "Preparando o molho",
-      "tempo_minutos": 5
+      "titulo": "Preparando o feijão",
+      "tempo_minutos": 120
     },
     {
       "id": 5,
       "receita_id": 2,
       "ordem": 2,
-      "titulo": "Montando a salada",
-      "tempo_minutos": 10
+      "titulo": "Preparando as carnes",
+      "tempo_minutos": 40
     },
     {
       "id": 6,
-      "receita_id": 3,
-      "ordem": 1,
-      "titulo": "Temperando o frango",
-      "tempo_minutos": 10
+      "receita_id": 2,
+      "ordem": 3,
+      "titulo": "Finalizando a feijoada",
+      "tempo_minutos": 20
     },
     {
       "id": 7,
       "receita_id": 3,
-      "ordem": 2,
-      "titulo": "Grelhando o frango",
+      "ordem": 1,
+      "titulo": "Preparando o frango",
       "tempo_minutos": 15
     },
     {
       "id": 8,
       "receita_id": 3,
-      "ordem": 3,
-      "titulo": "Preparando os legumes",
+      "ordem": 2,
+      "titulo": "Fazendo o molho",
       "tempo_minutos": 15
     },
     {
       "id": 9,
-      "receita_id": 4,
-      "ordem": 1,
-      "titulo": "Preparando os ingredientes",
+      "receita_id": 3,
+      "ordem": 3,
+      "titulo": "Finalizando o strogonoff",
       "tempo_minutos": 10
     },
     {
       "id": 10,
       "receita_id": 4,
-      "ordem": 2,
-      "titulo": "Cozinhando o risotto",
-      "tempo_minutos": 25
+      "ordem": 1,
+      "titulo": "Preparando a carne",
+      "tempo_minutos": 10
     },
     {
       "id": 11,
       "receita_id": 4,
+      "ordem": 2,
+      "titulo": "Montando o hambúrguer",
+      "tempo_minutos": 15
+    },
+    {
+      "id": 12,
+      "receita_id": 4,
       "ordem": 3,
       "titulo": "Finalizando",
+      "tempo_minutos": 5
+    },
+    {
+      "id": 13,
+      "receita_id": 5,
+      "ordem": 1,
+      "titulo": "Preparando a massa",
+      "tempo_minutos": 5
+    },
+    {
+      "id": 14,
+      "receita_id": 5,
+      "ordem": 2,
+      "titulo": "Fritando as panquecas",
+      "tempo_minutos": 15
+    },
+    {
+      "id": 15,
+      "receita_id": 6,
+      "ordem": 1,
+      "titulo": "Preparando a salada",
+      "tempo_minutos": 15
+    },
+    {
+      "id": 16,
+      "receita_id": 7,
+      "ordem": 1,
+      "titulo": "Cozinhando o risoto",
+      "tempo_minutos": 35
+    },
+    {
+      "id": 17,
+      "receita_id": 8,
+      "ordem": 1,
+      "titulo": "Grelhando e assando",
+      "tempo_minutos": 25
+    },
+    {
+      "id": 18,
+      "receita_id": 9,
+      "ordem": 1,
+      "titulo": "Cozinhando a sopa",
+      "tempo_minutos": 30
+    },
+    {
+      "id": 19,
+      "receita_id": 10,
+      "ordem": 1,
+      "titulo": "Assando o salmão",
+      "tempo_minutos": 20
+    },
+    {
+      "id": 20,
+      "receita_id": 11,
+      "ordem": 1,
+      "titulo": "Preparando o omelete",
       "tempo_minutos": 10
+    },
+    {
+      "id": 21,
+      "receita_id": 12,
+      "ordem": 1,
+      "titulo": "Cozinhando e montando",
+      "tempo_minutos": 30
+    },
+    {
+      "id": 22,
+      "receita_id": 13,
+      "ordem": 1,
+      "titulo": "Refogando o camarão",
+      "tempo_minutos": 15
+    },
+    {
+      "id": 23,
+      "receita_id": 16,
+      "ordem": 1,
+      "titulo": "Cozinhando o macarrão",
+      "tempo_minutos": 20
     }
   ],
   "receita_etapa_tarefas": [
     {
       "id": 1,
       "receita_etapa_id": 1,
-      "texto": "Cozinhe o arroz se não estiver usando arroz que sobrou.",
-      "descricao": "Cozinhe o arroz se não estiver usando arroz que sobrou."
+      "texto": "Em uma panela, refogue a cebola e o alho no azeite até dourar.",
+      "descricao": "Em uma panela, refogue a cebola e o alho no azeite até dourar."
     },
     {
       "id": 2,
       "receita_etapa_id": 1,
-      "texto": "Corte as salsichas em rodelas, pique o alho, pique a cebola, corte a pimenta em rodelas e corte a cenoura em cubos.",
-      "descricao": "Corte as salsichas em rodelas, pique o alho, pique a cebola, corte a pimenta em rodelas e corte a cenoura em cubos."
+      "texto": "Adicione a carne moída e cozinhe até dourar completamente.",
+      "descricao": "Adicione a carne moída e cozinhe até dourar completamente."
     },
     {
       "id": 3,
-      "receita_etapa_id": 2,
-      "texto": "Aqueça 1 colher de sopa de óleo vegetal em uma frigideira grande ou wok em fogo médio-alto.",
-      "descricao": "Aqueça 1 colher de sopa de óleo vegetal em uma frigideira grande ou wok em fogo médio-alto."
+      "receita_etapa_id": 1,
+      "texto": "Adicione o molho de tomate, sal, pimenta e orégano. Deixe cozinhar por 15 minutos.",
+      "descricao": "Adicione o molho de tomate, sal, pimenta e orégano. Deixe cozinhar por 15 minutos."
     },
     {
       "id": 4,
       "receita_etapa_id": 2,
-      "texto": "Adicione as salsichas e cozinhe até dourar, cerca de 3-4 minutos.",
-      "descricao": "Adicione as salsichas e cozinhe até dourar, cerca de 3-4 minutos."
+      "texto": "Em uma forma, faça camadas alternadas de massa, molho bolonhesa e queijos.",
+      "descricao": "Em uma forma, faça camadas alternadas de massa, molho bolonhesa e queijos."
     },
     {
       "id": 5,
       "receita_etapa_id": 2,
-      "texto": "Adicione o alho e a cebola e refogue por 1 minuto até perfumar.",
-      "descricao": "Adicione o alho e a cebola e refogue por 1 minuto até perfumar."
-    },
-    {
-      "id": 6,
-      "receita_etapa_id": 3,
-      "texto": "Adicione o arroz cozido e misture bem.",
-      "descricao": "Adicione o arroz cozido e misture bem."
-    },
-    {
-      "id": 7,
-      "receita_etapa_id": 3,
-      "texto": "Tempere com molho de soja, vinagre de arroz e açúcar.",
-      "descricao": "Tempere com molho de soja, vinagre de arroz e açúcar."
-    },
-    {
-      "id": 8,
-      "receita_etapa_id": 3,
-      "texto": "Finalize com gergelim torrado e cebolinha picada.",
-      "descricao": "Finalize com gergelim torrado e cebolinha picada."
-    },
-    {
-      "id": 9,
-      "receita_etapa_id": 4,
-      "texto": "Em uma tigela pequena, misture a gema do ovo, o suco de limão, a mostarda e o azeite.",
-      "descricao": "Em uma tigela pequena, misture a gema do ovo, o suco de limão, a mostarda e o azeite."
-    },
-    {
-      "id": 10,
-      "receita_etapa_id": 4,
-      "texto": "Tempere com sal e pimenta do reino a gosto.",
-      "descricao": "Tempere com sal e pimenta do reino a gosto."
-    },
-    {
-      "id": 11,
-      "receita_etapa_id": 5,
-      "texto": "Lave e seque bem a alface, depois pique em pedaços médios.",
-      "descricao": "Lave e seque bem a alface, depois pique em pedaços médios."
-    },
-    {
-      "id": 12,
-      "receita_etapa_id": 5,
-      "texto": "Coloque a alface em uma saladeira grande e adicione os croutons.",
-      "descricao": "Coloque a alface em uma saladeira grande e adicione os croutons."
-    },
-    {
-      "id": 13,
-      "receita_etapa_id": 5,
-      "texto": "Regue com o molho e misture delicadamente.",
-      "descricao": "Regue com o molho e misture delicadamente."
-    },
-    {
-      "id": 14,
-      "receita_etapa_id": 5,
       "texto": "Finalize com queijo parmesão ralado por cima.",
       "descricao": "Finalize com queijo parmesão ralado por cima."
     },
     {
-      "id": 15,
+      "id": 6,
+      "receita_etapa_id": 3,
+      "texto": "Leve ao forno pré-aquecido a 180°C por 40 minutos ou até dourar.",
+      "descricao": "Leve ao forno pré-aquecido a 180°C por 40 minutos ou até dourar."
+    },
+    {
+      "id": 7,
+      "receita_etapa_id": 4,
+      "texto": "Deixe o feijão de molho na véspera. No dia seguinte, cozinhe em panela de pressão por 40 minutos.",
+      "descricao": "Deixe o feijão de molho na véspera. No dia seguinte, cozinhe em panela de pressão por 40 minutos."
+    },
+    {
+      "id": 8,
+      "receita_etapa_id": 4,
+      "texto": "Refogue a cebola e o alho no azeite, adicione o feijão cozido e tempere com sal, pimenta e louro.",
+      "descricao": "Refogue a cebola e o alho no azeite, adicione o feijão cozido e tempere com sal, pimenta e louro."
+    },
+    {
+      "id": 9,
+      "receita_etapa_id": 5,
+      "texto": "Cozinhe as carnes (linguiça, bacon, presunto) separadamente até dourar.",
+      "descricao": "Cozinhe as carnes (linguiça, bacon, presunto) separadamente até dourar."
+    },
+    {
+      "id": 10,
+      "receita_etapa_id": 5,
+      "texto": "Adicione a carne moída e cozinhe até dourar.",
+      "descricao": "Adicione a carne moída e cozinhe até dourar."
+    },
+    {
+      "id": 11,
       "receita_etapa_id": 6,
-      "texto": "Tempere os filés de frango com sal, pimenta do reino e alho picado.",
-      "descricao": "Tempere os filés de frango com sal, pimenta do reino e alho picado."
+      "texto": "Junte todas as carnes ao feijão e deixe cozinhar em fogo baixo por 20 minutos.",
+      "descricao": "Junte todas as carnes ao feijão e deixe cozinhar em fogo baixo por 20 minutos."
+    },
+    {
+      "id": 12,
+      "receita_etapa_id": 7,
+      "texto": "Corte o frango em cubos e tempere com sal e pimenta.",
+      "descricao": "Corte o frango em cubos e tempere com sal e pimenta."
+    },
+    {
+      "id": 13,
+      "receita_etapa_id": 7,
+      "texto": "Em uma panela, refogue a cebola e o alho, adicione o frango e cozinhe até dourar.",
+      "descricao": "Em uma panela, refogue a cebola e o alho, adicione o frango e cozinhe até dourar."
+    },
+    {
+      "id": 14,
+      "receita_etapa_id": 8,
+      "texto": "Adicione os champignons e deixe cozinhar por 5 minutos.",
+      "descricao": "Adicione os champignons e deixe cozinhar por 5 minutos."
+    },
+    {
+      "id": 15,
+      "receita_etapa_id": 8,
+      "texto": "Adicione o creme de leite, ketchup e mostarda. Misture bem.",
+      "descricao": "Adicione o creme de leite, ketchup e mostarda. Misture bem."
     },
     {
       "id": 16,
-      "receita_etapa_id": 6,
-      "texto": "Deixe marinar por pelo menos 10 minutos.",
-      "descricao": "Deixe marinar por pelo menos 10 minutos."
+      "receita_etapa_id": 9,
+      "texto": "Deixe cozinhar por mais 5 minutos até o molho engrossar levemente.",
+      "descricao": "Deixe cozinhar por mais 5 minutos até o molho engrossar levemente."
     },
     {
       "id": 17,
-      "receita_etapa_id": 7,
-      "texto": "Aqueça uma grelha ou frigideira antiaderente em fogo médio-alto.",
-      "descricao": "Aqueça uma grelha ou frigideira antiaderente em fogo médio-alto."
+      "receita_etapa_id": 10,
+      "texto": "Tempere a carne moída com sal, pimenta, alho e cebola picados.",
+      "descricao": "Tempere a carne moída com sal, pimenta, alho e cebola picados."
     },
     {
       "id": 18,
-      "receita_etapa_id": 7,
-      "texto": "Grelhe o frango por cerca de 6-7 minutos de cada lado até dourar e cozinhar completamente.",
-      "descricao": "Grelhe o frango por cerca de 6-7 minutos de cada lado até dourar e cozinhar completamente."
+      "receita_etapa_id": 10,
+      "texto": "Modele hambúrgueres com as mãos e grelhe em frigideira ou churrasqueira.",
+      "descricao": "Modele hambúrgueres com as mãos e grelhe em frigideira ou churrasqueira."
     },
     {
       "id": 19,
-      "receita_etapa_id": 8,
-      "texto": "Corte os tomates, abobrinha e cenoura em pedaços uniformes.",
-      "descricao": "Corte os tomates, abobrinha e cenoura em pedaços uniformes."
+      "receita_etapa_id": 11,
+      "texto": "Monte os hambúrgueres com pão, carne, queijo, alface, tomate, ketchup e maionese.",
+      "descricao": "Monte os hambúrgueres com pão, carne, queijo, alface, tomate, ketchup e maionese."
     },
     {
       "id": 20,
-      "receita_etapa_id": 8,
-      "texto": "Em uma frigideira grande, aqueça o azeite e refogue os legumes por 8-10 minutos até ficarem macios.",
-      "descricao": "Em uma frigideira grande, aqueça o azeite e refogue os legumes por 8-10 minutos até ficarem macios."
+      "receita_etapa_id": 12,
+      "texto": "Sirva quente.",
+      "descricao": "Sirva quente."
     },
     {
       "id": 21,
-      "receita_etapa_id": 8,
-      "texto": "Tempere os legumes com sal e pimenta do reino.",
-      "descricao": "Tempere os legumes com sal e pimenta do reino."
+      "receita_etapa_id": 13,
+      "texto": "Em uma tigela, misture a farinha, o leite, os ovos, o azeite, o sal e o açúcar.",
+      "descricao": "Em uma tigela, misture a farinha, o leite, os ovos, o azeite, o sal e o açúcar."
     },
     {
       "id": 22,
-      "receita_etapa_id": 9,
-      "texto": "Pique a cebola e o alho finamente.",
-      "descricao": "Pique a cebola e o alho finamente."
+      "receita_etapa_id": 13,
+      "texto": "Bata tudo no liquidificador até obter uma massa homogênea.",
+      "descricao": "Bata tudo no liquidificador até obter uma massa homogênea."
     },
     {
       "id": 23,
-      "receita_etapa_id": 9,
-      "texto": "Lave e fatie os cogumelos.",
-      "descricao": "Lave e fatie os cogumelos."
+      "receita_etapa_id": 14,
+      "texto": "Aqueça uma frigideira e adicione uma concha da massa.",
+      "descricao": "Aqueça uma frigideira e adicione uma concha da massa."
     },
     {
       "id": 24,
-      "receita_etapa_id": 9,
-      "texto": "Mantenha o caldo de legumes aquecido em uma panela separada.",
-      "descricao": "Mantenha o caldo de legumes aquecido em uma panela separada."
+      "receita_etapa_id": 14,
+      "texto": "Frite cada panqueca por cerca de 2 minutos de cada lado até dourar.",
+      "descricao": "Frite cada panqueca por cerca de 2 minutos de cada lado até dourar."
     },
     {
       "id": 25,
-      "receita_etapa_id": 10,
-      "texto": "Em uma panela grande, derreta a manteiga e refogue a cebola até ficar transparente.",
-      "descricao": "Em uma panela grande, derreta a manteiga e refogue a cebola até ficar transparente."
+      "receita_etapa_id": 15,
+      "texto": "Misture o grão de bico cozido com tomate, cebola, azeite e limão. Tempere com sal a gosto.",
+      "descricao": "Misture o grão de bico cozido com tomate, cebola, azeite e limão. Tempere com sal a gosto."
     },
     {
       "id": 26,
-      "receita_etapa_id": 10,
-      "texto": "Adicione o arroz e mexa por 2 minutos até os grãos ficarem levemente tostados.",
-      "descricao": "Adicione o arroz e mexa por 2 minutos até os grãos ficarem levemente tostados."
+      "receita_etapa_id": 16,
+      "texto": "Refogue os cogumelos, adicione o arroz e o caldo quente aos poucos, mexendo sempre até ficar cremoso. Finalize com queijo parmesão.",
+      "descricao": "Refogue os cogumelos, adicione o arroz e o caldo quente aos poucos, mexendo sempre até ficar cremoso. Finalize com queijo parmesão."
     },
     {
       "id": 27,
-      "receita_etapa_id": 10,
-      "texto": "Adicione o vinho branco e mexa até evaporar.",
-      "descricao": "Adicione o vinho branco e mexa até evaporar."
+      "receita_etapa_id": 17,
+      "texto": "Tempere o frango e grelhe. Corte os legumes e asse no forno com azeite, sal e pimenta.",
+      "descricao": "Tempere o frango e grelhe. Corte os legumes e asse no forno com azeite, sal e pimenta."
     },
     {
       "id": 28,
-      "receita_etapa_id": 10,
-      "texto": "Adicione os cogumelos e comece a adicionar o caldo quente, uma concha por vez, mexendo sempre.",
-      "descricao": "Adicione os cogumelos e comece a adicionar o caldo quente, uma concha por vez, mexendo sempre."
+      "receita_etapa_id": 18,
+      "texto": "Refogue a cebola, adicione os legumes cortados e o caldo. Cozinhe até os legumes ficarem macios.",
+      "descricao": "Refogue a cebola, adicione os legumes cortados e o caldo. Cozinhe até os legumes ficarem macios."
     },
     {
       "id": 29,
-      "receita_etapa_id": 10,
-      "texto": "Continue adicionando caldo e mexendo até o arroz ficar cremoso e al dente (cerca de 18-20 minutos).",
-      "descricao": "Continue adicionando caldo e mexendo até o arroz ficar cremoso e al dente (cerca de 18-20 minutos)."
+      "receita_etapa_id": 19,
+      "texto": "Tempere o salmão com limão, ervas e azeite. Asse no forno a 200°C por 15-20 minutos.",
+      "descricao": "Tempere o salmão com limão, ervas e azeite. Asse no forno a 200°C por 15-20 minutos."
     },
     {
       "id": 30,
-      "receita_etapa_id": 11,
-      "texto": "Retire do fogo e adicione a manteiga restante e o queijo parmesão ralado.",
-      "descricao": "Retire do fogo e adicione a manteiga restante e o queijo parmesão ralado."
+      "receita_etapa_id": 20,
+      "texto": "Bata os ovos, adicione os vegetais picados e frite em frigideira com azeite até dourar.",
+      "descricao": "Bata os ovos, adicione os vegetais picados e frite em frigideira com azeite até dourar."
     },
     {
       "id": 31,
-      "receita_etapa_id": 11,
-      "texto": "Misture bem e finalize com salsinha picada.",
-      "descricao": "Misture bem e finalize com salsinha picada."
+      "receita_etapa_id": 21,
+      "texto": "Cozinhe o arroz e o feijão separadamente. Monte o prato com arroz, feijão e salada fresca.",
+      "descricao": "Cozinhe o arroz e o feijão separadamente. Monte o prato com arroz, feijão e salada fresca."
+    },
+    {
+      "id": 32,
+      "receita_etapa_id": 22,
+      "texto": "Refogue o alho no azeite, adicione o camarão e cozinhe até ficar rosado. Tempere com sal e pimenta.",
+      "descricao": "Refogue o alho no azeite, adicione o camarão e cozinhe até ficar rosado. Tempere com sal e pimenta."
+    },
+    {
+      "id": 33,
+      "receita_etapa_id": 23,
+      "texto": "Cozinhe o macarrão conforme instruções da embalagem. Refogue a cebola e o alho, adicione o molho de tomate e deixe cozinhar. Misture com o macarrão.",
+      "descricao": "Cozinhe o macarrão conforme instruções da embalagem. Refogue a cebola e o alho, adicione o molho de tomate e deixe cozinhar. Misture com o macarrão."
     }
   ],
   "receita_pontos_atencao": [
     {
       "id": 1,
       "receita_id": 1,
-      "descricao": "Alto teor de gordura"
+      "descricao": "Contém glúten"
     },
     {
       "id": 2,
       "receita_id": 1,
-      "descricao": "Alto teor de sódio"
+      "descricao": "Contém lactose"
     },
     {
       "id": 3,
-      "receita_id": 1,
-      "descricao": "Contém glúten"
+      "receita_id": 2,
+      "descricao": "Alto teor de gordura"
     },
     {
       "id": 4,
       "receita_id": 2,
-      "descricao": "Contém ovo cru"
+      "descricao": "Alto teor de sódio"
     },
     {
       "id": 5,
-      "receita_id": 2,
+      "receita_id": 3,
       "descricao": "Contém lactose"
     },
     {
       "id": 6,
-      "receita_id": 3,
-      "descricao": "Alto teor de proteína"
+      "receita_id": 4,
+      "descricao": "Contém glúten"
     },
     {
       "id": 7,
-      "receita_id": 4,
+      "receita_id": 5,
       "descricao": "Contém lactose"
     },
     {
       "id": 8,
-      "receita_id": 4,
-      "descricao": "Contém álcool (vinho)"
+      "receita_id": 5,
+      "descricao": "Contém ovos"
     }
   ],
   "receitas_categorias": [
     {
       "receita_id": 1,
-      "categoria_id": 1,
-      "principal": true
-    },
-    {
-      "receita_id": 1,
-      "categoria_id": 2,
-      "principal": false
-    },
-    {
-      "receita_id": 1,
-      "categoria_id": 3,
-      "principal": false
-    },
-    {
-      "receita_id": 1,
-      "categoria_id": 4,
+      "categoria_id": 6,
       "principal": true
     },
     {
       "receita_id": 2,
-      "categoria_id": 1,
-      "principal": true
-    },
-    {
-      "receita_id": 2,
-      "categoria_id": 2,
-      "principal": true
-    },
-    {
-      "receita_id": 2,
-      "categoria_id": 5,
-      "principal": true
-    },
-    {
-      "receita_id": 3,
-      "categoria_id": 5,
-      "principal": true
-    },
-    {
-      "receita_id": 3,
       "categoria_id": 7,
       "principal": true
     },
     {
-      "receita_id": 4,
-      "categoria_id": 3,
+      "receita_id": 3,
+      "categoria_id": 1,
       "principal": true
     },
     {
       "receita_id": 4,
-      "categoria_id": 6,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 5,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 6,
+      "categoria_id": 3,
+      "principal": true
+    },
+    {
+      "receita_id": 7,
+      "categoria_id": 3,
+      "principal": true
+    },
+    {
+      "receita_id": 8,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 9,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 10,
+      "categoria_id": 5,
+      "principal": true
+    },
+    {
+      "receita_id": 11,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 12,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 13,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 14,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 15,
+      "categoria_id": 5,
+      "principal": true
+    },
+    {
+      "receita_id": 16,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 17,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 18,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 19,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 20,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 21,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 22,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 23,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 24,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 25,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 26,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 27,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 28,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 29,
+      "categoria_id": 1,
+      "principal": true
+    },
+    {
+      "receita_id": 30,
+      "categoria_id": 1,
       "principal": true
     }
   ]
