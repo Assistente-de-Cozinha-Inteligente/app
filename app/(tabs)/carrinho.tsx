@@ -6,7 +6,6 @@ import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { TextUI } from '@/components/ui/text';
 import { Toast } from '@/components/ui/toast';
-import { ToastWithUndo } from '@/components/ui/toast-with-undo';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { inserirAtualizarItemInventario } from '@/data/local/dao/inventarioDao';
@@ -14,7 +13,6 @@ import { atualizarMarcadoItemListaCompras, excluirItemListaCompras, getListaComp
 import { useExpandableLocal } from '@/hooks/use-expandable-local';
 import { useLocalGrouping } from '@/hooks/use-local-grouping';
 import { useScreenEntrance } from '@/hooks/use-screen-entrance';
-import { useUndoDelete } from '@/hooks/use-undo-delete';
 import { ListaCompras } from '@/models';
 import { handleShareCarrinho } from '@/share/shareCarrinho';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -45,24 +43,6 @@ export default function CarrinhoScreen() {
     itensPorLocal.map(({ local }) => local)
   );
 
-  // Gerencia lógica de undo para exclusão
-  const {
-    deletingItems,
-    showUndoToast,
-    toastUndoKey,
-    handleItemRemove: handleItemRemoveBase,
-    handleUndoDelete,
-    handleConfirmDelete: handleConfirmDeleteBase,
-    cleanup,
-    syncWithItems,
-    setShowUndoToast,
-  } = useUndoDelete<ListaCompras>({
-    onConfirmDelete: async (items) => {
-      const ingredienteIds = items.map(item => item.ingrediente_id);
-      await excluirItemListaCompras(ingredienteIds);
-    },
-  });
-
   const handleItemCheck = async (ingrediente_id: number, checked: boolean) => {
     setListaCompras(listaCompras.map(item =>
       item.ingrediente_id === ingrediente_id ? { ...item, marcado: checked } : item
@@ -71,34 +51,9 @@ export default function CarrinhoScreen() {
   };
 
   const handleItemRemove = async (ingrediente_id: number) => {
-    const itemToDelete = listaCompras.find(item => item.ingrediente_id === ingrediente_id);
-    if (!itemToDelete) return;
-
-    setListaCompras(prev => prev.filter(item => item.ingrediente_id !== ingrediente_id));
-    handleItemRemoveBase(itemToDelete);
-  };
-
-  const handleConfirmDelete = async () => {
-    await handleConfirmDeleteBase();
-    // Recarrega a lista após exclusão
+    await excluirItemListaCompras([ingrediente_id]);
     const lista = await getListaCompras();
     setListaCompras(lista);
-  };
-
-  const handleUndoDeleteWithRestore = () => {
-    handleUndoDelete();
-    // Restaura visualmente na lista
-    const itemsToRestore = deletingItems;
-    setListaCompras(prev => {
-      const restored: ListaCompras[] = [];
-      itemsToRestore.forEach(itemToRestore => {
-        const exists = prev.some(item => item.ingrediente_id === itemToRestore.ingrediente_id);
-        if (!exists) restored.push(itemToRestore);
-      });
-      return [...prev, ...restored].sort((a, b) =>
-        (a.ingrediente?.nome || '').localeCompare(b.ingrediente?.nome || '')
-      );
-    });
   };
 
   const handleAddItem = () => {
@@ -138,12 +93,7 @@ export default function CarrinhoScreen() {
     useCallback(() => {
       getListaCompras().then((lista) => {
         setListaCompras(lista);
-        syncWithItems(lista);
       });
-
-      return () => {
-        cleanup();
-      };
     }, [])
   );
 
@@ -228,21 +178,6 @@ export default function CarrinhoScreen() {
         type="success"
         exitDirection="right"
         onHide={() => setShowSuccessMessage(false)}
-      />
-
-      {/* Toast de desfazer exclusão */}
-      <ToastWithUndo
-        key={`toast-undo-carrinho-${toastUndoKey}`}
-        visible={showUndoToast}
-        message={
-          deletingItems.length === 1
-            ? 'Item excluído'
-            : `${deletingItems.length} itens excluídos`
-        }
-        onUndo={handleUndoDeleteWithRestore}
-        onConfirm={handleConfirmDelete}
-        onHide={() => setShowUndoToast(false)}
-        duration={5}
       />
 
       <FloatingAddButton onPress={handleAddItem} />

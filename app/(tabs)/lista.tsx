@@ -10,7 +10,6 @@ import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { TextUI } from '@/components/ui/text';
 import { Toast } from '@/components/ui/toast';
-import { ToastWithUndo } from '@/components/ui/toast-with-undo';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { atualizarDisponibilidadeValidadeItemInventario, excluirItemInventario, getInventario } from '@/data/local/dao/inventarioDao';
@@ -18,7 +17,6 @@ import { inserirAtualizarItemListaCompras } from '@/data/local/dao/listaComprasD
 import { useExpandableLocal } from '@/hooks/use-expandable-local';
 import { useInventarioGrouping } from '@/hooks/use-inventario-grouping';
 import { useScreenEntrance } from '@/hooks/use-screen-entrance';
-import { useUndoDelete } from '@/hooks/use-undo-delete';
 import { Inventario } from '@/models';
 import { getItemMaisPrioritario } from '@/utils/validadeHelper';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -54,49 +52,8 @@ export default function ListaScreen() {
     itensPorLocal.map(({ local }) => local)
   );
 
-  // Gerencia lógica de undo para exclusão
-  const {
-    deletingItems,
-    showUndoToast,
-    toastUndoKey,
-    handleItemRemove: handleItemRemoveBase,
-    handleUndoDelete,
-    handleConfirmDelete: handleConfirmDeleteBase,
-    cleanup,
-    syncWithItems,
-    setShowUndoToast,
-  } = useUndoDelete<Inventario>({
-    onConfirmDelete: async (items) => {
-      const ingredienteIds = items.map(item => item.ingrediente_id);
-      await excluirItemInventario(ingredienteIds);
-    },
-  });
-
   const handleItemRemove = async (ingrediente_id: number) => {
-    const itemToDelete = inventario.find(item => item.ingrediente_id === ingrediente_id);
-    if (!itemToDelete) return;
-
-    setInventario(prev => prev.filter(item => item.ingrediente_id !== ingrediente_id));
-    handleItemRemoveBase(itemToDelete);
-  };
-
-  const handleUndoDeleteWithRestore = () => {
-    handleUndoDelete();
-    const itemsToRestore = deletingItems;
-    setInventario(prev => {
-      const restoredItems: Inventario[] = [];
-      itemsToRestore.forEach(itemToRestore => {
-        const exists = prev.some(item => item.ingrediente_id === itemToRestore.ingrediente_id);
-        if (!exists) {
-          restoredItems.push(itemToRestore);
-        }
-      });
-      return [...prev, ...restoredItems];
-    });
-  };
-
-  const handleConfirmDelete = async () => {
-    await handleConfirmDeleteBase();
+    await excluirItemInventario([ingrediente_id]);
     const inventarioAtualizado = await getInventario();
     setInventario(inventarioAtualizado);
   };
@@ -213,12 +170,7 @@ export default function ListaScreen() {
     useCallback(() => {
       getInventario().then((lista) => {
         setInventario(lista);
-        syncWithItems(lista);
       });
-
-      return () => {
-        cleanup();
-      };
     }, [])
   );
 
@@ -332,21 +284,6 @@ export default function ListaScreen() {
         type="success"
         exitDirection="left"
         onHide={() => setShowSuccessMessage(false)}
-      />
-
-      {/* Toast de desfazer exclusão */}
-      <ToastWithUndo
-        key={`toast-undo-${toastUndoKey}`}
-        visible={showUndoToast}
-        message={
-          deletingItems.length === 1
-            ? "Item excluído"
-            : `${deletingItems.length} itens excluídos`
-        }
-        onUndo={handleUndoDeleteWithRestore}
-        onConfirm={handleConfirmDelete}
-        onHide={() => setShowUndoToast(false)}
-        duration={5}
       />
 
       {/* Bottom Sheet para editar item */}
