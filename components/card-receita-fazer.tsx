@@ -4,12 +4,43 @@ import { StyleSheet, View } from 'react-native';
 import { ButtonUI } from './ui/button';
 import { TextUI } from './ui/text';
 
+// Função para determinar cor do status baseado no texto (versão para fundo claro)
+const getStatusColor = (status: string): { backgroundColor: string; textColor: string; borderColor?: string } => {
+    const statusLower = status.toLowerCase();
+
+    // Status positivo - pode fazer
+    if (statusLower.includes('consegue fazer') || statusLower.includes('pode fazer') || statusLower.includes('pronto')) {
+        return {
+            backgroundColor: '#E8F5E9', // Verde muito claro
+            textColor: '#2E7D32', // Verde escuro
+            borderColor: '#C8E6C9',
+        };
+    }
+
+    // Status de falta de ingredientes
+    if (statusLower.includes('falta') || statusLower.includes('faltam')) {
+        return {
+            backgroundColor: '#FFF3E0', // Amarelo/Laranja muito claro
+            textColor: '#E65100', // Laranja escuro
+            borderColor: '#FFE0B2',
+        };
+    }
+
+    // Status neutro/outros
+    return {
+        backgroundColor: '#F5F5F5',
+        textColor: Colors.light.bodyText,
+        borderColor: '#E0E0E0',
+    };
+};
+
 type CardReceitaFazerProps = {
     imageUri?: string;
     title: string;
     time: string;
     servings: string;
     description: string;
+    status?: string;
     onFazerAgora?: () => void;
     onProxima?: () => void;
     isLast?: boolean;
@@ -21,6 +52,7 @@ export function CardReceitaFazer({
     time,
     servings,
     description,
+    status,
     onFazerAgora,
     onProxima,
     isLast = false,
@@ -31,12 +63,38 @@ export function CardReceitaFazer({
                 <Image source={{ uri: imageUri }} style={styles.image} />
                 <View style={styles.infoContainer}>
                     <TextUI variant="medium" style={styles.title}>{title}</TextUI>
+
+                    {/* Status acima do time e pessoas */}
+                    {status && (() => {
+                        const statusColors = getStatusColor(status);
+                        return (
+                            <View style={[
+                                styles.statusContainer,
+                                {
+                                    backgroundColor: statusColors.backgroundColor,
+                                    borderTopColor: statusColors.borderColor || '#F0F0F0',
+                                }
+                            ]}>
+                                <TextUI variant="regular" style={[styles.statusText, { color: statusColors.textColor }]}>
+                                    {status}
+                                </TextUI>
+                            </View>
+                        );
+                    })()}
+
                     <View style={styles.infoTextContainer}>
-                        <TextUI variant="regular" style={styles.time}>{time}</TextUI>
+                        <TextUI variant="regular" style={styles.time}>{time} min</TextUI>
                         <TextUI variant="regular" style={styles.separator}>|</TextUI>
-                        <TextUI variant="regular" style={styles.servings}>{servings}</TextUI>
+                        <TextUI variant="regular" style={styles.servings}>{servings} pessoas</TextUI>
                     </View>
-                    <TextUI variant="light" style={styles.description}>{description}</TextUI>
+                    <TextUI
+                        variant="light"
+                        style={styles.description}
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                    >
+                        {description}
+                    </TextUI>
                 </View>
             </View>
             <View style={styles.actionsContainer}>
@@ -71,6 +129,7 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         borderWidth: 1,
         borderColor: "#EBEBEB",
+        minHeight: 180,
     },
     contentContainer: {
         flexDirection: 'row',
@@ -80,7 +139,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 90,
-        height: 90,
+        height: 120,
         borderRadius: 12,
     },
     infoContainer: {
@@ -98,7 +157,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         color: Colors.light.mainText,
-        marginBottom: 4,
     },
     time: {
         fontSize: 14,
@@ -117,6 +175,17 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors.light.bodyText,
         marginTop: 2,
+    },
+    statusContainer: {
+        paddingTop: 8,
+        paddingBottom: 6,
+        paddingHorizontal: 8,
+        borderRadius: 6,
+        borderTopWidth: 1,
+        width: '100%'
+    },
+    statusText: {
+        fontSize: 11,
     },
     actionsContainer: {
         flexDirection: 'row',
