@@ -2,8 +2,7 @@ import { CardPreferenciasIA } from '@/components/card-preferencias-ia';
 import { CronometroOferta } from '@/components/cronometro-oferta';
 import { EmptyCozinhaCard } from '@/components/empty-cozinha-card';
 import { ReceitaSlider } from '@/components/receita-slider';
-import { ReceitaSliderFazer } from '@/components/receita-slider-fazer';
-import { ButtonUI } from '@/components/ui/button';
+import { ReceitaSliderFazer, ReceitaSliderFazerRef } from '@/components/receita-slider-fazer';
 import { PageHeader } from '@/components/ui/page-header';
 import { ScrollViewWithPadding } from '@/components/ui/scroll-view-with-padding';
 import { SectionUI } from '@/components/ui/section';
@@ -11,12 +10,13 @@ import { TextUI } from '@/components/ui/text';
 import { ViewContainerUI } from '@/components/ui/view-container';
 import { Colors } from '@/constants/theme';
 import { getInventario } from '@/data/local/dao/inventarioDao';
+import { buscarReceitasHomePaginacao, buscarTop3ReceitasPossiveis, ReceitaComScore } from '@/data/local/dao/receitaDao';
 import { getOrCreateLocalUser } from '@/data/local/dao/usuarioDao';
 import { Usuario } from '@/models';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router, useFocusEffect } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
 export default function HomeScreen() {
@@ -24,6 +24,10 @@ export default function HomeScreen() {
   const [showCronometro, setShowCronometro] = useState(false);
   const [showPreferenciasIA, setShowPreferenciasIA] = useState(false);
   const [hasIngredientes, setHasIngredientes] = useState(true);
+  const [receitasFazer, setReceitasFazer] = useState<ReceitaComScore[]>([]);
+  const receitaSliderRef = useRef<ReceitaSliderFazerRef>(null);
+  const [receitas, setReceitas] = useState<ReceitaComScore[]>([]);
+  const [paginaReceitas, setPaginaReceitas] = useState(0);
 
   // Verifica se o usuário tem menos de 23 horas desde a criação E se ganhou a oferta
   const checkShouldShowCronometro = async (usuario: Usuario | null) => {
@@ -47,13 +51,15 @@ export default function HomeScreen() {
   useFocusEffect(() => {
     setShowCronometro(false);
 
+    // Volta o slider de receitas para o primeiro índice
+    receitaSliderRef.current?.scrollToStart();
+
     getOrCreateLocalUser().then(async (user) => {
       if (user) {
         setUsuario(user);
         const shouldShow = await checkShouldShowCronometro(user);
         setShowCronometro(shouldShow);
       }
-      console.log(user, "(<<<<<<<<< ID do usuário <<<<<<<<<)");
     });
 
     // Verifica se o usuário tem ingredientes
@@ -62,66 +68,79 @@ export default function HomeScreen() {
     });
   });
 
-  const receitasFazer = [
-    {
-      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
-      title: "Frango com legumes",
-      time: "20 min",
-      servings: "1 pessoa",
-      description: "Usa ingredientes comuns",
-      onFazerAgora: () => console.log('Fazer agora 1'),
-      onProxima: () => console.log('Próxima 1'),
-    },
-    {
-      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
-      title: "Salmão grelhado",
-      time: "25 min",
-      servings: "2 pessoas",
-      description: "Receita rápida e saudável",
-      onFazerAgora: () => console.log('Fazer agora 2'),
-      onProxima: () => console.log('Próxima 2'),
-    },
-    {
-      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
-      title: "Massa com molho",
-      time: "15 min",
-      servings: "1 pessoa",
-      description: "Perfeito para o almoço",
-      onFazerAgora: () => console.log('Fazer agora 3'),
-      onProxima: () => console.log('Próxima 3'),
-    },
-  ];
+  const buscarReceitasFazer = async () => {
+    const receitas = await buscarTop3ReceitasPossiveis();
 
-  const receitas = [
-    {
-      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
-      category: "Sushi",
-      title: "Sushi",
-      time: "35 min",
-      servings: "2 pessoas",
-      difficulty: "Fácil",
-      onPress: () => router.push('/receita/1'),
-    },
-    {
-      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
-      category: "Sushi",
-      title: "Sushi",
-      time: "35 min",
-      servings: "2 pessoas",
-      difficulty: "Fácil",
-      onPress: () => router.push('/receita/1'),
-    },
-    {
-      imageUri: "https://www.diadepeixe.com.br/extranet/thumbnail/crop/550x360/Receita/shutterstock_2105735288_1746448515362.jpg",
-      category: "Sushi",
-      title: "Sushi",
-      time: "35 min",
-      servings: "2 pessoas",
-      difficulty: "Fácil",
-      onPress: () => router.push('/receita/1'),
-    },
-  ];
+    console.log("A FAZER: ", receitas);
+    setReceitasFazer(receitas);
+    return receitas;
+  };
 
+  const buscarReceitas = async (pagina: number, excluirIds: number[] = []) => {
+    const receitasPaginacao = await buscarReceitasHomePaginacao(pagina, 2, excluirIds);
+    
+    // Só adiciona se houver receitas novas e que não estejam duplicadas
+    if (receitasPaginacao.length > 0) {
+      setReceitas(prev => {
+        const idsExistentes = new Set(prev.map(r => r.id));
+        const receitasNovas = receitasPaginacao.filter(r => !idsExistentes.has(r.id));
+        return [...prev, ...receitasNovas];
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!usuario) return;
+
+    // Reseta os estados
+    setReceitasFazer([]);
+    setReceitas([]);
+    setPaginaReceitas(0);
+
+    const carregarReceitas = async () => {
+      // Primeiro busca as receitas para fazer
+      const receitasParaFazer = await buscarReceitasFazer();
+      
+      // Depois busca outras receitas, excluindo as que já estão em "para fazer"
+      const idsParaExcluir = receitasParaFazer.map(r => r.id);
+      await buscarReceitas(0, idsParaExcluir);
+    };
+
+    carregarReceitas();
+  }, [usuario]);
+
+  // Determina o título da seção baseado na quantidade de ingredientes faltantes
+  const getTituloSugestao = (): string => {
+    if (receitasFazer.length === 0) {
+      return "Sugestão";
+    }
+
+    const primeiraReceita = receitasFazer[0];
+    const qtdFaltantes = primeiraReceita.qtd_faltantes;
+
+    // Nenhum ingrediente faltando
+    if (qtdFaltantes === 0) {
+      return "Perfeito para você";
+    }
+
+    // Faltando menos que 3 ingredientes (1 ou 2)
+    if (qtdFaltantes < 3) {
+      return "Precisa de um ajuste";
+    }
+
+    // Exatamente 3 ingredientes faltando
+    if (qtdFaltantes === 3) {
+      return "Talvez você possa fazer";
+    }
+
+    // Faltando mais que 3 até 4 ingredientes
+    if (qtdFaltantes > 3 && qtdFaltantes <= 4) {
+      return "Quase tudo em casa";
+    }
+
+    // ELSE (mais de 4 ingredientes faltando)
+    return "Sugestão";
+  };
 
   return (
     <ViewContainerUI isTabBar={true} exibirIA={true}>
@@ -139,7 +158,6 @@ export default function HomeScreen() {
       <ScrollViewWithPadding
         keyboardShouldPersistTaps="handled"
       >
-
         {/* Card para quando não tem ingredientes */}
         {!hasIngredientes && (
           <SectionUI title="" style={{
@@ -170,16 +188,25 @@ export default function HomeScreen() {
           />
         </SectionUI>}
 
-        <SectionUI title="Sugestão rápida" style={{
+        {receitasFazer.length > 0 && <SectionUI title={getTituloSugestao()} style={{
           paddingHorizontal: 20,
         }}>
-          <ReceitaSliderFazer receitas={receitasFazer} />
-        </SectionUI>
+          <ReceitaSliderFazer ref={receitaSliderRef} receitas={receitasFazer} />
+        </SectionUI>}
 
         <SectionUI title="Outras ideias simples" titleStyle={{
           paddingHorizontal: 20,
         }}>
-          <ReceitaSlider receitas={receitas} />
+          <ReceitaSlider receitas={receitas} onEndReached={() => {
+            const pagina = paginaReceitas + 1;
+            // Exclui tanto as receitas "para fazer" quanto as que já foram adicionadas
+            const idsParaExcluir = [
+              ...receitasFazer.map(r => r.id),
+              ...receitas.map(r => r.id)
+            ];
+            buscarReceitas(pagina, idsParaExcluir);
+            setPaginaReceitas(pagina);
+          }} />
         </SectionUI>
 
         <SectionUI title="" style={{
